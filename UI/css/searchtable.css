@@ -1,0 +1,28 @@
+#cart_table, #salesrecordtable, #productsrecordtable {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+  }
+  
+  #cart_table th, #salesrecordtable th, #productsrecordtable th  {
+    text-align: left;
+    padding: 12px;
+	  background-color: #551263;
+	color: aqua;
+  }
+  
+  #cart_table tr, #salesrecordtable tr, #productsrecordtable tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #cart_table tr.header, #cart_table tr:hover, #salesrecordtable tr:hover, #salesrecordtable tr.header, #productsrecordtable tr.header, #productsrecordtable tr:hover{
+    background-color: #f1f1f1;
+  }
+#cart_table td, #salesrecordtable td, #productsrecordtable td{
+	text-align: left;
+}
+
+#cart_table td, #cart_table th, #salesrecordtable td, #salesrecordtable th, #productsrecordtable td, #productsrecordtable th{
+	border:thin solid aqua;
+}
