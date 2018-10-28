@@ -1,0 +1,217 @@
+@charset "utf-8";
+/* CSS Document */
+#container {
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+#salesStatus {
+	color: #4CAF50;
+}
+
+button[type=submit], button[type=button] {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	background-color: #551263;
+	color: white;
+	padding: 10px 10px 30px 10px;
+	border: none;
+	color: aqua;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-top: 8px;
+	margin-right: 0;
+	margin-bottom: 8px;
+	margin-left: 0;
+}
+
+#receipt-table th{
+	background-color: #551263;
+	color: aqua;
+	text-align: left;
+}
+#receipt-table td, #receipt-table th, #receipt-table tfoot{
+	border:thin solid aqua;
+}
+
+input[name=quantity_to_be_purchased] {
+	width: 50px;
+}
+form input 
+	.active {
+    background-color: #4CAF50;
+}	
+
+
+nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+	overflow: hidden;
+	background-color: #551263;
+}
+
+
+#product_filter {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 75%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+nav ul li{
+	float:right;
+}
+
+
+form input[type=password], input[type=email] {
+	border-radius: 5px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: 50;
+	width: 350px;
+}
+
+form {
+	margin: 250px;
+}
+
+#salesArea{
+	margin-top: 50px;
+}
+
+#searchbutton{
+	padding: 4px;
+	margin: 5px;
+	background-color: #551263;
+	font-size: 20px;
+	color:aqua;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+
+}
+#allproductsbutton{
+	padding: 4px;
+	margin: 5px;
+	background-color: #551263;
+	font-size: 20px;
+	color:aqua;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+nav ul li a {
+    display: block;
+    color: aqua;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}	
+	nav ul li a:hover {
+    background-color: #111;
+}	
+#logo{
+		float:left;
+		text-align: left;
+		text-transform: uppercase;
+		color: aqua;
+		line-height: 2.5;
+		text-indent: 10px;
+		font-size: 18px;
+	    font-weight: 600;
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	}
+#welcome-message{
+	color: #551263;
+}
+  #loginlink {
+	text-decoration: none;
+	background-color: #551263;
+	color: aqua;
+	width: 30px;
+	display: block;
+	margin: 10px 5px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+
+}
+    #logo > a {
+        text-decoration: none;
+        color: aqua;
+    }
+
+
+.is-hidden { display: none; }
+
+#invoiceTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#invoiceTable td, #invoiceTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#invoiceTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#invoiceTable tr:hover {background-color: #ddd;}
+
+#invoiceTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #551263;
+    color: white;
+}
+#receiptAddress{
+	text-align: right;
+	text-indent: 100px;
+}
+h4{
+	line-height: 0.5;
+	text-align: center;
+}
+
+h2{
+	line-height: empty;
+	text-align: center;
+}
+#print_receipt{
+	float: right;
+}
+#custId{
+	float: right;
+}
+
+#results{
+	border-top: thick;
+}
+
+#salesrecordsection{
+	padding-top: 12px;
+}
+
+#productsTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#productsTable td, #invoiceTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#productsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#productsTable tr:hover {background-color: #ddd;}
+
+#productsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #551263;
+    color: aqua;
+}
