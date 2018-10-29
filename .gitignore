@@ -1,0 +1,8 @@
+/node_modules/
+npm-debug.log
+/.env
+test_index.js
+Gruntfile.js
+/coverage
+README.md
+.nyc_output

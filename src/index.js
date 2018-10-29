@@ -14,8 +14,8 @@ app.use('/api/v1/sales', sales);
 const port = process.env.PORT || 4000;
 app.listen(port, () => { console.log(`app running on ${port}...`); });
 
-const stop = function stop() {
+/* const stop = function stop() {
   server.close();
-};
+}; */
 export default app;
 // export { app, stop };

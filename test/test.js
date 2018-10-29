@@ -3,7 +3,7 @@ let expect = require('chai').expect;
 chai.use(require('chai-http')); */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../index';
+import app from '../src/index';
 
 const expect = chai.expect;
 

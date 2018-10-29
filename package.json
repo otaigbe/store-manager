@@ -38,10 +38,14 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node --presets env,stage-2 index.js",
     "test": "mocha --compilers js:babel-core/register --exit",
     "cover": "node_modules/.bin/nyc --require babel-core/register node_modules/.bin/mocha \\ test/test.js --exit",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel ./src --out-dir ./build",
+    "build": "npm run clean && npm run build-babel",
+    "dev": "nodemon --exec babel-node src/index.js --env",
+    "start": "npm run build && node ./build/index.js"
   },
   "repository": {
     "type": "git",

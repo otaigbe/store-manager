@@ -11,7 +11,7 @@ controllerObj.getSalesRecordById = (req, res) => {
 
 controllerObj.createSalesRecord = (req, res) => {
   const resource = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(salesrecords);
   salesrecords.push(req.body);
   return res.status(201).json({
