@@ -5,6 +5,10 @@
 <title>Untitled Document</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/searchtable.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <style>
 form input[type=text] {
 	border-radius: 5px;
@@ -12,9 +16,19 @@ form input[type=text] {
 	font-size: 20px;
 	font-weight: 50;
 	width: 500px;
+	padding:0px;
+}
+
+ button[type=button] {
+	padding-top: 14px;
+	padding-bottom: 14px;
 }
 	#productArea{
 		margin-top: 70px;
+	}
+	#searchIcon{
+		padding: 10px;
+
 	}
 
 </style>
@@ -39,7 +53,10 @@ form input[type=text] {
 </div>
 <div id="productArea">	
 	<center>
-<input type="text" id="product_filter" onkeyup="filterTable2()" placeholder="Enter first letter to filter table .." title="Type in a name">
+	
+			<div><input type="text" id="product_filter" onkeyup="filterTable2()"  aria-hidden="true"><button type="button" id="searcIcon"><i class="fa fa-search"></i></button></div>
+
+			
 <table id="productsrecordtable">
 <tr class="header">
     <th>Product Id</th>

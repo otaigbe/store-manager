@@ -1,9 +1,4 @@
 @charset "utf-8";
-/* CSS Document */
-
-body {font-family: Arial;}
-
-/* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -22,7 +17,7 @@ body {font-family: Arial;}
     padding: 14px 16px;
     transition: 0.3s;
     font-size: 17px;
-	color: aqua;
+	color: white;
 }
 
 /* Change background color of buttons on hover */
