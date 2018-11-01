@@ -9,7 +9,7 @@
     text-align: left;
     padding: 12px;
 	  background-color: #551263;
-	color: aqua;
+	color: white;
   }
   
   #cart_table tr, #salesrecordtable tr, #productsrecordtable tr {
@@ -24,5 +24,5 @@
 }
 
 #cart_table td, #cart_table th, #salesrecordtable td, #salesrecordtable th, #productsrecordtable td, #productsrecordtable th{
-	border:thin solid aqua;
+	border:thin solid white;
 }

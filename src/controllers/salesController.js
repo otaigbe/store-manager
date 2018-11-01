@@ -1,27 +1,47 @@
-import salesrecords from '../dataholder/salesrecords';
+import pool from './db';
 
 const controllerObj = {};
 controllerObj.getSalesRecordById = (req, res) => {
-  for (let i = 0; i < salesrecords.length; i += 1) {
-    if (Number(salesrecords[i].salesRecordId) === Number(req.params.id)) {
-      res.status(200).json(salesrecords[i]);
-    }
-  }
+  const param = Number(req.params.id);
+  const temp = [];
+  temp.push(param);
+  const sql = 'SELECT * FROM salesrecords WHERE sales_id = $1';
+  pool.connect(async (err, client) => {
+    const dbrows = await client.query(sql, temp);
+    console.log(dbrows.rows[0]);
+    res.status(200).json({
+      message: 'Resource Found',
+      resorce: dbrows.rows[0],
+    });
+  });
 };
 
+
 controllerObj.createSalesRecord = (req, res) => {
-  const resource = req.body;
-  // console.log(req.body);
-  // console.log(salesrecords);
-  salesrecords.push(req.body);
-  return res.status(201).json({
-    message: 'Successfully added product',
-    'resource-created': resource,
+  const array = req.body;
+  console.log(array);
+  const attendantId = array[0].attendant_id;
+  const params = [];
+  params.push(array, attendantId);
+  const sql = 'INSERT INTO salesrecords (sales, attendant_id) VALUES ($1,$2)';
+  pool.connect(async (err, client) => {
+    const dbrows = await client.query(sql, params);
+    console.log(dbrows);
+    res.status(201).json({
+      message: 'Resource Created!',
+    });
   });
 };
 
 controllerObj.getAllSalesRecord = (req, res) => {
-  res.status(200).json(salesrecords);
+  const sql = 'SELECT * FROM salesrecords';
+  pool.connect(async (err, client) => {
+    const dbrows = await client.query(sql);
+    res.status(200).json({
+      message: 'Resources Found',
+      resources: dbrows.rows[0],
+    });
+  });
 };
 
 export default controllerObj;

@@ -1,6 +1,7 @@
-# Store-Manager
-[![Build Status](https://travis-ci.org/otaigbe/store-manager-clean-.svg?branch=develop)](https://travis-ci.org/otaigbe/store-manager-clean-)
-[![Coverage Status](https://coveralls.io/repos/github/otaigbe/store-manager-clean-/badge.svg?branch=develop)](https://coveralls.io/github/otaigbe/store-manager-clean-?branch=develop)
+# Store-Manager2
+[![Coverage Status](https://coveralls.io/repos/github/otaigbe/Store-Manager2/badge.svg?branch=develop)](https://coveralls.io/github/otaigbe/Store-Manager2?branch=develop)
+[![Build Status](https://travis-ci.org/otaigbe/Store-Manager2.svg?branch=develop)](https://travis-ci.org/otaigbe/Store-Manager2)
+
 # Store-Manager
 Store-Manager is a light weight, easy to use desktop application that runs primarily in a browser. It is built on top of NodeJS and uses javascript to query restful resources from the backend. It is higly responsive and flexible because it helps the store owner/Administrator perform a variety of operations which include:
 * Searching and adding products to buyer’s cart.
@@ -33,8 +34,6 @@ You must have
 Otaigbe Okhueleigbe
 
 # Acknowledgements
-<<<<<<< HEAD
-# W3Schools
-# Create a Modal With HTML, CSS & JavaScript  by Traversy Media
-=======
->>>>>>> 41d544a81d2de54baf3dcfdc03e178ddcee9cd7d
+ W3Schools.com
+ Create a Modal With HTML, CSS & JavaScript  by Traversy Media
+
