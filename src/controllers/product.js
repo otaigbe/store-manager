@@ -3,24 +3,16 @@ import pool from './db';
 
 const productControlObj = {};
 const schema = Joi.object().keys({
-  // product_id: Joi.string().alphanum().min(1).max(30).required(),
   product_desc: Joi.string().required(),
   unit_price: Joi.number().required(),
   quantity_supplied: Joi.number().required(),
   supplier_name: Joi.string().required(),
   category: Joi.string().required(),
 });
-// const schema2 = Joi.object().keys({
-//   product_id: Joi.string().alphanum().min(1).max(30)
-//     .required(),
-//   product_desc: Joi.string().required(),
-//   unit_price: Joi.number().required(),
-//   quantity_supplied: Joi.number().required(),
-//   supplier_name: Joi.string().required(),
-//   category: Joi.string().required(),
-// });
+
 
 productControlObj.createProduct = (req, res) => {
+  console.log(req.body);
   const result = Joi.validate(req.body, schema);
   if (result.error === null) {
     const pname = req.body.product_desc;

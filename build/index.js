@@ -8,13 +8,13 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _products = require('./routes/products');
+var _mainController = require('./mainrouter/mainController');
 
-var _products2 = _interopRequireDefault(_products);
+var _mainController2 = _interopRequireDefault(_mainController);
 
-var _sales = require('./routes/sales');
+var _authController = require('./mainrouter/authController');
 
-var _sales2 = _interopRequireDefault(_sales);
+var _authController2 = _interopRequireDefault(_authController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,15 +24,12 @@ app.use(_express2.default.urlencoded({ extended: true }));
 app.use(_express2.default.static('./UI'));
 app.use(_express2.default.json());
 
-app.use('/api/v1/products', _products2.default);
-app.use('/api/v1/sales', _sales2.default);
+app.use('/api/v1', _mainController2.default);
+app.use('/auth', _authController2.default);
+
 var port = process.env.PORT || 4000;
-app.listen(port, function () {
+var server = app.listen(port, function () {
   console.log('app running on ' + port + '...');
 });
 
-/* const stop = function stop() {
-  server.close();
-}; */
-exports.default = app;
-// export { app, stop };
+exports.default = server;

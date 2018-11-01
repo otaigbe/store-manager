@@ -3,7 +3,7 @@ import extensions from 'joi-date-extensions';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from './db';
-
+import 'babel-polyfill';
 
 const JoiExtended = Joi.extend(extensions);
 
@@ -70,6 +70,8 @@ signup.checkAuth = async (req, res) => {
           message: 'Attendant created',
         });
       }
+    }).catch((error) => {
+      console.log(error.message);
     });
   } else {
     res.status(400).json({

@@ -1,6 +1,7 @@
 import express from 'express';
 import maincontroller from './mainrouter/mainController';
 import authController from './mainrouter/authController';
+import 'body-parser';
 
 const app = express();
 
