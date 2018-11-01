@@ -1,10 +1,4 @@
 
-CREATE DATABASE store_manager;
-\connect store_manager
-
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS attendants;
-DROP TABLE IF EXISTS salesRecords;
 CREATE TABLE IF NOT EXISTS products
 (
     product_id serial NOT NULL PRIMARY KEY,

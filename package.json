@@ -52,7 +52,8 @@
     "dev": "nodemon --exec babel-node src/index.js --env",
     "devdb": "nodemon --exec babel-node src/routes/dbparams.js --env",
     "start": "npm run build && node ./build/index.js",
-    "dbscript": "psql -U postgres -f ./dbscript/CreateDb.sql"
+    "dbscript": "psql -U postgres -f ./dbscript/CreateDb.sql",
+    "tables-setup-heroku": "heroku pg:psql -f  ./dbscript/CreateDbHeroku.sql"
   },
   "repository": {
     "type": "git",
