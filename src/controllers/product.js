@@ -19,7 +19,6 @@ const schema2 = Joi.object().keys({
 });
 
 productControlObj.createProduct = (req, res) => {
-  console.log(req.body);
   const result = Joi.validate(req.body, schema);
   if (result.error === null) {
     const pname = req.body.product_desc;
@@ -52,7 +51,13 @@ productControlObj.getAllProducts = (req, res) => {
   pool.connect(async (err, client) => {
     const sql = 'SELECT * FROM products';
     const dbrows = await client.query(sql);
-    res.status(200).json(dbrows.rows);
+    if (dbrows.rowCount === 0) {
+      res.status(404).json({
+        message: 'No products in the database',
+      });
+    } else {
+      res.status(200).json(dbrows.rows);
+    }
   });
 };
 
@@ -66,13 +71,12 @@ productControlObj.getProductById = (req, res) => {
     console.log(dbrows.rows[0]);
     res.status(200).json({
       message: 'Resource Found',
-      resorce: dbrows.rows[0],
+      resource: dbrows.rows[0],
     });
   });
 };
 // Replace
 productControlObj.modifyProduct = (req, res) => {
- 
   const param = [];
   param.push(req.params.id);
   const sql = 'SELECT * FROM products WHERE product_id = $1';
@@ -85,7 +89,7 @@ productControlObj.modifyProduct = (req, res) => {
         const dbrows2 = await client.query(sql2, params);
         res.status(200).json({
           message: 'Resource Updated',
-          resorce: dbrows2.rows[0],
+          resource: dbrows2.rows[0],
         });
       } catch (error) {
         console.log(error.message);
@@ -99,7 +103,7 @@ productControlObj.deleteProduct = (req, res) => {
   param.push(req.body.product_id);
   const sql = 'SELECT product_id FROM products WHERE product_id = $1';
   pool.connect(async (err, client) => {
-    try {     
+    try {
       const dbrows = await client.query(sql, param);
       console.log(dbrows.rows[0]);
       if (dbrows.rows[0].product_id === req.body.product_id) {
@@ -119,8 +123,7 @@ productControlObj.deleteProduct = (req, res) => {
       }
     } catch (error) {
       console.log(error.message);
-    }  
-    
+    }
   });
 };
 

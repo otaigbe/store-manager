@@ -34,7 +34,6 @@ var schema2 = _joi2.default.object().keys({
 });
 
 productControlObj.createProduct = function (req, res) {
-  console.log(req.body);
   var result = _joi2.default.validate(req.body, schema);
   if (result.error === null) {
     var pname = req.body.product_desc;
