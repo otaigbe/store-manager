@@ -6,4 +6,3 @@ Gruntfile.js
 /coverage
 README.md
 .nyc_output
-/build
