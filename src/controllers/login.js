@@ -2,7 +2,6 @@ import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from './db';
-import con from './dbconString';
 
 const login = {};
 const schema = Joi.object().keys({
@@ -28,7 +27,6 @@ login.auth = (req, res) => {
               message: 'Invalid Username or Password',
             });
           }
-        // eslint-disable-next-line no-empty
         } catch (error) {
           console.log(error.message);
         }
@@ -36,7 +34,7 @@ login.auth = (req, res) => {
         tokenObj.email = dbrows.rows[0].email;
         tokenObj.admin = dbrows.rows[0].admin;
         if (tokenObj.admin === true) {
-          const token = jwt.sign(tokenObj, process.env.SECRETKEY);
+          const token = jwt.sign(tokenObj, 'secret');
           return res.json({
             message: 'Youre logged in as admin',
             token,
