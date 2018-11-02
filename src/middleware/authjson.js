@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const auth = {};
 auth.authenticate = (req, res, next) => {
   try {
-    const decoded = jwt.verify(req.body.token, process.env.SECRETKEY);
+    const decoded = jwt.verify(req.body.token, 'secret');
     if (decoded.admin === true) {
       next();
     } else {

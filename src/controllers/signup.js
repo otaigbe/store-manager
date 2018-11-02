@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import extensions from 'joi-date-extensions';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from './db';
@@ -34,7 +33,7 @@ signup.checkAuth = async (req, res) => {
     } catch (e) {
       console.log(e.message);
     }
-    const decoded = jwt.verify(req.body.token, 'secret');
+    const decoded = await jwt.verify(req.body.token, 'secret');
     if (decoded.admin === true) {
     // const bool = isadmin(req.body.admin);
       pool.connect(async (err, client) => {
