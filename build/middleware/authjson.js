@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var auth = {};
 auth.authenticate = function (req, res, next) {
   try {
-    var decoded = _jsonwebtoken2.default.verify(req.body.token, process.env.SECRETKEY);
+    var decoded = _jsonwebtoken2.default.verify(req.body.token, 'secret');
     if (decoded.admin === true) {
       next();
     } else {

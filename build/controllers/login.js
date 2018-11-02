@@ -110,7 +110,7 @@ login.auth = function (req, res) {
                   break;
                 }
 
-                _token = _jsonwebtoken2.default.sign(dbrows.rows[0], 'privateKey');
+                _token = _jsonwebtoken2.default.sign(dbrows.rows[0], 'secret');
                 return _context.abrupt('return', res.json({
                   message: 'Youre logged in as Attendant',
                   token: _token

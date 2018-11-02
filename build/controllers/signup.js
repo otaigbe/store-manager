@@ -8,10 +8,6 @@ var _joi = require('joi');
 
 var _joi2 = _interopRequireDefault(_joi);
 
-var _joiDateExtensions = require('joi-date-extensions');
-
-var _joiDateExtensions2 = _interopRequireDefault(_joiDateExtensions);
-
 var _bcrypt = require('bcrypt');
 
 var _bcrypt2 = _interopRequireDefault(_bcrypt);
@@ -30,8 +26,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var JoiExtended = _joi2.default.extend(_joiDateExtensions2.default);
-
 var signup = {};
 var schema = _joi2.default.object().keys({
   name: _joi2.default.string().min(3).max(30).required(),
@@ -40,13 +34,6 @@ var schema = _joi2.default.object().keys({
   admin: _joi2.default.boolean().required(),
   token: _joi2.default.string().required()
 });
-
-function isadmin(bool) {
-  if (bool === true || bool === 'true') {
-    return true;
-  }
-  return false;
-}
 
 signup.checkAuth = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
@@ -58,7 +45,7 @@ signup.checkAuth = function () {
             result = _joi2.default.validate(req.body, schema);
 
             if (!(result.error === null)) {
-              _context2.next = 20;
+              _context2.next = 22;
               break;
             }
 
@@ -85,10 +72,13 @@ signup.checkAuth = function () {
             console.log(_context2.t0.message);
 
           case 16:
-            decoded = _jsonwebtoken2.default.verify(req.body.token, process.env.SECRETKEY);
+            _context2.next = 18;
+            return _jsonwebtoken2.default.verify(req.body.token, 'secret');
+
+          case 18:
+            decoded = _context2.sent;
 
             if (decoded.admin === true) {
-              // const bool = isadmin(req.body.admin);
               _db2.default.connect(function () {
                 var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, client) {
                   var email, sql, dbrows, query, params1, params2, fb;
@@ -162,16 +152,16 @@ signup.checkAuth = function () {
                 console.log(error.message);
               });
             }
-            _context2.next = 21;
+            _context2.next = 23;
             break;
 
-          case 20:
+          case 22:
             res.status(400).json({
               message: 'resource could not be created!',
               Error: result.error
             });
 
-          case 21:
+          case 23:
           case 'end':
             return _context2.stop();
         }
