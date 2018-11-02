@@ -41,6 +41,7 @@ productControlObj.createProduct = (req, res) => {
         console.log(error.message);
       }
     });
+    pool.end();
   } else {
     res.status(404).json({
       message: 'resource could not be created',
@@ -60,6 +61,7 @@ productControlObj.getAllProducts = (req, res) => {
     }
     res.status(200).json(dbrows.rows);
   });
+  pool.end();
 };
 
 productControlObj.getProductById = (req, res) => {
@@ -97,6 +99,7 @@ productControlObj.modifyProduct = (req, res) => {
       }
     }
   });
+  pool.end();
 };
 
 productControlObj.deleteProduct = (req, res) => {
@@ -125,8 +128,9 @@ productControlObj.deleteProduct = (req, res) => {
     } catch (error) {
       console.log(error.message);
     }  
-    
+    pool.end();
   });
+  
 };
 
 export default productControlObj;
