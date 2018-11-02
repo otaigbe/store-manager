@@ -2,6 +2,7 @@ import Joi from 'joi';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from './db';
+import con from './dbconString';
 
 const login = {};
 const schema = Joi.object().keys({

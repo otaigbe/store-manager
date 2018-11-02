@@ -12,6 +12,10 @@ var _db = require('./db');
 
 var _db2 = _interopRequireDefault(_db);
 
+var _dbconString = require('./dbconString');
+
+var _dbconString2 = _interopRequireDefault(_dbconString);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -45,9 +49,10 @@ productControlObj.createProduct = function (req, res) {
     var params = [];
     params.push(pname, unitPrice, quantSup, supplier, cat);
     var sql = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
-    _db2.default.connect(function () {
+    _db2.default.connect(_dbconString2.default, function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, client) {
-        var dbrows;
+        var _dbrows;
+
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -57,7 +62,7 @@ productControlObj.createProduct = function (req, res) {
                 return client.query(sql, params);
 
               case 3:
-                dbrows = _context.sent;
+                _dbrows = _context.sent;
 
                 res.status(201).json({
                   message: 'Resource Created!'
@@ -92,28 +97,39 @@ productControlObj.createProduct = function (req, res) {
 };
 
 productControlObj.getAllProducts = function (req, res) {
-  _db2.default.connect(function () {
+  _db2.default.connect(_dbconString2.default, function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(err, client) {
-      var sql, dbrows;
+      var sql, _dbrows2;
+
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               sql = 'SELECT * FROM products';
-              _context2.next = 3;
+              _context2.prev = 1;
+              _context2.next = 4;
               return client.query(sql);
 
-            case 3:
-              dbrows = _context2.sent;
+            case 4:
+              _dbrows2 = _context2.sent;
+              _context2.next = 10;
+              break;
 
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2['catch'](1);
+
+              console.error(_context2.t0.message);
+
+            case 10:
               res.status(200).json(dbrows.rows);
 
-            case 5:
+            case 11:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined);
+      }, _callee2, undefined, [[1, 7]]);
     }));
 
     return function (_x3, _x4) {
@@ -161,11 +177,10 @@ productControlObj.getProductById = function (req, res) {
 };
 // Replace
 productControlObj.modifyProduct = function (req, res) {
-
   var param = [];
   param.push(req.params.id);
   var sql = 'SELECT * FROM products WHERE product_id = $1';
-  _db2.default.connect(function () {
+  _db2.default.connect(process.env.DATABASE_URL, function () {
     var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(err, client) {
       var dbrows, params, sql2, dbrows2;
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -223,9 +238,10 @@ productControlObj.deleteProduct = function (req, res) {
   var param = [];
   param.push(req.body.product_id);
   var sql = 'SELECT product_id FROM products WHERE product_id = $1';
-  _db2.default.connect(function () {
+  _db2.default.connect(_dbconString2.default, function () {
     var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(err, client) {
-      var dbrows, temp, sql2, dbrows2;
+      var _dbrows3, temp, sql2, dbrows2;
+
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
@@ -235,19 +251,19 @@ productControlObj.deleteProduct = function (req, res) {
               return client.query(sql, param);
 
             case 3:
-              dbrows = _context5.sent;
+              _dbrows3 = _context5.sent;
 
-              console.log(dbrows.rows[0]);
+              console.log(_dbrows3.rows[0]);
 
-              if (!(dbrows.rows[0].product_id === req.body.product_id)) {
+              if (!(_dbrows3.rows[0].product_id === req.body.product_id)) {
                 _context5.next = 20;
                 break;
               }
 
-              console.log(dbrows.rows[0]);
+              console.log(_dbrows3.rows[0]);
               temp = [];
 
-              temp.push(dbrows.rows[0].product_id);
+              temp.push(_dbrows3.rows[0].product_id);
               sql2 = 'DELETE FROM products WHERE product_id = $1';
               _context5.prev = 10;
               _context5.next = 13;

@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import pool from './db';
+import con from './dbconString';
 
 const productControlObj = {};
 const schema = Joi.object().keys({
@@ -51,7 +52,12 @@ productControlObj.createProduct = (req, res) => {
 productControlObj.getAllProducts = (req, res) => {
   pool.connect(async (err, client) => {
     const sql = 'SELECT * FROM products';
-    const dbrows = await client.query(sql);
+    try {
+      const dbrows = await client.query(sql);
+
+    } catch (error) {
+      console.error(error.message);
+    }
     res.status(200).json(dbrows.rows);
   });
 };
@@ -72,7 +78,6 @@ productControlObj.getProductById = (req, res) => {
 };
 // Replace
 productControlObj.modifyProduct = (req, res) => {
- 
   const param = [];
   param.push(req.params.id);
   const sql = 'SELECT * FROM products WHERE product_id = $1';
