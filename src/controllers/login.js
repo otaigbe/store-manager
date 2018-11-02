@@ -40,7 +40,7 @@ login.auth = (req, res) => {
             token,
           });
         } if (tokenObj.admin === false) {
-          const token = jwt.sign(dbrows.rows[0], 'privateKey');
+          const token = jwt.sign(dbrows.rows[0], 'secret');
           return res.json({
             message: 'Youre logged in as Attendant',
             token,

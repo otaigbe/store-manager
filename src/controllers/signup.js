@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import pool from './db';
 import 'babel-polyfill';
 
-const JoiExtended = Joi.extend(extensions);
-
 const signup = {};
 const schema = Joi.object().keys({
   name: Joi.string().min(3).max(30).required(),
