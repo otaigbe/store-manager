@@ -1,10 +1,12 @@
-
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS attendants;
+DROP TABLE IF EXISTS salesRecords;
 CREATE TABLE IF NOT EXISTS products
 (
     product_id serial NOT NULL PRIMARY KEY,
     product_desc VARCHAR(200) NOT NULL,
     unit_price double precision NOT NULL,
-    quantity_supplied INT NOT NULL,
+    quantity_in_stock INT NOT NULL,
     supplier_name VARCHAR(200)  NOT NULL,
     category VARCHAR(200) NOT NULL
 );
@@ -20,7 +22,7 @@ CREATE TABLE IF NOT EXISTS attendants
 
 CREATE TABLE IF NOT EXISTS salesRecords
 (
-    sales_Id serial NOT NULL references attendants(attendant_id),
+    sales_Id serial NOT NULL,
     sales json[],
     attendant_id INT
 );
@@ -39,7 +41,7 @@ INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('Cups',  450, 30, 'Okonkwo', 'soap');
 
 
-
-
 INSERT INTO attendants (name, email, password, admin) VALUES ('otaigbe',  'otaigbe@gmail.com', 'password', true);
 INSERT INTO attendants (name, email, password, admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
+
+
