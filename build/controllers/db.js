@@ -21,6 +21,7 @@ var config = {
   User: 'eiswqjxnuvwwvx',
   Port: 5432,
   Password: '02fa9f8ade88e87c5f99e148f36f42c92380c7f68dfc856e935351150f0f9723'
+  // 'Heroku CLI': 'heroku pg:psql postgresql-graceful-64992 --app fathomless-tor-14107',
 };
 
 var pool = new _pg2.default.Pool(config);
