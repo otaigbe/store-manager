@@ -37,7 +37,7 @@ var schema = _joi2.default.object().keys({
 login.auth = function (req, res) {
   var result = _joi2.default.validate(req.body, schema);
   if (result.error === null) {
-    _db2.default.connect(_dbconString2.default, function () {
+    _db2.default.connect(function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, client) {
         var email, sql, dbrows, validPassword, tokenObj, token, _token;
 
