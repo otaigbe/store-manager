@@ -25,17 +25,7 @@ function isadmin(bool) {
 
 signup.checkAuth = async (req, res) => {
   const result = Joi.validate(req.body, schema);
-  let obj = '';
-  try {
-    const decoded = jwt.verify(req.body.token, 'privateKey');
-    obj = decoded;
-  } catch (error) {
-    return res.status(401).json({
-      message: 'Authenticatication failed',
-    });
-  }
-  console.log(obj);
-  if (result.error === null && obj.admin === true) {
+  if (result.error === null) {
     let hashedPass = null;
     let salt = null;
     try {
@@ -44,35 +34,38 @@ signup.checkAuth = async (req, res) => {
     } catch (e) {
       console.log(e.message);
     }
+    const decoded = jwt.verify(req.body.token, process.env.SECRETKEY);
+    if (decoded.admin === true) {
     // const bool = isadmin(req.body.admin);
-    pool.connect(async (err, client) => {
-      const email = [];
-      email.push(req.body.email);
-      const sql = 'SELECT email FROM attendants WHERE email = $1';
-      const dbrows = await client.query(sql, email);
-      console.log(dbrows);
-      if (dbrows.rowCount >= 1) {
-        res.json({
-          message: `User with email ${req.body.email} already exists. Choose Unique email to signup`,
-        });
-      } else {
-        let query = '';
-        const params1 = [];
-        const params2 = [];
-        params1.push(req.body.name, req.body.email, hashedPass, req.body.admin);
-        params2.push(req.body.firstname, req.body.lastname, req.body.email, hashedPass, req.body.admin);
-        query = 'INSERT INTO attendants (name,email, password, admin) VALUES ($1, $2, $3, $4)';
-        if (err) { console.log(err.message); } else {
-          const fb = await client.query(query, params1);
-        }
+      pool.connect(async (err, client) => {
+        const email = [];
+        email.push(req.body.email);
+        const sql = 'SELECT email FROM attendants WHERE email = $1';
+        const dbrows = await client.query(sql, email);
+        // console.log(dbrows);
+        if (dbrows.rowCount >= 1) {
+          res.json({
+            message: `User with email ${req.body.email} already exists. Choose Unique email to signup`,
+          });
+        } else {
+          let query = '';
+          const params1 = [];
+          const params2 = [];
+          params1.push(req.body.name, req.body.email, hashedPass, req.body.admin);
+          params2.push(req.body.firstname, req.body.lastname, req.body.email, hashedPass, req.body.admin);
+          query = 'INSERT INTO attendants (name,email, password, admin) VALUES ($1, $2, $3, $4)';
+          if (err) { console.log(err.message); } else {
+            const fb = await client.query(query, params1);
+          }
 
-        res.status(201).json({
-          message: 'Attendant created',
-        });
-      }
-    }).catch((error) => {
-      console.log(error.message);
-    });
+          res.status(201).json({
+            message: 'Attendant created',
+          });
+        }
+      }).catch((error) => {
+        console.log(error.message);
+      });
+    }
   } else {
     res.status(400).json({
       message: 'resource could not be created!',

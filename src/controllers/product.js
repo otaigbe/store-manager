@@ -9,7 +9,14 @@ const schema = Joi.object().keys({
   supplier_name: Joi.string().required(),
   category: Joi.string().required(),
 });
-
+const schema2 = Joi.object().keys({
+  product_desc: Joi.string().required(),
+  unit_price: Joi.number().required(),
+  quantity_supplied: Joi.number().required(),
+  supplier_name: Joi.string().required(),
+  category: Joi.string().required(),
+  token: Joi.string().required(),
+});
 
 productControlObj.createProduct = (req, res) => {
   console.log(req.body);
@@ -22,9 +29,8 @@ productControlObj.createProduct = (req, res) => {
     const cat = req.body.category;
     const params = [];
     params.push(pname, unitPrice, quantSup, supplier, cat);
-    const sql = 'INSERT INTO products (product_desc, unit_price, quantity_supplied, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
+    const sql = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
     pool.connect(async (err, client) => {
-      console.log(err);
       try {
         const dbrows = await client.query(sql, params);
         res.status(201).json({
@@ -64,18 +70,17 @@ productControlObj.getProductById = (req, res) => {
     });
   });
 };
-
+// Replace
 productControlObj.modifyProduct = (req, res) => {
-  // console.log(req.body);
+ 
   const param = [];
   param.push(req.params.id);
   const sql = 'SELECT * FROM products WHERE product_id = $1';
   pool.connect(async (err, client) => {
     const dbrows = await client.query(sql, param);
     if (dbrows.rows[0].product_id) {
-      console.log(dbrows.rows[0]);
-      const params = [req.body.product_desc, req.body.unit_price, req.body.quantity_supplied, req.body.supplier_name, req.body.category, req.body.product_id,];
-      const sql2 = 'UPDATE products SET product_desc=$1, unit_price=$2, quantity_supplied=$3, supplier_name=$4, category=$5 WHERE product_id = $6';
+      const params = [req.body.product_desc, req.body.unit_price, req.body.quantity_supplied, req.body.supplier_name, req.body.category, req.body.product_id];
+      const sql2 = 'UPDATE products SET product_desc=$1, unit_price=$2, quantity_in_stock=$3, supplier_name=$4, category=$5 WHERE product_id = $6';
       try {
         const dbrows2 = await client.query(sql2, params);
         res.status(200).json({

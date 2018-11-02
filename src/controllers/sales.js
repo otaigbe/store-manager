@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import pool from './db';
 
 const controllerObj = {};
@@ -18,9 +19,9 @@ controllerObj.getSalesRecordById = (req, res) => {
 
 
 controllerObj.createSalesRecord = (req, res) => {
+  const attendantId = Math.floor(Math.random() * 2) + 1;
   const array = req.body;
   console.log(array);
-  const attendantId = array[0].attendant_id;
   const params = [];
   params.push(array, attendantId);
   const sql = 'INSERT INTO salesrecords (sales, attendant_id) VALUES ($1,$2)';
@@ -39,7 +40,7 @@ controllerObj.getAllSalesRecord = (req, res) => {
     const dbrows = await client.query(sql);
     res.status(200).json({
       message: 'Resources Found',
-      resources: dbrows.rows[0],
+      resources: dbrows.rows,
     });
   });
 };

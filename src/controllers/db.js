@@ -1,10 +1,10 @@
 import pg from 'pg';
 
 const config = {
-  user: 'postgres',
-  database: 'store_manager',
-  password: 'mar889003',
-  port: 5432,
+  user: process.env.PGUSER,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
 };
 
 const pool = new pg.Pool(config);

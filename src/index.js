@@ -1,7 +1,10 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import maincontroller from './mainrouter/mainController';
 import authController from './mainrouter/authController';
 import 'body-parser';
+
+dotenv.config();
 
 const app = express();
 
