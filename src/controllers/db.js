@@ -1,6 +1,9 @@
 import pg from 'pg';
 
+
 const config = {
+ 
+ 
   // user: process.env.PGUSER,
   // database: process.env.PGDATABASE,
   // password: process.env.PGPASSWORD,
