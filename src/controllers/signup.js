@@ -13,13 +13,6 @@ const schema = Joi.object().keys({
   token: Joi.string().required(),
 });
 
-function isadmin(bool) {
-  if (bool === true || bool === 'true') {
-    return true;
-  }
-  return false;
-}
-
 signup.checkAuth = async (req, res) => {
   const result = Joi.validate(req.body, schema);
   if (result.error === null) {
@@ -33,13 +26,11 @@ signup.checkAuth = async (req, res) => {
     }
     const decoded = await jwt.verify(req.body.token, 'secret');
     if (decoded.admin === true) {
-    // const bool = isadmin(req.body.admin);
       pool.connect(async (err, client) => {
         const email = [];
         email.push(req.body.email);
         const sql = 'SELECT email FROM attendants WHERE email = $1';
         const dbrows = await client.query(sql, email);
-        // console.log(dbrows);
         if (dbrows.rowCount >= 1) {
           res.json({
             message: `User with email ${req.body.email} already exists. Choose Unique email to signup`,
