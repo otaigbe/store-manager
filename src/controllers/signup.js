@@ -34,7 +34,7 @@ signup.checkAuth = async (req, res) => {
     } catch (e) {
       console.log(e.message);
     }
-    const decoded = jwt.verify(req.body.token, process.env.SECRETKEY);
+    const decoded = jwt.verify(req.body.token, 'secret');
     if (decoded.admin === true) {
     // const bool = isadmin(req.body.admin);
       pool.connect(async (err, client) => {
