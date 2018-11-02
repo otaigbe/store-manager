@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import pool from './db';
 import con from './dbconString';
+import 'babel-polyfill';
 
 const productControlObj = {};
 const schema = Joi.object().keys({
@@ -41,7 +42,7 @@ productControlObj.createProduct = (req, res) => {
         console.log(error.message);
       }
     });
-    pool.end();
+    
   } else {
     res.status(404).json({
       message: 'resource could not be created',
@@ -53,15 +54,16 @@ productControlObj.createProduct = (req, res) => {
 productControlObj.getAllProducts = (req, res) => {
   pool.connect(async (err, client) => {
     const sql = 'SELECT * FROM products';
+    let dbrows = null;
     try {
-      const dbrows = await client.query(sql);
-
+      dbrows = await client.query(sql);
     } catch (error) {
       console.error(error.message);
     }
     res.status(200).json(dbrows.rows);
+  }).catch((err) => {
+
   });
-  pool.end();
 };
 
 productControlObj.getProductById = (req, res) => {
@@ -107,7 +109,7 @@ productControlObj.deleteProduct = (req, res) => {
   param.push(req.body.product_id);
   const sql = 'SELECT product_id FROM products WHERE product_id = $1';
   pool.connect(async (err, client) => {
-    try {     
+    try {
       const dbrows = await client.query(sql, param);
       console.log(dbrows.rows[0]);
       if (dbrows.rows[0].product_id === req.body.product_id) {
@@ -127,10 +129,9 @@ productControlObj.deleteProduct = (req, res) => {
       }
     } catch (error) {
       console.log(error.message);
-    }  
+    }
     pool.end();
   });
-  
 };
 
 export default productControlObj;
