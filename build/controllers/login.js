@@ -129,7 +129,10 @@ login.auth = function (req, res) {
       };
     }());
   } else {
-    console.log('wrong login');
+    console.log('wrong login credentials');
+    return res.json({
+      message: 'Wrong login credentials'
+    });
   }
 };
 exports.default = login;

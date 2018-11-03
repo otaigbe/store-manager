@@ -45,7 +45,7 @@ signup.checkAuth = function () {
             result = _joi2.default.validate(req.body, schema);
 
             if (!(result.error === null)) {
-              _context2.next = 22;
+              _context2.next = 29;
               break;
             }
 
@@ -72,10 +72,12 @@ signup.checkAuth = function () {
             console.log(_context2.t0.message);
 
           case 16:
-            _context2.next = 18;
+            decoded = null;
+            _context2.prev = 17;
+            _context2.next = 20;
             return _jsonwebtoken2.default.verify(req.body.token, 'secret');
 
-          case 18:
+          case 20:
             decoded = _context2.sent;
 
             if (decoded.admin === true) {
@@ -132,7 +134,6 @@ signup.checkAuth = function () {
                           fb = _context.sent;
 
                         case 23:
-
                           res.status(201).json({
                             message: 'Attendant created'
                           });
@@ -148,25 +149,40 @@ signup.checkAuth = function () {
                 return function (_x3, _x4) {
                   return _ref2.apply(this, arguments);
                 };
-              }()).catch(function (error) {
-                console.log(error.message);
+              }()).catch(function (err) {
+                console.log(err.message);
+                res.status(501).json({
+                  message: 'Something went wrong!'
+                });
               });
             }
-            _context2.next = 23;
+            _context2.next = 27;
             break;
 
-          case 22:
+          case 24:
+            _context2.prev = 24;
+            _context2.t1 = _context2['catch'](17);
+
+            res.status(501).json({
+              message: 'Something went wrong!'
+            });
+
+          case 27:
+            _context2.next = 30;
+            break;
+
+          case 29:
             res.status(400).json({
               message: 'resource could not be created!',
               Error: result.error
             });
 
-          case 23:
+          case 30:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, undefined, [[4, 13]]);
+    }, _callee2, undefined, [[4, 13], [17, 24]]);
   }));
 
   return function (_x, _x2) {

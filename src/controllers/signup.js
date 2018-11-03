@@ -24,34 +24,43 @@ signup.checkAuth = async (req, res) => {
     } catch (e) {
       console.log(e.message);
     }
-    const decoded = await jwt.verify(req.body.token, 'secret');
-    if (decoded.admin === true) {
-      pool.connect(async (err, client) => {
-        const email = [];
-        email.push(req.body.email);
-        const sql = 'SELECT email FROM attendants WHERE email = $1';
-        const dbrows = await client.query(sql, email);
-        if (dbrows.rowCount >= 1) {
-          res.json({
-            message: `User with email ${req.body.email} already exists. Choose Unique email to signup`,
-          });
-        } else {
-          let query = '';
-          const params1 = [];
-          const params2 = [];
-          params1.push(req.body.name, req.body.email, hashedPass, req.body.admin);
-          params2.push(req.body.firstname, req.body.lastname, req.body.email, hashedPass, req.body.admin);
-          query = 'INSERT INTO attendants (name,email, password, admin) VALUES ($1, $2, $3, $4)';
-          if (err) { console.log(err.message); } else {
-            const fb = await client.query(query, params1);
+    let decoded = null;
+    try {
+      decoded = await jwt.verify(req.body.token, 'secret');
+      if (decoded.admin === true) {
+        pool.connect(async (err, client) => {
+          const email = [];
+          email.push(req.body.email);
+          const sql = 'SELECT email FROM attendants WHERE email = $1';
+          const dbrows = await client.query(sql, email);
+          if (dbrows.rowCount >= 1) {
+            res.json({
+              message: `User with email ${req.body.email} already exists. Choose Unique email to signup`,
+            });
+          } else {
+            let query = '';
+            const params1 = [];
+            const params2 = [];
+            params1.push(req.body.name, req.body.email, hashedPass, req.body.admin);
+            params2.push(req.body.firstname, req.body.lastname, req.body.email, hashedPass, req.body.admin);
+            query = 'INSERT INTO attendants (name,email, password, admin) VALUES ($1, $2, $3, $4)';
+            if (err) { console.log(err.message); } else {
+              const fb = await client.query(query, params1);
+            }
+            res.status(201).json({
+              message: 'Attendant created',
+            });
           }
-
-          res.status(201).json({
-            message: 'Attendant created',
+        }).catch((err) => {
+          console.log(err.message);
+          res.status(501).json({
+            message: 'Something went wrong!',
           });
-        }
-      }).catch((error) => {
-        console.log(error.message);
+        });
+      }
+    } catch (error) {
+      res.status(501).json({
+        message: 'Something went wrong!',
       });
     }
   } else {

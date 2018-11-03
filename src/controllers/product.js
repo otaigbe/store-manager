@@ -30,8 +30,9 @@ productControlObj.createProduct = (req, res) => {
     params.push(pname, unitPrice, quantSup, supplier, cat);
     const sql = 'INSERT INTO products (product_desc, unit_price, quantity_supplied, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
     pool.connect(async (err, client) => {
+      let dbrows = '';
       try {
-        const dbrows = await client.query(sql, params);
+        dbrows = await client.query(sql, params);
         res.status(201).json({
           message: 'Resource Created!',
         });
