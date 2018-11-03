@@ -29,10 +29,11 @@ controllerObj.getSalesRecordById = function (req, res) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return client.query(sql, temp);
 
-            case 2:
+            case 3:
               dbrows = _context.sent;
 
               console.log(dbrows.rows[0]);
@@ -40,13 +41,21 @@ controllerObj.getSalesRecordById = function (req, res) {
                 message: 'Resource Found',
                 resorce: dbrows.rows[0]
               });
+              _context.next = 11;
+              break;
 
-            case 5:
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context['catch'](0);
+
+              console.log(_context.t0.message);
+
+            case 11:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, undefined);
+      }, _callee, undefined, [[0, 8]]);
     }));
 
     return function (_x, _x2) {
@@ -69,23 +78,34 @@ controllerObj.createSalesRecord = function (req, res) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              _context2.prev = 0;
+              _context2.next = 3;
               return client.query(sql, params);
 
-            case 2:
+            case 3:
               dbrows = _context2.sent;
 
               console.log(dbrows);
               res.status(201).json({
                 message: 'Resource Created!'
               });
+              _context2.next = 11;
+              break;
 
-            case 5:
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2['catch'](0);
+
+              res.status(500).json({
+                message: 'Something went wrong,sales record couldnt be created'
+              });
+
+            case 11:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined);
+      }, _callee2, undefined, [[0, 8]]);
     }));
 
     return function (_x3, _x4) {
@@ -103,23 +123,30 @@ controllerObj.getAllSalesRecord = function (req, res) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
+              _context3.prev = 0;
+              _context3.next = 3;
               return client.query(sql);
 
-            case 2:
+            case 3:
               dbrows = _context3.sent;
 
               res.status(200).json({
                 message: 'Resources Found',
                 resources: dbrows.rows
               });
+              _context3.next = 9;
+              break;
 
-            case 4:
+            case 7:
+              _context3.prev = 7;
+              _context3.t0 = _context3['catch'](0);
+
+            case 9:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined);
+      }, _callee3, undefined, [[0, 7]]);
     }));
 
     return function (_x5, _x6) {

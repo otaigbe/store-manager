@@ -43,7 +43,7 @@ productControlObj.createProduct = function (req, res) {
     var cat = req.body.category;
     var params = [];
     params.push(pname, unitPrice, quantSup, supplier, cat);
-    var sql = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
+    var sql = 'INSERT INTO products (product_desc, unit_price, quantity_supplied, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
     _db2.default.connect(function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(err, client) {
         var dbrows;
@@ -61,7 +61,7 @@ productControlObj.createProduct = function (req, res) {
                 res.status(201).json({
                   message: 'Resource Created!'
                 });
-                _context.next = 10;
+                _context.next = 11;
                 break;
 
               case 7:
@@ -69,8 +69,11 @@ productControlObj.createProduct = function (req, res) {
                 _context.t0 = _context['catch'](0);
 
                 console.log(_context.t0.message);
+                res.status(501).json({
+                  message: 'Something went wrong!'
+                });
 
-              case 10:
+              case 11:
               case 'end':
                 return _context.stop();
             }
@@ -99,20 +102,37 @@ productControlObj.getAllProducts = function (req, res) {
           switch (_context2.prev = _context2.next) {
             case 0:
               sql = 'SELECT * FROM products';
-              _context2.next = 3;
+              _context2.prev = 1;
+              _context2.next = 4;
               return client.query(sql);
 
-            case 3:
+            case 4:
               dbrows = _context2.sent;
 
-              res.status(200).json(dbrows.rows);
+              if (dbrows.rowCount === 0) {
+                res.status(404).json({
+                  message: 'No products in the database'
+                });
+              } else {
+                res.status(200).json(dbrows.rows);
+              }
+              _context2.next = 11;
+              break;
 
-            case 5:
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2['catch'](1);
+
+              res.status(501).json({
+                message: 'Something went wrong!'
+              });
+
+            case 11:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, undefined);
+      }, _callee2, undefined, [[1, 8]]);
     }));
 
     return function (_x3, _x4) {
@@ -133,24 +153,35 @@ productControlObj.getProductById = function (req, res) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
+              _context3.prev = 0;
+              _context3.next = 3;
               return client.query(sql, temp);
 
-            case 2:
+            case 3:
               dbrows = _context3.sent;
 
               console.log(dbrows.rows[0]);
               res.status(200).json({
                 message: 'Resource Found',
-                resorce: dbrows.rows[0]
+                resource: dbrows.rows[0]
+              });
+              _context3.next = 11;
+              break;
+
+            case 8:
+              _context3.prev = 8;
+              _context3.t0 = _context3['catch'](0);
+
+              res.status(501).json({
+                message: 'Something went wrong!'
               });
 
-            case 5:
+            case 11:
             case 'end':
               return _context3.stop();
           }
         }
-      }, _callee3, undefined);
+      }, _callee3, undefined, [[0, 8]]);
     }));
 
     return function (_x5, _x6) {
@@ -158,9 +189,9 @@ productControlObj.getProductById = function (req, res) {
     };
   }());
 };
+
 // Replace
 productControlObj.modifyProduct = function (req, res) {
-
   var param = [];
   param.push(req.params.id);
   var sql = 'SELECT * FROM products WHERE product_id = $1';
@@ -171,45 +202,58 @@ productControlObj.modifyProduct = function (req, res) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
+              dbrows = '';
+              _context4.prev = 1;
+              _context4.next = 4;
               return client.query(sql, param);
 
-            case 2:
+            case 4:
               dbrows = _context4.sent;
+              _context4.next = 10;
+              break;
 
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4['catch'](1);
+
+              res.status(501).json({
+                message: 'Something went wrong!'
+              });
+
+            case 10:
               if (!dbrows.rows[0].product_id) {
-                _context4.next = 16;
+                _context4.next = 23;
                 break;
               }
 
               params = [req.body.product_desc, req.body.unit_price, req.body.quantity_supplied, req.body.supplier_name, req.body.category, req.body.product_id];
               sql2 = 'UPDATE products SET product_desc=$1, unit_price=$2, quantity_in_stock=$3, supplier_name=$4, category=$5 WHERE product_id = $6';
-              _context4.prev = 6;
-              _context4.next = 9;
+              _context4.prev = 13;
+              _context4.next = 16;
               return client.query(sql2, params);
 
-            case 9:
+            case 16:
               dbrows2 = _context4.sent;
 
               res.status(200).json({
                 message: 'Resource Updated',
-                resorce: dbrows2.rows[0]
+                resource: dbrows2.rows[0]
               });
-              _context4.next = 16;
+              _context4.next = 23;
               break;
 
-            case 13:
-              _context4.prev = 13;
-              _context4.t0 = _context4['catch'](6);
+            case 20:
+              _context4.prev = 20;
+              _context4.t1 = _context4['catch'](13);
 
-              console.log(_context4.t0.message);
+              console.log(_context4.t1.message);
 
-            case 16:
+            case 23:
             case 'end':
               return _context4.stop();
           }
         }
-      }, _callee4, undefined, [[6, 13]]);
+      }, _callee4, undefined, [[1, 7], [13, 20]]);
     }));
 
     return function (_x7, _x8) {

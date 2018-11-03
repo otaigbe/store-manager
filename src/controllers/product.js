@@ -28,7 +28,7 @@ productControlObj.createProduct = (req, res) => {
     const cat = req.body.category;
     const params = [];
     params.push(pname, unitPrice, quantSup, supplier, cat);
-    const sql = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
+    const sql = 'INSERT INTO products (product_desc, unit_price, quantity_supplied, supplier_name, category) VALUES ( $1, $2, $3, $4, $5);';
     pool.connect(async (err, client) => {
       try {
         const dbrows = await client.query(sql, params);
@@ -37,6 +37,9 @@ productControlObj.createProduct = (req, res) => {
         });
       } catch (error) {
         console.log(error.message);
+        res.status(501).json({
+          message: 'Something went wrong!',
+        });
       }
     });
   } else {
@@ -50,13 +53,19 @@ productControlObj.createProduct = (req, res) => {
 productControlObj.getAllProducts = (req, res) => {
   pool.connect(async (err, client) => {
     const sql = 'SELECT * FROM products';
-    const dbrows = await client.query(sql);
-    if (dbrows.rowCount === 0) {
-      res.status(404).json({
-        message: 'No products in the database',
+    try {
+      const dbrows = await client.query(sql);
+      if (dbrows.rowCount === 0) {
+        res.status(404).json({
+          message: 'No products in the database',
+        });
+      } else {
+        res.status(200).json(dbrows.rows);
+      }
+    } catch (error) {
+      res.status(501).json({
+        message: 'Something went wrong!',
       });
-    } else {
-      res.status(200).json(dbrows.rows);
     }
   });
 };
@@ -67,21 +76,35 @@ productControlObj.getProductById = (req, res) => {
   temp.push(param);
   const sql = 'SELECT * FROM products WHERE product_id = $1';
   pool.connect(async (err, client) => {
-    const dbrows = await client.query(sql, temp);
-    console.log(dbrows.rows[0]);
-    res.status(200).json({
-      message: 'Resource Found',
-      resource: dbrows.rows[0],
-    });
+    try {
+      const dbrows = await client.query(sql, temp);
+      console.log(dbrows.rows[0]);
+      res.status(200).json({
+        message: 'Resource Found',
+        resource: dbrows.rows[0],
+      });
+    } catch (error) {
+      res.status(501).json({
+        message: 'Something went wrong!',
+      });
+    }
   });
 };
+
 // Replace
 productControlObj.modifyProduct = (req, res) => {
   const param = [];
   param.push(req.params.id);
   const sql = 'SELECT * FROM products WHERE product_id = $1';
   pool.connect(async (err, client) => {
-    const dbrows = await client.query(sql, param);
+    let dbrows = '';
+    try {
+      dbrows = await client.query(sql, param);
+    } catch (error) {
+      res.status(501).json({
+        message: 'Something went wrong!',
+      });
+    }
     if (dbrows.rows[0].product_id) {
       const params = [req.body.product_desc, req.body.unit_price, req.body.quantity_supplied, req.body.supplier_name, req.body.category, req.body.product_id];
       const sql2 = 'UPDATE products SET product_desc=$1, unit_price=$2, quantity_in_stock=$3, supplier_name=$4, category=$5 WHERE product_id = $6';
