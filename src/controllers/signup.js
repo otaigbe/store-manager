@@ -53,7 +53,7 @@ signup.checkAuth = async (req, res) => {
           }
         }).catch((err) => {
           console.log(err.message);
-          res.status(501).json({
+          res.json({
             message: 'Something went wrong!',
           });
         });
