@@ -45,7 +45,7 @@ signup.checkAuth = function () {
             result = _joi2.default.validate(req.body, schema);
 
             if (!(result.error === null)) {
-              _context2.next = 29;
+              _context2.next = 23;
               break;
             }
 
@@ -73,11 +73,10 @@ signup.checkAuth = function () {
 
           case 16:
             decoded = null;
-            _context2.prev = 17;
-            _context2.next = 20;
+            _context2.next = 19;
             return _jsonwebtoken2.default.verify(req.body.token, 'secret');
 
-          case 20:
+          case 19:
             decoded = _context2.sent;
 
             if (decoded.admin === true) {
@@ -149,40 +148,23 @@ signup.checkAuth = function () {
                 return function (_x3, _x4) {
                   return _ref2.apply(this, arguments);
                 };
-              }()).catch(function (err) {
-                console.log(err.message);
-                res.json({
-                  message: 'Something went wrong!'
-                });
-              });
+              }());
             }
-            _context2.next = 27;
+            _context2.next = 24;
             break;
 
-          case 24:
-            _context2.prev = 24;
-            _context2.t1 = _context2['catch'](17);
-
-            res.status(501).json({
-              message: 'Something went wrong!'
-            });
-
-          case 27:
-            _context2.next = 30;
-            break;
-
-          case 29:
+          case 23:
             res.status(400).json({
               message: 'resource could not be created!',
               Error: result.error
             });
 
-          case 30:
+          case 24:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, undefined, [[4, 13], [17, 24]]);
+    }, _callee2, undefined, [[4, 13]]);
   }));
 
   return function (_x, _x2) {

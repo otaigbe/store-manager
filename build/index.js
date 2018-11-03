@@ -35,7 +35,7 @@ app.use(_express2.default.json());
 app.use('/api/v1', _mainController2.default);
 app.use('/auth', _authController2.default);
 
-var port = process.env.PORT || 4400;
+var port = process.env.PORT || 6600;
 var server = app.listen(port, function () {
   console.log('app running on ' + port + '...');
 });

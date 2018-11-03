@@ -16,7 +16,7 @@ app.use('/api/v1', maincontroller);
 app.use('/auth', authController);
 
 
-const port = process.env.PORT || 4400;
+const port = process.env.PORT || 6600;
 const server = app.listen(port, () => { console.log(`app running on ${port}...`); });
 
 export default server;
