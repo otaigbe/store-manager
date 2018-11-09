@@ -96,7 +96,10 @@ productImpl.getAllProducts = (req, res) => {
     pool.connect(async (error, client) => {
       if (error) {
         console.log(error);
-        return res.status(501).json({ message: 'Internal Database Error' });
+        return res.status(501).json({
+          message: 'Internal Database Error',
+          Error: error,
+        });
       }
       const selectResultSet = await client.query(queries.selectProductsWithoutPagination);
       res.status(200).json({

@@ -8,7 +8,9 @@ const config = {
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
   host: process.env.PGHOST,
-  dbname: process.env.PGDATABASE,
+};
+const config2 = {
+  connectionString: process.env.DATABASE_URL,
 };
 
 const pool = new pg.Pool(config);
