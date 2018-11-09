@@ -1,69 +1,68 @@
 {
   "name": "store-manager",
   "version": "1.0.0",
-  "description": "[![Build Status](https://travis-ci.com/otaigbe/store-manager.svg?branch=master)](https://travis-ci.com/otaigbe/store-manager)",
+  "description": "",
   "main": "index.js",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-istanbul": "^0.12.2",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
     "chai-json": "^1.0.0",
-    "config": "^2.0.1",
+    "chai-url": "^1.0.4",
+    "co": "^4.6.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.1.0",
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "joi": "^14.0.2",
     "joi-date-extensions": "^1.2.0",
     "jsonwebtoken": "^8.3.0",
     "mocha": "^5.2.0",
-    "node-static": "^0.7.11",
     "pg": "^7.6.0",
-    "supertest": "^3.3.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "pg-format": "^1.0.4",
+    "pgtools": "^0.3.0",
+    "supertest": "^3.3.0"
+  },
+  "devDependencies": {
     "coveralls": "^3.0.2",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "istanbul": "^0.4.5",
-    "mocha-lcov-reporter": "^1.3.0",
-    "nodemon": "^1.18.4",
+    "nodemon": "^1.18.6",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2"
   },
-  "devDependencies": {
-    
-  },
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register src/test/ --exit ",
-    "cover": "node_modules/.bin/nyc --require babel-core/register node_modules/.bin/mocha \\ test/test.js --exit",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "test": "psql -U postgres -f ./dbscripts/CreateDb.sql &&  _mocha --recursive --compilers js:babel-core/register src/test/version1/  --timeout 10000 --exit",
+    "cover": "psql -U postgres -f ./dbscripts/CreateDb.sql && nyc  _mocha --recursive --compilers js:babel-core/register src/test/version1/  --exit",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",
     "build": "npm run clean && npm run build-babel",
     "dev": "nodemon --exec babel-node src/index.js --env",
     "devdb": "nodemon --exec babel-node src/routes/dbparams.js --env",
     "start": "npm run build && node ./build/index.js",
-    "dbscript": "psql -U postgres -f ./dbscript/CreateDb.sql",
-    "tables-setup-heroku": "heroku pg:psql -f  ./dbscript/CreateDbHeroku.sql"
+    "dbscript": "psql -U postgres -f ./src/dbUtils/dbscripts/CreateDb.sql",
+    "tables-setup-heroku": "heroku pg:psql -f  ./dbscript/CreateDbHeroku.sql",
+    "coveralls": "nyc report --reporter=text npm run cover | coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/otaigbe/store-manager.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/otaigbe/store-manager/issues"
+    "url": ""
   },
   "engines": {
     "node": "10.5.0"
@@ -73,5 +72,9 @@
       "mocha"
     ]
   },
-  "homepage": "https://github.com/otaigbe/store-manager#readme"
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  },
+  "homepage": ""
 }

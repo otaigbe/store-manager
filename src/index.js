@@ -1,19 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import maincontroller from './mainrouter/mainController';
-import authController from './mainrouter/authController';
-import 'body-parser';
+import versions from './controller/api/versions';
 
 dotenv.config();
-
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./UI'));
 app.use(express.json());
+app.use(express.static('./UI'));
 
-app.use('/api/v1', maincontroller);
-app.use('/auth', authController);
+app.use('/', versions);
 
 
 const port = process.env.PORT || 6600;
