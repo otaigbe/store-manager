@@ -52,7 +52,7 @@
     "devdb": "nodemon --exec babel-node src/routes/dbparams.js --env",
     "start": "npm run build && node ./build/index.js",
     "dbscript": "psql -U postgres -f ./src/dbUtils/dbscripts/CreateDb.sql",
-    "tables-setup-heroku": "heroku pg:psql -f  ./dbscript/CreateDbHeroku.sql",
+    "tables-setup-heroku": "heroku pg:psql -f  ./dbscripts/CreateDbHeroku.sql",
     "coveralls": "nyc report --reporter=text npm run cover | coveralls"
   },
   "repository": {

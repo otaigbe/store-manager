@@ -16,7 +16,8 @@ var config = {
   user: process.env.PGUSER,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
-  port: process.env.PGPORT
+  port: process.env.PGPORT,
+  host: process.env.PGHOST
 };
 
 var pool = new _pg2.default.Pool(config);
