@@ -93,8 +93,11 @@ productImpl.getAllProducts = (req, res) => {
       }
     });
   } else {
-    pool.connect(async (err, client) => {
-      if (err) return res.status(501).json({ message: 'Internal Database Error' });
+    pool.connect(async (error, client) => {
+      if (error) {
+        console.log(error);
+        return res.status(501).json({ message: 'Internal Database Error' });
+      }
       const selectResultSet = await client.query(queries.selectProductsWithoutPagination);
       res.status(200).json({
         message: 'Showing pages All Products',
