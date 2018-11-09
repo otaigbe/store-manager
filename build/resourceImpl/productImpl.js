@@ -155,7 +155,10 @@ productImpl.getAllProducts = function (req, res) {
                   break;
                 }
 
-                return _context2.abrupt('return', res.status(501).json({ message: 'Internal Database Error' }));
+                return _context2.abrupt('return', res.status(501).json({
+                  message: 'Internal Database Error',
+                  Error: err.message
+                }));
 
               case 2:
                 _context2.prev = 2;
@@ -200,24 +203,28 @@ productImpl.getAllProducts = function (req, res) {
     }());
   } else {
     _queries.pool.connect(function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(err, client) {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(error, client) {
         var selectResultSet;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (!err) {
-                  _context3.next = 2;
+                if (!error) {
+                  _context3.next = 3;
                   break;
                 }
 
-                return _context3.abrupt('return', res.status(501).json({ message: 'Internal Database Error' }));
+                console.log(error);
+                return _context3.abrupt('return', res.status(501).json({
+                  message: 'Internal Database Error',
+                  Error: error
+                }));
 
-              case 2:
-                _context3.next = 4;
+              case 3:
+                _context3.next = 5;
                 return client.query(_queries.queries.selectProductsWithoutPagination);
 
-              case 4:
+              case 5:
                 selectResultSet = _context3.sent;
 
                 res.status(200).json({
@@ -225,7 +232,7 @@ productImpl.getAllProducts = function (req, res) {
                   Products: selectResultSet.rows
                 });
 
-              case 6:
+              case 7:
               case 'end':
                 return _context3.stop();
             }

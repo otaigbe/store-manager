@@ -19,6 +19,9 @@ var config = {
   port: process.env.PGPORT,
   host: process.env.PGHOST
 };
+var config2 = {
+  connectionString: process.env.DATABASE_URL
+};
 
 var pool = new _pg2.default.Pool(config);
 

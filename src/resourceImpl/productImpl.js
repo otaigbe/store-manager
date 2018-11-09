@@ -77,7 +77,12 @@ productImpl.getAllProducts = (req, res) => {
     args.push(itemsPerPage);
     args.push(pageOffset);
     pool.connect(async (err, client) => {
-      if (err) return res.status(501).json({ message: 'Internal Database Error' });
+      if (err) {
+        return res.status(501).json({
+          message: 'Internal Database Error',
+          Error: err.message,
+        });
+      }
       try {
         const count = await client.query(queries.countAllProducts);
         const selectResultSet = await client.query(queries.selectProductsWithPagination, args);
