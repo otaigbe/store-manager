@@ -3,6 +3,6 @@ node_js:
   - "10"
 services:
   - postgresql
-script:
+before_script:
   - npm run test
 after_success: npm run coverage
