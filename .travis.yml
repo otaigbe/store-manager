@@ -5,8 +5,8 @@ services:
   - postgresql
 script:
   - psql -c 'create database store_manager;' -U postgres
-  - export PGPASSWORD = password
-  - psql -U postgres -a -f dbscripts/travis.sql
+  - export PGPASSWORD = "password"
+  - psql -U postgres -a -f src/dbscripts/travis.sql
 
 env:
  - NODE_ENV= test
