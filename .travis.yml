@@ -5,7 +5,7 @@ services:
   - postgresql
 script:
   - npm run test
-  - export PGPASSWORD = "password"
+  - psql -U postgres 'select * from products';
 
 env:
  - PGUSER = postgres
