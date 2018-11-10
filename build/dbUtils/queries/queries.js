@@ -1,13 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.queries = exports.pool = undefined;
+exports.queries = exports.pool = void 0;
 
-var _pg = require('pg');
-
-var _pg2 = _interopRequireDefault(_pg);
+var _pg = _interopRequireDefault(require("pg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,10 +20,10 @@ var config = {
 var config2 = {
   connectionString: process.env.DATABASE_URL
 };
-
-var pool = new _pg2.default.Pool(config);
-
+var pool = new _pg.default.Pool(config);
+exports.pool = pool;
 var queries = {};
+exports.queries = queries;
 queries.selectLoginQuery = 'SELECT attendant_id, name, email, password, admin FROM attendants WHERE email = $1 and password = $2';
 queries.InsertSignup = 'INSERT INTO attendants (name, email, password, admin) VALUES ($1, $2, $3, $4)';
 queries.selectEmail = 'SELECT email FROM attendants WHERE email= $1';
@@ -42,6 +40,3 @@ queries.selectProductById = 'SELECT * from products WHERE product_id = $1';
 queries.getAllsalesRecordCount = 'SELECT * FROM salesrecords';
 queries.selectAllSalesRecord = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
 queries.selectSalesRecordById = 'SELECT * from salesrecords WHERE salesrecord_id = $1';
-
-exports.pool = pool;
-exports.queries = queries;

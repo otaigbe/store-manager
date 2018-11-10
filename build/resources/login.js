@@ -1,21 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _express = require('express');
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
-
-var _login = require('../resourceImpl/login');
-
-var _login2 = _interopRequireDefault(_login);
+var _login = _interopRequireDefault(require("../resourceImpl/login"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = _express2.default.Router();
+var router = _express.default.Router();
 
-router.post('/', _login2.default.login);
-
-exports.default = router;
+router.post('/', _login.default.login);
+var _default = router;
+exports.default = _default;

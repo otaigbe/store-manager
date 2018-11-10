@@ -14,10 +14,10 @@ chai.use(chaiJson);
 chai.use(chaiUrl);
 const pgConfig = {
   user: 'postgres',
-  password: 'mar889003',
+  password: '',
   port: 5432,
   host: 'localhost',
-  database: 'test-db',
+  database: 'test_db',
 };
 describe('StoreManager endpoints tests', () => {
   afterEach(() => {

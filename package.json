@@ -33,7 +33,12 @@
     "supertest": "^3.3.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/register": "^7.0.0",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -43,8 +48,8 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "test": "psql -U postgres -f ./dbscripts/CreateDb.sql &&  _mocha --recursive --compilers js:babel-core/register src/test/version1/  --timeout 10000 --exit",
-    "cover": "psql -U postgres -f ./dbscripts/CreateDb.sql && nyc  _mocha --recursive --compilers js:babel-core/register src/test/version1/  --exit",
+    "test": "psql -U postgres -f ./dbscripts/CreateDb.sql && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
+    "cover": "nyc --reporter=lcov npm test",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",
     "build": "npm run clean && npm run build-babel",
@@ -53,7 +58,7 @@
     "start": "npm run build && node ./build/index.js",
     "dbscript": "psql -U postgres -f ./src/dbUtils/dbscripts/CreateDb.sql",
     "tables-setup-heroku": "heroku pg:psql -f  ./dbscripts/CreateDbHeroku.sql",
-    "coveralls": "nyc report --reporter=text npm run cover | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -73,6 +78,13 @@
     ]
   },
   "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
     "sourceMap": false,
     "instrument": false
   },

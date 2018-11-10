@@ -1,35 +1,30 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _express = require('express');
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
-
-var _versions = require('./controller/api/versions');
-
-var _versions2 = _interopRequireDefault(_versions);
+var _versions = _interopRequireDefault(require("./controller/api/versions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config();
-var app = (0, _express2.default)();
+_dotenv.default.config();
 
-app.use(_express2.default.urlencoded({ extended: true }));
-app.use(_express2.default.json());
-app.use(_express2.default.static('./UI'));
-
-app.use('/', _versions2.default);
-
+var app = (0, _express.default)();
+app.use(_express.default.urlencoded({
+  extended: true
+}));
+app.use(_express.default.json());
+app.use(_express.default.static('./UI'));
+app.use('/', _versions.default);
 var port = process.env.PORT || 6600;
 var server = app.listen(port, function () {
-  console.log('app running on ' + port + '...');
+  console.log("app running on ".concat(port, "..."));
 });
-
-exports.default = server;
+var _default = server;
+exports.default = _default;

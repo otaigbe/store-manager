@@ -1,26 +1,21 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _express = require('express');
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
+var _signup = _interopRequireDefault(require("../resourceImpl/signup"));
 
-var _signup = require('../resourceImpl/signup');
-
-var _signup2 = _interopRequireDefault(_signup);
-
-var _auth = require('../middleware/auth');
-
-var _auth2 = _interopRequireDefault(_auth);
+var _auth = _interopRequireDefault(require("../middleware/auth"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = _express2.default.Router(); /* eslint-disable prefer-destructuring */
+/* eslint-disable prefer-destructuring */
+var router = _express.default.Router();
 
-
-router.post('/', _auth2.default, _signup2.default.signup);
-
-exports.default = router;
+router.post('/', _auth.default, _signup.default.signup);
+var _default = router;
+exports.default = _default;

@@ -1,21 +1,18 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = void 0;
 
-var _express = require('express');
+var _express = _interopRequireDefault(require("express"));
 
-var _express2 = _interopRequireDefault(_express);
-
-var _router = require('../../routes/version1/router');
-
-var _router2 = _interopRequireDefault(_router);
+var _router = _interopRequireDefault(require("../../routes/version1/router"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = _express2.default.Router();
+var router = _express.default.Router();
 
-router.use('/api/v1', _router2.default);
-
-exports.default = router;
+router.use('/api/v1', _router.default);
+var _default = router;
+exports.default = _default;

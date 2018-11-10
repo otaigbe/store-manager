@@ -1,66 +1,61 @@
-'use strict';
+"use strict";
 
-var _chai = require('chai');
+var _chai = _interopRequireDefault(require("chai"));
 
-var _chai2 = _interopRequireDefault(_chai);
+var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
-var _chaiHttp = require('chai-http');
+var _chaiJson = _interopRequireDefault(require("chai-json"));
 
-var _chaiHttp2 = _interopRequireDefault(_chaiHttp);
+var _chaiUrl = _interopRequireDefault(require("chai-url"));
 
-var _chaiJson = require('chai-json');
+var _co = _interopRequireDefault(require("co"));
 
-var _chaiJson2 = _interopRequireDefault(_chaiJson);
+var _index = _interopRequireDefault(require("../../index"));
 
-var _chaiUrl = require('chai-url');
-
-var _chaiUrl2 = _interopRequireDefault(_chaiUrl);
-
-var _co = require('co');
-
-var _co2 = _interopRequireDefault(_co);
-
-var _index = require('../../index');
-
-var _index2 = _interopRequireDefault(_index);
-
-require('babel-polyfill');
+require("babel-polyfill");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var expect = _chai2.default.expect; /* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-destructuring */
+/* eslint-disable no-unused-expressions */
 
-_chai2.default.use(_chaiHttp2.default);
-_chai2.default.use(_chaiJson2.default);
-_chai2.default.use(_chaiUrl2.default);
+/* eslint-disable prefer-destructuring */
+var expect = _chai.default.expect;
+
+_chai.default.use(_chaiHttp.default);
+
+_chai.default.use(_chaiJson.default);
+
+_chai.default.use(_chaiUrl.default);
+
 describe('Testing the SIGNUP endpoint', function () {
   describe('Testing the POST method', function () {
     it('should check if token exists', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').type('form').send({
         name: 'Ehimare',
         email: 'Ehimare@gmail.com',
         password: 'password',
         admin: true
       }).end(function (err, res) {
         expect(res).to.have.status(401);
-        expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
+        expect(res.body).to.eql({
+          message: 'No access token provided! Unaccessible resource'
+        });
         done();
       });
     });
-    it('should check if request successful after token is set and already existent email is passed', _co2.default.wrap(function () {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ0NTgxNn0.riIuOpKwOhPq3HVwxLQikmwJ2ZCf3gQue2Pb_xQTV3I').type('form').send({
+    it('should check if request successful after token is set and already existent email is passed', _co.default.wrap(function () {
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ0NTgxNn0.riIuOpKwOhPq3HVwxLQikmwJ2ZCf3gQue2Pb_xQTV3I').type('form').send({
         name: 'otaigbe',
         email: 'otaigbe@gmail.com',
         password: 'password',
         admin: true
       }).end(function (err, res) {
         expect(res).to.have.status(409);
-        expect(res.body).to.eql({ message: 'Email already exists, choose a unique email.' });
+        expect(res.body).to.eql({
+          message: 'Email already exists, choose a unique email.'
+        });
       });
-    }));
-
-    // it('should check if request successful after token is set and unique email is passed', (done) => {
+    })); // it('should check if request successful after token is set and unique email is passed', (done) => {
     //   chai.request(app)
     //     .post('/api/v1/auth/signup')
     //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
@@ -77,21 +72,23 @@ describe('Testing the SIGNUP endpoint', function () {
     //       done();
     //     });
     // }).timeout(20000);
+
     it('should check if a user is admin', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
         name: 'olu',
         email: 'olu@gmail.com',
         password: 'password',
         admin: true
       }).end(function (err, res) {
         expect(res).to.have.status(403);
-        expect(res.body).to.eql({ message: 'Forbidden! You need to have  admin privileges' });
+        expect(res.body).to.eql({
+          message: 'Forbidden! You need to have  admin privileges'
+        });
         done();
       });
     });
-
     it('POST / signup endpoint should return no errors', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').type('form').send({
         name: 'Otaigbe',
         email: 'otaigbe@gmail.com',
         admin: true
@@ -101,7 +98,7 @@ describe('Testing the SIGNUP endpoint', function () {
       });
     });
     it('(POST / signup endpoint) should check that the name,email,admin property of body is filled', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').type('form').send({
         name: 'Otaigbe',
         email: 'otaigbe@gmail.com',
         admin: true
@@ -113,7 +110,7 @@ describe('Testing the SIGNUP endpoint', function () {
       });
     });
     it('(POST / products endpoint) should check that the request is json', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').type('form').send({
         name: 'Otaigbe',
         email: 'otaigbe@gmail.com',
         admin: true
@@ -123,7 +120,7 @@ describe('Testing the SIGNUP endpoint', function () {
       });
     });
     it('(POST / products endpoint) should check that the response is json', function (done) {
-      _chai2.default.request(_index2.default).post('/api/v1/auth/signup').type('form').send({
+      _chai.default.request(_index.default).post('/api/v1/auth/signup').type('form').send({
         name: 'Otaigbe',
         email: 'otaigbe@gmail.com',
         admin: true

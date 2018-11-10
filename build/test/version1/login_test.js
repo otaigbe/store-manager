@@ -1,54 +1,47 @@
-'use strict';
+"use strict";
 
-var _chai = require('chai');
+var _chai = _interopRequireDefault(require("chai"));
 
-var _chai2 = _interopRequireDefault(_chai);
+var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
-var _chaiHttp = require('chai-http');
+var _chaiJson = _interopRequireDefault(require("chai-json"));
 
-var _chaiHttp2 = _interopRequireDefault(_chaiHttp);
+var _chaiUrl = _interopRequireDefault(require("chai-url"));
 
-var _chaiJson = require('chai-json');
+var _co = _interopRequireDefault(require("co"));
 
-var _chaiJson2 = _interopRequireDefault(_chaiJson);
+var _index = _interopRequireDefault(require("../../index"));
 
-var _chaiUrl = require('chai-url');
-
-var _chaiUrl2 = _interopRequireDefault(_chaiUrl);
-
-var _co = require('co');
-
-var _co2 = _interopRequireDefault(_co);
-
-var _index = require('../../index');
-
-var _index2 = _interopRequireDefault(_index);
-
-require('babel-polyfill');
+require("babel-polyfill");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var expect = _chai2.default.expect; /* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-destructuring */
+/* eslint-disable no-unused-expressions */
 
-_chai2.default.use(_chaiHttp2.default);
-_chai2.default.use(_chaiJson2.default);
-_chai2.default.use(_chaiUrl2.default);
+/* eslint-disable prefer-destructuring */
+var expect = _chai.default.expect;
+
+_chai.default.use(_chaiHttp.default);
+
+_chai.default.use(_chaiJson.default);
+
+_chai.default.use(_chaiUrl.default);
+
 var pgConfig = {
   user: 'postgres',
-  password: 'mar889003',
+  password: '',
   port: 5432,
   host: 'localhost',
-  database: 'test-db'
+  database: 'test_db'
 };
 describe('StoreManager endpoints tests', function () {
   afterEach(function () {
-    _index2.default.close();
+    _index.default.close();
   });
   describe('Testing the login endpoint', function () {
     describe('Testing the POST method', function () {
       it('should check the response status', function (done) {
-        _chai2.default.request(_index2.default).post('/api/v1/auth/login').type('form').send({
+        _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
           email: 'otaigbe@gmail.com',
           password: 'password'
         }).end(function (err, res) {
@@ -57,7 +50,7 @@ describe('StoreManager endpoints tests', function () {
         });
       });
       it('POST / login endpoint should return no errors', function (done) {
-        _chai2.default.request(_index2.default).post('/api/v1/auth/login').type('form').send({
+        _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
           email: 'otaigbe@gmail.com',
           password: 'password'
         }).end(function (err, res) {
@@ -66,7 +59,7 @@ describe('StoreManager endpoints tests', function () {
         });
       });
       it('POST / login endpoint should successfully sign in', function (done) {
-        _chai2.default.request(_index2.default).post('/api/v1/auth/login').type('form').send({
+        _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
           email: 'otaigbe@gmail.com',
           password: 'password'
         }).end(function (err, res) {

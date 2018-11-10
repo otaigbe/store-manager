@@ -1,5 +1,18 @@
 language: node_js
 node_js:
     - "10"
+services:
+  - postgresql
+env:
+-PGUSER = 'postgrestravis'
+-PGDATABASE = store_manager
+-PGPASSWORD = 'mar889003'
+-PGPORT = 5432
+-PGHOST = 'localhost'
+-JWTKEY = 'secretKey'
+before_script:
+  - psql -c 'create database store_manager;' -U postgres
+  - psql -c "CREATE USER postgrestravis WITH PASSWORD 'mar889003';" -U postgres
+  - psql -U postgres -f ./dbscripts/CreateDb.sql
 after_success:
-    - npm run coveralls
+  - npm run coverage

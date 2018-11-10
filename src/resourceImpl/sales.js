@@ -4,31 +4,59 @@ import Joi from 'joi';
 import { pool, queries } from '../dbUtils/queries/queries';
 
 const salesImpl = {};
+
+function typeOf(value) {
+  let s = typeof value;
+  if (s === 'object') {
+    if (value) {
+      if (value instanceof Array) {
+        s = 'array';
+      }
+    } else {
+      s = 'null';
+    }
+  }
+  return s;
+}
 salesImpl.createSalesRecord = (req, res) => {
   console.log(req.body);
   const records = [];
-  for (let i = 0; i < req.body.length; i += 1) {
-    const inner = [];
-    inner.push(req.body[i].product_id, req.body[i].product_desc, req.body[i].unit_price, req.body[i].quantity_bought, req.body[i].amount, req.body[i].attendant_id, req.body[i].attendant_name);
-    records.push(inner);
-  }
-
-  pool.connect(async (err, client) => {
-    if (err) return res.status(501).send('Something is wrong! Unable to connect to the database');
-    const multiInsert = format('INSERT INTO salesRecords(product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
-    console.log(multiInsert);
-    try {
-      const insertResult = await client.query(multiInsert);
-    } catch (error) {
-      return res.status(501).send('Something is wrong! Unable to save sales records to the database');
+  if (typeOf(req.body) === 'array') {
+    for (let i = 0; i < req.body.length; i += 1) {
+      const inner = [];
+      inner.push(req.body[i].product_id, req.body[i].product_desc, req.body[i].unit_price, req.body[i].quantity_bought, req.body[i].amount, req.body[i].attendant_id, req.body[i].attendant_name);
+      records.push(inner);
     }
-    return res.status(200).json({ message: 'Records saved' });
-  });
+    pool.connect(async (err, client) => {
+      if (err) return res.status(501).send('Something is wrong! Unable to connect to the database');
+      const multiInsert = format('INSERT INTO salesRecords(product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
+      console.log(multiInsert);
+      try {
+        const insertResult = await client.query(multiInsert);
+      } catch (error) {
+        return res.status(501).send('Something is wrong! Unable to save sales records to the database');
+      }
+      return res.status(200).json({ message: 'Records saved' });
+    });
+  } else {
+    pool.connect(async (err, client) => {
+      if (err) return res.status(501).send('Something is wrong! Unable to connect to the database');
+      const singleInsert = format('INSERT INTO salesRecords(product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', req.body);
+      console.log(singleInsert);
+      try {
+        const insertResult = await client.query(singleInsert);
+      } catch (error) {
+        return res.status(501).send('Something is wrong! Unable to save sales records to the database');
+      }
+      return res.status(200).json({ message: 'Records saved' });
+    });
+  } 
 };
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
+
 salesImpl.getAllSalesRecords = (req, res) => {
   const urlQuery = req.query;
   console.log(urlQuery);
