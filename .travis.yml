@@ -3,9 +3,6 @@ node_js:
   - "10"
 services:
   - postgresql
-before_script:
-  - psql -c 'create database store_manager;' -U postgres
-  - psql -U postgres -a -f dbscripts/travis.sql
 script:
-  - npm run travistest
+  - npm run test
 after_success: npm run coverage
