@@ -5,4 +5,5 @@ services:
   - postgresql
 script:
   - cd dbscripts
+  - ls
 after_success: npm run coverage
