@@ -25,7 +25,7 @@ describe('StoreManager endpoints tests', () => {
   });
   describe('Testing the login endpoint', () => {
     describe('Testing the POST method', () => {
-      it('should check the response status', (done) => {
+      it('should check the response status', co.wrap(() => {
         chai.request(app)
           .post('/api/v1/auth/login')
           .type('form')
@@ -35,9 +35,8 @@ describe('StoreManager endpoints tests', () => {
           })
           .end((err, res) => {
             expect(res).to.have.status(200);
-            done();
           });
-      });
+      }));
       it('POST / login endpoint should return no errors', (done) => {
         chai.request(app)
           .post('/api/v1/auth/login')
@@ -51,7 +50,7 @@ describe('StoreManager endpoints tests', () => {
             done();
           });
       });
-      it('POST / login endpoint should successfully sign in', (done) => {
+      it('POST / login endpoint should successfully sign in', co.wrap(() => {
         chai.request(app)
           .post('/api/v1/auth/login')
           .type('form')
@@ -64,9 +63,8 @@ describe('StoreManager endpoints tests', () => {
             expect(res.body).to.eql({
               message: 'You"re logged in',
             });
-            done();
           });
-      });
+      }));
     });
   });
 });

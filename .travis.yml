@@ -3,4 +3,11 @@ node_js:
     - "10"
 services:
   - postgresql
+env:
+ - PGUSER = 'postgres'
+ - PGDATABASE = store_manager
+ - PGPORT = 5432
+ - PORT = 5500
+ - PGHOST = 'localhost'
+ - JWTKEY = 'secretKey'
 after_success: npm run coverage
