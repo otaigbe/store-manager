@@ -55,4 +55,4 @@ INSERT INTO attendants (name, email, password, admin) VALUES ('angela',  'angela
 
 INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'), ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe')
 
-
+SELECT * FROM products;

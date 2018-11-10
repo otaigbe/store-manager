@@ -3,10 +3,6 @@ node_js:
     - "10"
 services:
   - postgresql
-script:
-  - npm run test
-  - psql -U postgres 'select * from products';
-
 env:
  - PGUSER = postgres
  - PGDATABASE = store_manager
