@@ -1,7 +1,4 @@
 
-CREATE DATABASE store_manager;
-\connect store_manager
-
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS attendants CASCADE;
 DROP TABLE IF EXISTS salesRecords CASCADE;
@@ -54,4 +51,5 @@ INSERT INTO attendants (name, email, password, admin) VALUES ('otaigbe',  'otaig
 INSERT INTO attendants (name, email, password, admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
 
 INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'), ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe')
+
 
