@@ -4,12 +4,10 @@ node_js:
 services:
   - postgresql
 script:
-  - psql -c 'create database store_manager;' -U postgres
+  - npm run test
   - export PGPASSWORD = "password"
-  - psql -U postgres -a -f src/dbscripts/travis.sql
 
 env:
- - NODE_ENV= test
  - PGUSER = postgres
  - PGDATABASE = store_manager
  - PGPORT = 5432
