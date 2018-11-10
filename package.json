@@ -48,7 +48,7 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "test": "psql -U postgres -a -f ./src/CreateDb.sql && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
+    "test": "psql -U postgres -a -f /src/CreateDb.sql && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
     "cover": "nyc --reporter=lcov npm test",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",
