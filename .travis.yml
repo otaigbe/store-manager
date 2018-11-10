@@ -4,5 +4,5 @@ node_js:
 services:
   - postgresql
 script:
-  - echo pwd
+  - pwd
 after_success: npm run coverage
