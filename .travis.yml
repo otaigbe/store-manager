@@ -3,11 +3,17 @@ node_js:
     - "10"
 services:
   - postgresql
+script:
+  - psql -c 'create database store_manager;' -U postgres
+  - export PGPASSWORD = password
+  - psql -U postgres -a -f dbscripts/travis.sql
+
 env:
- - PGUSER = 'postgres'
+ - NODE_ENV= test
+ - PGUSER = postgres
  - PGDATABASE = store_manager
  - PGPORT = 5432
+ - PGPASSWORD= password
  - PORT = 5500
- - PGHOST = 'localhost'
- - JWTKEY = 'secretKey'
+ - JWTKEY = secretKey
 after_success: npm run coverage
