@@ -3,7 +3,6 @@ node_js:
     - "10"
 services:
   - postgresql
-script:
-  - cd dbscripts
-  - ls
+before_script:
+  - psql -U postgres -a -f dbscripts/CreateDb.sql
 after_success: npm run coverage
