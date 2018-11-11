@@ -1,8 +1,8 @@
 language: node_js
 env:
   global:
-  - PGDATABASE='store_manager'
-  - PGUSER='postgres'
+  - PGDATABASE=store_manager
+  - PGUSER=postgres
   - JWTKEY='secretKey'
   - PGPORT='5432'
   - PGHOST='localhost'
@@ -10,8 +10,6 @@ node_js:
   - "10"
 services:
   - postgresql
-addons:
-  postgresql: "10"
 before_script:
   - psql -c 'create database store_manager;' -U postgres
 script:
