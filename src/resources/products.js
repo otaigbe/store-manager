@@ -8,7 +8,7 @@ router.get('/?', productImpl.getAllProducts);
 
 router.get('/:id', productImpl.getProductById);
 
-router.post('/', auth, productImpl.addProduct);
+router.post('/', productImpl.addProduct);
 
 router.put('/:id', auth, productImpl.modifyAProduct);
 
