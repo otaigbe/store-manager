@@ -5,7 +5,7 @@ import chaiHttp from 'chai-http';
 import chaiJson from 'chai-json';
 import chaiUrl from 'chai-url';
 import co from 'co';
-import app from '../src/index';
+import app from '../../index';
 import 'babel-polyfill';
 
 const expect = chai.expect;
