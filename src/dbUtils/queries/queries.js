@@ -13,7 +13,7 @@ const config2 = {
   database: 'store_manager',
 };
 
-const pool = new pg.Pool(config);
+const pool = new pg.Pool(config2);
 
 
 const queries = {};
