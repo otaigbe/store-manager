@@ -9,11 +9,11 @@ const config = {
   host: process.env.PGHOST,
 };
 const config2 = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
+  user: 'postgres',
+  database: 'store_manager',
 };
 
-const pool = new pg.Pool(config);
+const pool = new pg.Pool(config2);
 
 
 const queries = {};
