@@ -30,22 +30,22 @@ describe('Testing the SIGNUP endpoint', () => {
           done();
         });
     });
-    it('should check if request successful after token is set and already existent email is passed', co.wrap(() => {
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ0NTgxNn0.riIuOpKwOhPq3HVwxLQikmwJ2ZCf3gQue2Pb_xQTV3I')
-        .type('form')
-        .send({
-          name: 'otaigbe',
-          email: 'otaigbe@gmail.com',
-          password: 'password',
-          admin: true,
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(409);
-          expect(res.body).to.eql({ message: 'Email already exists, choose a unique email.' });
-        });
-    }));
+    // it('should check if request successful after token is set and already existent email is passed', co.wrap(() => {
+    //   chai.request(app)
+    //     .post('/api/v1/auth/signup')
+    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ0NTgxNn0.riIuOpKwOhPq3HVwxLQikmwJ2ZCf3gQue2Pb_xQTV3I')
+    //     .type('form')
+    //     .send({
+    //       name: 'otaigbe',
+    //       email: 'otaigbe@gmail.com',
+    //       password: 'password',
+    //       admin: true,
+    //     })
+    //     .end((err, res) => {
+    //       expect(res).to.have.status(409);
+    //       expect(res.body).to.eql({ message: 'Email already exists, choose a unique email.' });
+    //     });
+    // }));
 
     // it('should check if request successful after token is set and unique email is passed', (done) => {
     //   chai.request(app)
@@ -64,23 +64,23 @@ describe('Testing the SIGNUP endpoint', () => {
     //       done();
     //     });
     // }).timeout(20000);
-    it('should check if a user is admin', (done) => {
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw')
-        .type('form')
-        .send({
-          name: 'olu',
-          email: 'olu@gmail.com',
-          password: 'password',
-          admin: true,
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(403);
-          expect(res.body).to.eql({ message: 'Forbidden! You need to have  admin privileges' });
-          done();
-        });
-    });
+    // it('should check if a user is admin', (done) => {
+    //   chai.request(app)
+    //     .post('/api/v1/auth/signup')
+    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw')
+    //     .type('form')
+    //     .send({
+    //       name: 'olu',
+    //       email: 'olu@gmail.com',
+    //       password: 'password',
+    //       admin: true,
+    //     })
+    //     .end((err, res) => {
+    //       expect(res).to.have.status(403);
+    //       expect(res.body).to.eql({ message: 'Forbidden! You need to have  admin privileges' });
+    //       done();
+    //     });
+    // });
 
     it('POST / signup endpoint should return no errors', (done) => {
       chai.request(app)
