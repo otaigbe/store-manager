@@ -1,4 +1,8 @@
 language: node_js
+env:
+  - PGDATABASE=store_manager
+  - PGUSER=postgres
+  - JWTKEY='secretKey'
 node_js:
   - "10"
 services:
