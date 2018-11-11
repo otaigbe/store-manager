@@ -10,11 +10,13 @@ const schema = Joi.object({
 });
 
 loginImpl.login = (req, res) => {
+  
   const result = Joi.validate(req.body, schema);
   if (result.error === null) {
     const temp = [req.body.email, req.body.password];
     pool.connect(async (err, client) => {
       if (err) {
+        console.log(err.message);
         res.status(501).json({
           message: 'Internal Server Error',
         });
