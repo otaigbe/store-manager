@@ -1,6 +1,18 @@
 language: node_js
+env:
+  - PGDATABASE=store_manager
+  - PGUSER=postgres
 node_js:
   - "10"
 services:
   - postgresql
+before_script:
+  - psql -c 'create database store_manager;' -U postgres
+  - psql -c 'DROP TABLE IF EXISTS products CASCADE;' -U postgres
+  - psql -c 'DROP TABLE IF EXISTS attendants CASCADE;' -U postgres
+  - psql -c 'DROP TABLE IF EXISTS salesRecords CASCADE;' -U postgres
+  - psql -c 'CREATE TABLE IF NOT EXISTS products (product_id serial NOT NULL PRIMARY KEY, product_desc VARCHAR(200) NOT NULL, unit_price double precision NOT NULL, quantity_in_stock INT NOT NULL, supplier_name VARCHAR(200)  NOT NULL, category VARCHAR(200) NOT NULL); -U postgres
+  - psql -c 'CREATE TABLE IF NOT EXISTS attendants (attendant_id serial PRIMARY KEY NOT NULL, name VARCHAR(200) NOT NULL, email VARCHAR(500) NOT NULL, password VARCHAR(500)  NOT NULL, admin boolean NOT NULL );' -U postgres
+  - psql -c 'CREATE TABLE IF NOT EXISTS salesRecords (salesrecord_Id serial NOT NULL, product_id serial NOT NULL, product_desc VARCHAR(200) NOT NULL, unit_price double precision NOT NULL, quantity_bought INT, amount double precision NOT NULL, attendant_id INT, attendant_name VARCHAR(200) NOT NULL);' -U postgres
+  - psql -f dbscripts/travis.sql -U postgres
 after_success: npm run coverage

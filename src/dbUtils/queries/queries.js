@@ -1,6 +1,5 @@
 import pg from 'pg';
 
-
 const db = {};
 const config = {
   user: process.env.PGUSER,
@@ -10,7 +9,8 @@ const config = {
   host: process.env.PGHOST,
 };
 const config2 = {
-  connectionString: process.env.DATABASE_URL,
+  user: process.env.PGUSER,
+  database: process.env.PGDATABASE,
 };
 
 const pool = new pg.Pool(config);
