@@ -3,12 +3,14 @@ env:
   - PGDATABASE=store_manager
   - PGUSER=postgres
   - JWTKEY='secretKey'
+  - PGPORT=5432
 node_js:
   - "10"
 services:
   - postgresql
+addons:
+  postgresql: "11"
 before_script:
   - psql -c 'create database store_manager;' -U postgres
 script:
   - npm run travistest
-after_success: npm run coverage
