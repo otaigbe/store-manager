@@ -19,7 +19,7 @@ const pool = new pg.Pool(config2);
 
 
 const queries = {};
-queries.selectLoginQuery = 'SELECT attendant_id, name, email, password, admin FROM attendants WHERE email = $1 and password = $2';
+queries.selectLoginQuery = 'SELECT attendant_id, name, email, password, admin FROM \'attendants\' WHERE email = $1 and password = $2';
 queries.InsertSignup = 'INSERT INTO attendants (name, email, password, admin) VALUES ($1, $2, $3, $4)';
 queries.selectEmail = 'SELECT email FROM attendants WHERE email= $1';
 queries.selectProductIfExist = 'SELECT * from products WHERE product_desc = $1';
