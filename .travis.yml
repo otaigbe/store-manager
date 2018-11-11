@@ -2,15 +2,13 @@ language: node_js
 env:
   - PGDATABASE=store_manager
   - PGUSER=postgres
+  - JWTKEY='secretKey'
 node_js:
   - "10"
 services:
   - postgresql
 before_script:
   - psql -c 'create database store_manager;' -U postgres
-  - psql -c 'DROP TABLE IF EXISTS products CASCADE;' -U postgres
-  - psql -c 'DROP TABLE IF EXISTS attendants CASCADE;' -U postgres
-  - psql -c 'DROP TABLE IF EXISTS salesRecords CASCADE;' -U postgres
   - psql -f dbscripts/travis.sql -U postgres
 script:
   - npm run travistest

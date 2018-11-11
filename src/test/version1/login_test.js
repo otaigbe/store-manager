@@ -37,7 +37,7 @@ describe('StoreManager endpoints tests', () => {
             expect(res).to.have.status(200);
           });
       }));
-      it('POST / login endpoint should return no errors', (done) => {
+      it('POST / login endpoint should return no errors', co.wrap(() => {
         chai.request(app)
           .post('/api/v1/auth/login')
           .type('form')
@@ -47,9 +47,8 @@ describe('StoreManager endpoints tests', () => {
           })
           .end((err, res) => {
             expect(err).to.be.null;
-            done();
           });
-      });
+      }));
       it('POST / login endpoint should successfully sign in', co.wrap(() => {
         chai.request(app)
           .post('/api/v1/auth/login')
