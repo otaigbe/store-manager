@@ -13,6 +13,9 @@ chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.use(chaiUrl);
 describe('Testing the SIGNUP endpoint', () => {
+  afterEach(() => {
+    app.close();
+  });
   describe('Testing the POST method', () => {
     it('should check if token exists', (done) => {
       chai.request(app)

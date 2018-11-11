@@ -23,6 +23,9 @@ const array = [{
   attendant_name: 'otaigbe',
 }];
 describe('Test cases for the sales endpoint', () => {
+  afterEach(() => {
+    app.close();
+  });
   describe('Testing the create sales record endpoint', () => {
     it('should return a no access token error', (done) => {
       chai.request(app)
