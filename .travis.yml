@@ -1,7 +1,7 @@
 language: node_js
 env:
   - PGDATABASE=store_manager
-  - PGUSER=postgres
+  - PGUSER=otaigbe
   - JWTKEY='secretKey'
   - PGPASSWORD=password
 node_js:
@@ -10,7 +10,7 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database store_manager;' -U postgres
-  - psql -c "CREATE USER postgres WITH PASSWORD 'password';" -U postgres
+  - psql -c "CREATE USER otaigbe WITH PASSWORD 'password';" -U postgres
 script:
   - npm run travistest
 after_script:
