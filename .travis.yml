@@ -12,4 +12,6 @@ before_script:
   - psql -c 'DROP TABLE IF EXISTS attendants CASCADE;' -U postgres
   - psql -c 'DROP TABLE IF EXISTS salesRecords CASCADE;' -U postgres
   - psql -f dbscripts/travis.sql -U postgres
+script:
+  - npm run travistest
 after_success: npm run coverage
