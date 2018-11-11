@@ -35,23 +35,23 @@ describe('Testing out Products endpoints', () => {
 
   // end of products GET
   describe('Testing the Posts Method', () => {
-    it('POST / products endpoint should return a 401 error', (done) => {
-      chai.request(app)
-        .post('/api/v1/products')
-        .type('form')
-        .send({
-          product_desc: 'short bread butter biscuit',
-          unit_price: 650,
-          quantity_supplied: 40,
-          supplier_name: 'Okonkwo',
-          category: 'biscuits',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(401);
-          expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
-          done();
-        });
-    });
+    // it('POST / products endpoint should return a 401 error', (done) => {
+    //   chai.request(app)
+    //     .post('/api/v1/products')
+    //     .type('form')
+    //     .send({
+    //       product_desc: 'short bread butter biscuit',
+    //       unit_price: 650,
+    //       quantity_supplied: 40,
+    //       supplier_name: 'Okonkwo',
+    //       category: 'biscuits',
+    //     })
+    //     .end((err, res) => {
+    //       expect(res).to.have.status(401);
+    //       expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
+    //       done();
+    //     });
+    // });
     it('POST / products endpoint; should create a new Product in the database', (done) => {
       chai.request(app)
         .post('/api/v1/products')
