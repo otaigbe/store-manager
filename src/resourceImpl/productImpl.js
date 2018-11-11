@@ -34,7 +34,7 @@ productImpl.addProduct = (req, res) => {
     const temp3 = [productDesc, unitPrice, quantitySupplied, supplierName, category];
     const temp = [productDesc];
     pool.connect(async (err, client) => {
-      if (err) { return res.status(501).json({ message: err.message }); }
+      if (err) { console.log(err); return res.status(501).json({ message: err.message }); }
       try {
         const resultSet = await client.query(queries.selectProductIfExist, temp);
         if (resultSet.rowCount === 1) {
