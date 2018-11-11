@@ -9,8 +9,8 @@ const config = {
   host: process.env.PGHOST,
 };
 const config2 = {
-  user: 'postgres',
-  database: 'store_manager',
+  user: process.env.PGUSER,
+  database: process.env.PGDATABASE,
 };
 
 const pool = new pg.Pool(config2);
