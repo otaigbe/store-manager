@@ -1,6 +1,6 @@
 language: node_js
 env:
-  - PGDATABASE=store_manager
+  - PGDATABASE=storemanagertest
   - PGUSER=postgres
   - JWTKEY=secretKey
   - PGHOST=localhost
@@ -10,8 +10,8 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'DROP DATABASE IF EXISTS store_manager;' -U postgres
-  - psql -c 'create database store_manager;' -U postgres
+  - psql -c 'DROP DATABASE IF EXISTS storemanagertest;' -U postgres
+  - psql -c 'create database storemanagertest;' -U postgres
   - psql -c "CREATE USER otaigbe WITH PASSWORD 'password';" -U postgres
 script:
   - npm run travistest
