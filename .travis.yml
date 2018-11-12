@@ -8,7 +8,6 @@ before_script:
   - psql -c 'create database store_manager;' -U postgres
 env:
   - PGUSER=postgres
-  - JWTKEY=secretKey
   - PGHOST=localhost
 script:
   - npm run travistest

@@ -62,16 +62,6 @@ productImpl.addProduct = (req, res) => {
       Error: result.error,
     });
   }
-
-  pool.connect(async (err, client) => {
-    if (err) { console.log(err); return res.status(501).json({ message: err.message }); }
-    try {
-      const results = await client.query('Select * from products');
-      console.log(results.rows);
-    } catch (error) {
-      console.log(error);
-    }
-  });
 };
 
 function isEmpty(obj) {
