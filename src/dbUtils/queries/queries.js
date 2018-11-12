@@ -4,18 +4,19 @@ const db = {};
 const config = {
   user: process.env.PGUSER,
   database: process.env.PGDATABASE,
-  // password: process.env.PGPASSWORD,
+  password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
   host: process.env.PGHOST,
 };
 const config2 = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
+  user: 'postgres',
+  database: 'storemanager',
+  password: '',
+  host: 'localhost',
+  port: 5432,
 };
 
-const pool = new pg.Pool(config);
+const pool = new pg.Pool(config2);
 
 
 const queries = {};
