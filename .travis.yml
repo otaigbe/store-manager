@@ -1,9 +1,10 @@
 language: node_js
 env:
-  - PGDATABASE=storemanager
   - PGUSER=postgres
   - JWTKEY=secretKey
   - PGHOST=localhost
+  - PGPASSWORD=
+  - PGDATABASE=storemanager
 node_js:
   - "10"
 services:
@@ -13,6 +14,3 @@ before_script:
   - psql -c 'create database storemanager;' -U postgres
 script:
   - npm run travistest
-after_script:
-  - psql -c 'select * from products;' -U postgres
-  - psql -c 'select * from attendants;' -U postgres
