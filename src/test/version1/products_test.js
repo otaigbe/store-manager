@@ -35,23 +35,23 @@ describe('Testing out Products endpoints', () => {
 
   // end of products GET
   describe('Testing the Posts Method', () => {
-    // it('POST / products endpoint should return a 401 error', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/products')
-    //     .type('form')
-    //     .send({
-    //       product_desc: 'short bread butter biscuit',
-    //       unit_price: 650,
-    //       quantity_supplied: 40,
-    //       supplier_name: 'Okonkwo',
-    //       category: 'biscuits',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(401);
-    //       expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
-    //       done();
-    //     });
-    // });
+    it('POST / products endpoint should return a 401 error', (done) => {
+      chai.request(app)
+        .post('/api/v1/products')
+        .type('form')
+        .send({
+          product_desc: 'short bread butter biscuit',
+          unit_price: 650,
+          quantity_supplied: 40,
+          supplier_name: 'Okonkwo',
+          category: 'biscuits',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
+          done();
+        });
+    });
     it('POST / products endpoint; should create a new Product in the database', (done) => {
       chai.request(app)
         .post('/api/v1/products')
@@ -90,45 +90,45 @@ describe('Testing out Products endpoints', () => {
     //       expect(res.body).to.eql({ message: 'Updated an already existent product.' });
     //     });
     // }));
-    // it('POST / products endpoint; should report a validation error', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/products')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-    //     .type('form')
-    //     .send({
-    //       product_desc: 'bucket',
-    //       unit_price: 350,
-    //       quantity_in_stock: 10,
-    //       supplier_name: 'Okonkwo',
-    //       category: 'biscuits',
-    //     })
-    //     .end((err, res) => {
-    //       expect(err).to.be.null;
-    //       expect(res.body).to.be.a.jsonObj();
-    //       expect(res).to.have.status(422);
-    //       done();
-    //     });
-    // });
-    // it('POST / products endpoint; should return a no access message', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/products')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw')
-    //     .type('form')
-    //     .send({
-    //       product_desc: 'bucket',
-    //       unit_price: 350,
-    //       quantity_in_stock: 10,
-    //       supplier_name: 'Okonkwo',
-    //       category: 'biscuits',
-    //     })
-    //     .end((err, res) => {
-    //       expect(err).to.be.null;
-    //       expect(res.body).to.be.a.jsonObj();
-    //       expect(res).to.have.status(403);
-    //       expect(res.body).to.eql({ message: 'Forbidden! You need to have  admin privileges' });
-    //       done();
-    //     });
-    // });
+    it('POST / products endpoint; should report a validation error', (done) => {
+      chai.request(app)
+        .post('/api/v1/products')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
+        .type('form')
+        .send({
+          product_desc: 'bucket',
+          unit_price: 350,
+          quantity_in_stock: 10,
+          supplier_name: 'Okonkwo',
+          category: 'biscuits',
+        })
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.body).to.be.a.jsonObj();
+          expect(res).to.have.status(422);
+          done();
+        });
+    });
+    it('POST / products endpoint; should return a no access message', (done) => {
+      chai.request(app)
+        .post('/api/v1/products')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw')
+        .type('form')
+        .send({
+          product_desc: 'bucket',
+          unit_price: 350,
+          quantity_in_stock: 10,
+          supplier_name: 'Okonkwo',
+          category: 'biscuits',
+        })
+        .end((err, res) => {
+          expect(err).to.be.null;
+          expect(res.body).to.be.a.jsonObj();
+          expect(res).to.have.status(403);
+          expect(res.body).to.eql({ message: 'Forbidden! You need to have  admin privileges' });
+          done();
+        });
+    });
   });
 
   // end of POST
