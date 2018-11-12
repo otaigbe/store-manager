@@ -12,3 +12,5 @@ env:
   - PGHOST=localhost
 script:
   - npm run travistest
+after_script:
+  - npm run confirm

@@ -47,6 +47,7 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
+    "confirm": "babel-node ./src/dbUtils/confirmInsertion.js --env",
     "migrations": "babel-node ./src/dbUtils/autoCreateTables.js --env",
     "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
     "cover": "nyc --reporter=lcov npm test",

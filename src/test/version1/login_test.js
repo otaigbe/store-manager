@@ -12,13 +12,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.use(chaiUrl);
-const pgConfig = {
-  user: 'postgres',
-  password: '',
-  port: 5432,
-  host: 'localhost',
-  database: 'test_db',
-};
+
 describe('StoreManager endpoints tests', () => {
   afterEach(() => {
     app.close();
