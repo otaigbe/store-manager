@@ -18,10 +18,10 @@ CREATE TABLE IF NOT EXISTS products
 CREATE TABLE IF NOT EXISTS attendants
 (
     attendant_id serial PRIMARY KEY NOT NULL,
-    name VARCHAR(200) NOT NULL,
-    email VARCHAR(500) NOT NULL,
-    password VARCHAR(500)  NOT NULL,
-    admin boolean NOT NULL
+    attendant_name VARCHAR(200) NOT NULL,
+    attendant_email VARCHAR(500) NOT NULL,
+    attendant_password VARCHAR(500)  NOT NULL,
+    attendant_admin boolean NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS salesRecords
@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS salesRecords
 INSERT INTO products (product_desc, unit_price,  quantity_in_stock, supplier_name, category) VALUES ('Mama Lemon liquid soap 300ml',  450,  30, 'Okonkwo', 'soap');
 INSERT INTO products (product_desc, unit_price,  quantity_in_stock, supplier_name, category) VALUES ('Golden Morn 500g',  750, 30,'Okonkwo', 'cereal');
 INSERT INTO products (product_desc, unit_price,  quantity_in_stock, supplier_name, category) VALUES ('Morning Fresh liguid soap', 450, 30, 'Okonkwo', 'soap');
-INSERT INTO products (product_desc, unit_price,  quantity_in_stock, supplier_name, category) VALUES ('Mama Lemeon liquid soap 300ml',  450, 30, 'Okonkwo', 'soap');
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('bucket',  450,  30, 'Okonkwo', 'soap');
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('Biscuits',  450,  30, 'Okonkwo', 'soap');
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('Omo',  450, 30, 'Okonkwo', 'soap');
@@ -50,9 +49,7 @@ INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('Cups',  450, 30, 'Okonkwo', 'soap');
 
 
-INSERT INTO attendants (name, email, password, admin) VALUES ('otaigbe',  'otaigbe@gmail.com', 'password', true);
-INSERT INTO attendants (name, email, password, admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
+INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES ('otaigbe',  'otaigbe@gmail.com', 'password', true);
+INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
 
 INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'), ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe')
-
-
