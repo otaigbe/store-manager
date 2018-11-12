@@ -3,7 +3,6 @@ env:
   - PGDATABASE=store_manager
   - PGUSER=postgres
   - JWTKEY=secretKey
-  - PGPASSWORD=password
   - PGHOST=localhost
   - PGPORT=5432
 node_js:
