@@ -19,9 +19,9 @@ const pool = new pg.Pool(config2);
 
 
 const queries = {};
-queries.selectLoginQuery = 'SELECT attendant_id,name,email,password,admin FROM members WHERE email=$1 and password=$2';
-queries.InsertSignup = 'INSERT INTO members (name, email, password, admin) VALUES ($1, $2, $3, $4)';
-queries.selectEmail = 'SELECT email FROM members WHERE email= $1';
+queries.selectLoginQuery = 'SELECT attendant_id,name,email,password,admin FROM attendants WHERE email=$1 and password=$2';
+queries.InsertSignup = 'INSERT INTO attendants (name, email, password, admin) VALUES ($1, $2, $3, $4)';
+queries.selectEmail = 'SELECT email FROM attendants WHERE email= $1';
 queries.selectProductIfExist = 'SELECT * from products WHERE product_desc=$1';
 queries.updateProductDuringCreation = 'UPDATE products SET quantity_in_stock = $1, unit_price = $3 WHERE product_desc= $2';
 queries.insertProduct = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ($1,$2,$3,$4,$5)';

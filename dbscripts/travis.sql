@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS products
     category VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS MEMBERS
+CREATE TABLE IF NOT EXISTS attendants
 (
     attendant_id serial PRIMARY KEY NOT NULL,
     attendant_name VARCHAR(200) NOT NULL,
@@ -45,7 +45,7 @@ INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name
 INSERT INTO products (product_desc, unit_price, quantity_in_stock, supplier_name, category) VALUES ('Cups',  450, 30, 'Okonkwo', 'soap');
 
 
-INSERT INTO members (name, email, password, admin) VALUES ('otaigbe',  'otaigbe@gmail.com', 'password', true);
-INSERT INTO members (name, email, password, admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
+INSERT INTO attendants (name, email, password, admin) VALUES ('otaigbe',  'otaigbe@gmail.com', 'password', true);
+INSERT INTO attendants (name, email, password, admin) VALUES ('angela',  'angela@gmail.com', 'password', false);
 
 INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'), ('6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe')
