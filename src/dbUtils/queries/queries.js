@@ -1,5 +1,7 @@
 import pg from 'pg';
+import env from 'dotenv';
 
+env.config();
 const db = {};
 const config = {
   user: process.env.PGUSER,
@@ -9,14 +11,14 @@ const config = {
   host: process.env.PGHOST,
 };
 const config2 = {
-  user: 'postgres',
-  database: 'storemanager',
-  password: '',
-  host: 'localhost',
-  port: 5432,
+  user: process.env.PGUSER,
+  database: process.env.PGDATABASE,
+  // password: process.env.PGPASSWORD,
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
 };
 
-const pool = new pg.Pool(config2);
+const pool = new pg.Pool(config);
 
 
 const queries = {};

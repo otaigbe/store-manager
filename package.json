@@ -35,6 +35,7 @@
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.5",
+    "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.5",
     "@babel/register": "^7.0.0",
     "coveralls": "^3.0.2",
@@ -48,7 +49,8 @@
     "rimraf": "^2.6.2"
   },
   "scripts": {
-    "test": "psql -U postgres -a -f dbscripts/createDb.sql && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
+    "migrations": "babel-node ./src/dbUtils/autoCreateTables.js --env",
+    "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
     "cover": "nyc --reporter=lcov npm test",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",
@@ -59,8 +61,7 @@
     "dbscript": "psql -U postgres -f ./src/dbUtils/dbscripts/createDb.sql",
     "tables-setup-heroku": "heroku pg:psql -f  ./dbscripts/createDbHeroku.sql",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "travistest": "psql -U postgres -a -f dbscripts/travis.sql && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit"
-
+    "travistest": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit"
   },
   "repository": {
     "type": "git",
