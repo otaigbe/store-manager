@@ -17,4 +17,4 @@ script:
   - npm run travistest
 after_script:
   - psql -c 'select * from products;' -U postgres
-  - psql -c 'select * from memebers;' -U postgres
+  - psql -c 'select * from members;' -U postgres

@@ -11,13 +11,13 @@ CREATE TABLE IF NOT EXISTS products
     category VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS members
+CREATE TABLE IF NOT EXISTS MEMBERS
 (
     attendant_id serial PRIMARY KEY NOT NULL,
-    name VARCHAR(200) NOT NULL,
-    email VARCHAR(500) NOT NULL,
-    password VARCHAR(500)  NOT NULL,
-    admin boolean NOT NULL
+    attendant_name VARCHAR(200) NOT NULL,
+    attendant_email VARCHAR(500) NOT NULL,
+    attendant_password VARCHAR(500)  NOT NULL,
+    attendant_admin boolean NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS salesRecords
