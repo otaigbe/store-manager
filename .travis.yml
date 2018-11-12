@@ -1,11 +1,11 @@
 language: node_js
 env:
   - PGDATABASE='store_manager'
-  - PGUSER='otaigbe'
+  - PGUSER='postgres'
   - JWTKEY='secretKey'
   - PGPASSWORD='password'
   - PGHOST='localhost'
-  - PGPORT=5432
+  - PGPORT='5432'
 node_js:
   - "10"
 services:
