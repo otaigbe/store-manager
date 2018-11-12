@@ -13,9 +13,9 @@ chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.use(chaiUrl);
 describe('Testing out Products endpoints', () => {
-  // afterEach(() => {
-  //   app.close();
-  // });
+  afterEach(() => {
+    app.close();
+  });
   describe('Testing products GET', () => {
     it('GET / products endpoint; should check if url has a parameter of id', (done) => {
       chai.request(app).get('/api/v1/products/')
@@ -189,24 +189,24 @@ describe('Testing out Products endpoints', () => {
           done();
         });
     });
-    it('PUT / should return a validation error', (done) => {
-      chai.request(app)
-        .put('/api/v1/products/6')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-        .type('form')
-        .send({
-          product_id: 6,
-          product_desc: 'Biscuits',
-          unit_price: 400,
-          quantity_in_stock: 150,
-          supplier_name: 'Okonkwo',
-          category: 'soap',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(404);
-          done();
-        });
-    });
+    // it('PUT / should return a validation error', (done) => {
+    //   chai.request(app)
+    //     .put('/api/v1/products/6')
+    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
+    //     .type('form')
+    //     .send({
+    //       product_id: 6,
+    //       product_desc: 'Biscuits',
+    //       unit_price: 400,
+    //       quantity_in_stock: 150,
+    //       supplier_name: 'Okonkwo',
+    //       category: 'soap',
+    //     })
+    //     .end((err, res) => {
+    //       expect(res).to.have.status(404);
+    //       done();
+    //     });
+    // });
     it('PUT / should return a non existent product error message', co.wrap(() => {
       chai.request(app)
         .put('/api/v1/products/125')
