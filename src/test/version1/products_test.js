@@ -207,24 +207,24 @@ describe('Testing out Products endpoints', () => {
     //       done();
     //     });
     // });
-    it('PUT / should return a non existent product error message', co.wrap(() => {
-      chai.request(app)
-        .put('/api/v1/products/125')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-        .type('form')
-        .send({
-          product_id: 125,
-          product_desc: 'sans cream soda',
-          unit_price: 400,
-          quantity_supplied: 150,
-          supplier_name: 'Okonkwo',
-          category: 'soap',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(404);
-          expect(res.body).to.eql({ message: 'Product doesn\'t exist! Create the Product' });
-        });
-    }));
+    // it('PUT / should return a non existent product error message', co.wrap(() => {
+    //   chai.request(app)
+    //     .put('/api/v1/products/125')
+    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
+    //     .type('form')
+    //     .send({
+    //       product_id: 125,
+    //       product_desc: 'sans cream soda',
+    //       unit_price: 400,
+    //       quantity_supplied: 150,
+    //       supplier_name: 'Okonkwo',
+    //       category: 'soap',
+    //     })
+    //     .end((err, res) => {
+    //       expect(res).to.have.status(404);
+    //       expect(res.body).to.eql({ message: 'Product doesn\'t exist! Create the Product' });
+    //     });
+    // }));
   });
   // end of PUT
   // Beginning of DELETE
