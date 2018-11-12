@@ -13,9 +13,9 @@ chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.use(chaiUrl);
 describe('Testing out Products endpoints', () => {
-  afterEach(() => {
-    app.close();
-  });
+  // afterEach(() => {
+  //   app.close();
+  // });
   describe('Testing products GET', () => {
     it('GET / products endpoint; should check if url has a parameter of id', (done) => {
       chai.request(app).get('/api/v1/products/')
