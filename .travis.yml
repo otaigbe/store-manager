@@ -1,16 +1,9 @@
 language: node_js
-env:
-  - PGDATABASE=storemanagertest
-  - PGUSER=postgres
-  - JWTKEY=secretKey
-  - PGHOST=localhost
-  - PGPORT=5432
 node_js:
   - "10"
 services:
   - postgresql
 before_script:
-  - psql -c 'DROP DATABASE IF EXISTS storemanagertest;' -U postgres
   - psql -c 'create database storemanagertest;' -U postgres
 script:
   - npm run travistest
