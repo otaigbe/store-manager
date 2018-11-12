@@ -1,10 +1,13 @@
 language: node_js
 node_js:
   - "10"
+cache:
+directories:
+  - "node_modules"
 services:
   - postgresql
 before_script:
-  - psql -c 'create database storemanagertest;' -U postgres
+  - psql -c 'create database storemanager;' -U postgres
 script:
   - npm run travistest
 after_script:
