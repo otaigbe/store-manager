@@ -4,13 +4,12 @@ env:
   - JWTKEY=secretKey
   - PGHOST=localhost
   - PGPASSWORD=
-  - PGDATABASE=storemanager
 node_js:
   - "10"
 services:
   - postgresql
 before_script:
-  - psql -c 'DROP DATABASE IF EXISTS storemanager;' -U postgres
-  - psql -c 'create database storemanager;' -U postgres
+  - psql -c 'DROP DATABASE IF EXISTS store_manager;' -U postgres
+  - psql -c 'create database store_manager;' -U postgres
 script:
   - npm run travistest
