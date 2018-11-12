@@ -1,9 +1,10 @@
 language: node_js
 env:
-  - PGDATABASE=store_manager
-  - PGUSER=otaigbe
+  - PGDATABASE='store_manager'
+  - PGUSER='otaigbe'
   - JWTKEY='secretKey'
-  - PGPASSWORD=password
+  - PGPASSWORD='password'
+  - PGHOST='localhost'
 node_js:
   - "10"
 services:
@@ -15,4 +16,4 @@ script:
   - npm run travistest
 after_script:
   - psql -c 'select * from products;' -U postgres
-  - psql -c 'select * from attendants;' -U postgres
+  - psql -c 'select * from memebers;' -U postgres
