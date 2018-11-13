@@ -49,7 +49,7 @@
   "scripts": {
     "confirm": "babel-node ./src/dbUtils/confirmInsertion.js --env",
     "migrations": "babel-node ./src/dbUtils/autoCreateTables.js --env",
-    "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit",
+    "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 20000 --exit",
     "cover": "nyc --reporter=lcov npm test",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",

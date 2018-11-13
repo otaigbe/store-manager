@@ -33,10 +33,11 @@ salesImpl.createSalesRecord = (req, res) => {
       console.log(multiInsert);
       try {
         const insertResult = await client.query(multiInsert);
+        return res.status(200).json({ message: 'Records saved' });
       } catch (error) {
         return res.status(501).send('Something is wrong! Unable to save sales records to the database');
       }
-      return res.status(200).json({ message: 'Records saved' });
+      
     });
   } else {
     pool.connect(async (err, client) => {

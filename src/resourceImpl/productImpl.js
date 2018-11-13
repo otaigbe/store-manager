@@ -147,7 +147,7 @@ productImpl.modifyAProduct = (req, res) => {
       }
     });
   } else {
-    return res.status(404).json({
+    return res.status(422).json({
       message: 'Validation error! Please check your input',
       ErrorMessage: result.error,
     });
@@ -178,7 +178,7 @@ productImpl.deleteProduct = (req, res) => {
           return res.status(404).json({ message: 'Product doesn\'t exist! Nothing to Delete' });
         }
       } catch (er) {
-        return res.status(404).json({
+        return res.status(501).json({
           message: 'Something went wrong: Couldn\'t modify the product',
           ErrorMessage: er.message,
         });
@@ -193,34 +193,26 @@ productImpl.deleteProduct = (req, res) => {
 };
 
 productImpl.getProductById = (req, res) => {
-  const result = Joi.validate(req.params.product_id, schema3);
-  if (result.error === null) {
-    const args = [req.params.id];
-    pool.connect(async (err, client) => {
-      if (err) { return res.status(501).json({ message: 'Somethings up with the database!' }); }
-      try {
-        const queryResult = await client.query(queries.selectProductById, args);
-        if (queryResult.rowCount === 1) {
-          return res.status(200).json({
-            message: 'Product Found!',
-            Product: queryResult.rows,
-          });
-        }
-        if (queryResult.rowCount === 0) {
-          return res.status(404).json({ message: 'Product doesn\'t exist!' });
-        }
-      } catch (er) {
-        return res.status(404).json({
-          message: 'Something went wrong: Couldn\'t acess the product',
-          ErrorMessage: er.message,
+  const args = [req.params.id];
+  pool.connect(async (err, client) => {
+    if (err) { return res.status(501).json({ message: 'Somethings up with the database!' }); }
+    try {
+      const queryResult = await client.query(queries.selectProductById, args);
+      if (queryResult.rowCount === 1) {
+        return res.status(200).json({
+          message: 'Product Found!',
+          Product: queryResult.rows,
         });
       }
-    });
-  } else {
-    return res.status(422).json({
-      message: 'Validation error! Please check your input',
-      ErrorMessage: result.error,
-    });
-  }
+      if (queryResult.rowCount === 0) {
+        return res.status(404).json({ message: 'Product doesn\'t exist!' });
+      }
+    } catch (er) {
+      return res.status(404).json({
+        message: 'Something went wrong: Couldn\'t acess the product',
+        ErrorMessage: er.message,
+      });
+    }
+  });
 };
 export default productImpl;
