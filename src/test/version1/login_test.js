@@ -19,45 +19,31 @@ describe('StoreManager endpoints tests', () => {
   });
   describe('Testing the login endpoint', () => {
     describe('Testing the POST method', () => {
-      it('should check the response status', co.wrap(() => {
-        chai.request(app)
-          .post('/api/v1/auth/login')
-          .type('form')
-          .send({
-            email: 'otaigbe@gmail.com',
-            password: 'password',
-          })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-          });
-      }));
-      it('POST / login endpoint should return no errors', co.wrap(() => {
-        chai.request(app)
-          .post('/api/v1/auth/login')
-          .type('form')
-          .send({
-            email: 'otaigbe@gmail.com',
-            password: 'password',
-          })
-          .end((err, res) => {
-            expect(err).to.be.null;
-          });
-      }));
-      it('POST / login endpoint should successfully sign in', co.wrap(() => {
-        chai.request(app)
-          .post('/api/v1/auth/login')
-          .type('form')
-          .send({
-            email: 'otaigbe@gmail.com',
-            password: 'password',
-          })
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res.body).to.eql({
-              message: 'You"re logged in',
-            });
-          });
-      }));
+      describe('Testing when correct information is provided', () => {
+        it('POST / login endpoint should successfully sign in', async () => {
+          const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe@gmail.com', password: 'password' });
+          expect(res).to.have.status(200);
+          expect(res.body).to.eql({ message: 'You"re logged in' });
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('You"re logged in');
+        });
+      });
+      describe('Testing when wrong information is inputted', () => {
+        it('POST / login endpoint should return a 404(not found) error', async () => {
+          const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe@gmail.com', password: 'okokobioko' });
+          expect(res).to.have.status(404);
+          expect(res.body).to.eql({ message: 'User doesn"t exist! Enter valid email and password' });
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('User doesn"t exist! Enter valid email and password');
+        });
+        it('POST / login endpoint should return a 422(unprocessable entity) error', async () => {
+          const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe', password: 'okokobioko' });
+          expect(res).to.have.status(422);
+          expect(res.body).to.have.property('message');
+          expect(res.body).to.have.property('ErrorMessage');
+          expect(res.body.message).to.equal('Validation error! Please check your input');
+        });
+      });
     });
   });
 });
