@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/otaigbe/store-manager.svg?branch=develop)](https://travis-ci.org/otaigbe/store-manager)
 # Store-Manager
 Store-Manager is a light weight, easy to use desktop application that runs primarily in a browser. It is built on top of NodeJS and uses javascript to query restful resources from the backend. It is higly responsive and flexible because it helps the store owner/Administrator perform a variety of operations which include:
 * Searching and adding products to buyer’s cart.
