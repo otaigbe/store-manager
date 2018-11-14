@@ -22,7 +22,7 @@ const pool = new pg.Pool(config);
 
 
 const queries = {};
-queries.selectLoginQuery = 'SELECT attendant_id,attendant_name,attendant_email,attendant_password,attendant_admin FROM attendants WHERE attendant_email=$1 and attendant_password=$2';
+queries.selectLoginQuery = 'SELECT * FROM attendants WHERE attendant_email=$1 and attendant_password=$2';
 queries.InsertSignup = 'INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES ($1, $2, $3, $4)';
 queries.selectEmail = 'SELECT attendant_email FROM attendants WHERE attendant_email= $1';
 queries.selectProductIfExist = 'SELECT * from products WHERE product_desc=$1';
@@ -38,5 +38,9 @@ queries.selectProductById = 'SELECT * from products WHERE product_id = $1';
 queries.getAllsalesRecordCount = 'SELECT * FROM salesrecords';
 queries.selectAllSalesRecord = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
 queries.selectSalesRecordById = 'SELECT * from salesrecords WHERE salesrecord_id = $1';
+queries.selectAllSalesRecordFilterByCreatorWithPagination = 'SELECT * FROM salesRecords WHERE attendant_name = $3 LIMIT $1 OFFSET $2';
+queries.selectAllSalesRecordFilterByCreatorWithoutPagination = 'SELECT * FROM salesrecords WHERE attendant_name = $1';
+
+
 
 export { pool, queries };

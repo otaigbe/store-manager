@@ -7,6 +7,8 @@ exports.default = void 0;
 
 var _joi = _interopRequireDefault(require("joi"));
 
+var _functions = _interopRequireDefault(require("../utils/functions"));
+
 var _queries = require("../dbUtils/queries/queries");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -62,24 +64,25 @@ productImpl.addProduct = function (req, res) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!err) {
-                  _context.next = 2;
+                  _context.next = 3;
                   break;
                 }
 
+                console.log(err);
                 return _context.abrupt("return", res.status(501).json({
                   message: err.message
                 }));
 
-              case 2:
-                _context.prev = 2;
-                _context.next = 5;
+              case 3:
+                _context.prev = 3;
+                _context.next = 6;
                 return client.query(_queries.queries.selectProductIfExist, temp);
 
-              case 5:
+              case 6:
                 resultSet = _context.sent;
 
                 if (!(resultSet.rowCount === 1)) {
-                  _context.next = 14;
+                  _context.next = 15;
                   break;
                 }
 
@@ -87,48 +90,48 @@ productImpl.addProduct = function (req, res) {
                 console.log(currentQuantityInStock);
                 temp2 = [Number(quantitySupplied) + Number(currentQuantityInStock), productDesc, unitPrice]; // console.log(temp2);
 
-                _context.next = 12;
+                _context.next = 13;
                 return client.query(_queries.queries.updateProductDuringCreation, temp2);
 
-              case 12:
+              case 13:
                 updateResult = _context.sent;
                 return _context.abrupt("return", res.status(200).json({
                   message: 'Updated an already existent product.'
                 }));
 
-              case 14:
+              case 15:
                 if (!(resultSet.rowCount === 0)) {
-                  _context.next = 19;
+                  _context.next = 20;
                   break;
                 }
 
-                _context.next = 17;
+                _context.next = 18;
                 return client.query(_queries.queries.insertProduct, temp3);
 
-              case 17:
+              case 18:
                 insertResultSet = _context.sent;
                 return _context.abrupt("return", res.status(201).json({
                   message: 'Created a new product.',
                   Resource: req.body
                 }));
 
-              case 19:
-                _context.next = 24;
+              case 20:
+                _context.next = 25;
                 break;
 
-              case 21:
-                _context.prev = 21;
-                _context.t0 = _context["catch"](2);
+              case 22:
+                _context.prev = 22;
+                _context.t0 = _context["catch"](3);
                 return _context.abrupt("return", res.status(501).json({
                   message: _context.t0.message
                 }));
 
-              case 24:
+              case 25:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 21]]);
+        }, _callee, this, [[3, 22]]);
       }));
 
       return function (_x, _x2) {
@@ -143,15 +146,11 @@ productImpl.addProduct = function (req, res) {
   }
 };
 
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
 productImpl.getAllProducts = function (req, res) {
   var urlQuery = req.query;
   var args = [];
 
-  if (!isEmpty(urlQuery)) {
+  if (!_functions.default.isEmpty(urlQuery)) {
     var page = req.query.pageNumber;
     var itemsPerPage = 5;
     var pageOffset = (page - 1) * itemsPerPage;
@@ -362,7 +361,7 @@ productImpl.modifyAProduct = function (req, res) {
       };
     }());
   } else {
-    return res.status(404).json({
+    return res.status(422).json({
       message: 'Validation error! Please check your input',
       ErrorMessage: result.error
     });
@@ -445,7 +444,7 @@ productImpl.deleteProduct = function (req, res) {
               case 21:
                 _context5.prev = 21;
                 _context5.t1 = _context5["catch"](2);
-                return _context5.abrupt("return", res.status(404).json({
+                return _context5.abrupt("return", res.status(501).json({
                   message: 'Something went wrong: Couldn\'t modify the product',
                   ErrorMessage: _context5.t1.message
                 }));
@@ -471,89 +470,80 @@ productImpl.deleteProduct = function (req, res) {
 };
 
 productImpl.getProductById = function (req, res) {
-  var result = _joi.default.validate(req.params.product_id, schema3);
+  var args = [req.params.id];
 
-  if (result.error === null) {
-    var args = [req.params.id];
-
-    _queries.pool.connect(
+  _queries.pool.connect(
+  /*#__PURE__*/
+  function () {
+    var _ref6 = _asyncToGenerator(
     /*#__PURE__*/
-    function () {
-      var _ref6 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6(err, client) {
-        var queryResult;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                if (!err) {
-                  _context6.next = 2;
-                  break;
-                }
-
-                return _context6.abrupt("return", res.status(501).json({
-                  message: 'Somethings up with the database!'
-                }));
-
-              case 2:
-                _context6.prev = 2;
-                _context6.next = 5;
-                return client.query(_queries.queries.selectProductById, args);
-
-              case 5:
-                queryResult = _context6.sent;
-
-                if (!(queryResult.rowCount === 1)) {
-                  _context6.next = 8;
-                  break;
-                }
-
-                return _context6.abrupt("return", res.status(200).json({
-                  message: 'Product Found!',
-                  Product: queryResult.rows
-                }));
-
-              case 8:
-                if (!(queryResult.rowCount === 0)) {
-                  _context6.next = 10;
-                  break;
-                }
-
-                return _context6.abrupt("return", res.status(404).json({
-                  message: 'Product doesn\'t exist!'
-                }));
-
-              case 10:
-                _context6.next = 15;
+    regeneratorRuntime.mark(function _callee6(err, client) {
+      var queryResult;
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              if (!err) {
+                _context6.next = 2;
                 break;
+              }
 
-              case 12:
-                _context6.prev = 12;
-                _context6.t0 = _context6["catch"](2);
-                return _context6.abrupt("return", res.status(404).json({
-                  message: 'Something went wrong: Couldn\'t acess the product',
-                  ErrorMessage: _context6.t0.message
-                }));
+              return _context6.abrupt("return", res.status(501).json({
+                message: 'Somethings up with the database!'
+              }));
 
-              case 15:
-              case "end":
-                return _context6.stop();
-            }
+            case 2:
+              _context6.prev = 2;
+              _context6.next = 5;
+              return client.query(_queries.queries.selectProductById, args);
+
+            case 5:
+              queryResult = _context6.sent;
+
+              if (!(queryResult.rowCount === 1)) {
+                _context6.next = 8;
+                break;
+              }
+
+              return _context6.abrupt("return", res.status(200).json({
+                message: 'Product Found!',
+                Product: queryResult.rows
+              }));
+
+            case 8:
+              if (!(queryResult.rowCount === 0)) {
+                _context6.next = 10;
+                break;
+              }
+
+              return _context6.abrupt("return", res.status(404).json({
+                message: 'Product doesn\'t exist!'
+              }));
+
+            case 10:
+              _context6.next = 15;
+              break;
+
+            case 12:
+              _context6.prev = 12;
+              _context6.t0 = _context6["catch"](2);
+              return _context6.abrupt("return", res.status(404).json({
+                message: 'Something went wrong: Couldn\'t acess the product',
+                ErrorMessage: _context6.t0.message
+              }));
+
+            case 15:
+            case "end":
+              return _context6.stop();
           }
-        }, _callee6, this, [[2, 12]]);
-      }));
+        }
+      }, _callee6, this, [[2, 12]]);
+    }));
 
-      return function (_x11, _x12) {
-        return _ref6.apply(this, arguments);
-      };
-    }());
-  } else {
-    return res.status(422).json({
-      message: 'Validation error! Please check your input',
-      ErrorMessage: result.error
-    });
-  }
+    return function (_x11, _x12) {
+      return _ref6.apply(this, arguments);
+    };
+  }());
 };
 
 var _default = productImpl;

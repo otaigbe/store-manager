@@ -1,5 +1,7 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable consistent-return */
 import Joi from 'joi';
+import customFunc from '../utils/functions';
 import { queries, pool } from '../dbUtils/queries/queries';
 
 const productImpl = {};
@@ -64,13 +66,10 @@ productImpl.addProduct = (req, res) => {
   }
 };
 
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
 productImpl.getAllProducts = (req, res) => {
   const urlQuery = req.query;
   const args = [];
-  if (!isEmpty(urlQuery)) {
+  if (!customFunc.isEmpty(urlQuery)) {
     const page = req.query.pageNumber;
     const itemsPerPage = 5;
     const pageOffset = (page - 1) * itemsPerPage;

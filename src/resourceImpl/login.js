@@ -24,10 +24,10 @@ loginImpl.login = (req, res) => {
           const db = await client.query(queries.selectLoginQuery, temp);
           if (db.rowCount > 0) {
             const signObj = {};
-            signObj.email = db.rows[0].email;
-            signObj.admin = db.rows[0].admin;
+            signObj.email = db.rows[0].attendant_email;
+            signObj.admin = db.rows[0].attendant_admin;
             signObj.attendant_id = db.rows[0].attendant_id;
-            signObj.name = db.rows[0].name;
+            signObj.name = db.rows[0].attendant_name;
             const token = jwt.sign(signObj, process.env.JWTKEY);
             res.header('x-auth-token', token).status(200).json({
               message: 'You"re logged in',

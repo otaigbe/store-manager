@@ -1,23 +1,11 @@
 /* eslint-disable no-else-return */
 import jwt from 'jsonwebtoken';
+import customFunc from '../utils/functions';
 
-export function typeOf(value) {
-  let s = typeof value;
-  if (s === 'object') {
-    if (value) {
-      if (value instanceof Array) {
-        s = 'array';
-      }
-    } else {
-      s = 'null';
-    }
-  }
-  return s;
-}
 const auth = (req, res, next) => {
   const token = req.header('x-auth-token');
   let name;
-  if (typeOf(req.body) === 'array') {
+  if (customFunc.typeOf(req.body) === 'array') {
     name = req.body[0].attendant_name;
   } else {
     name = req.body.attendant_name;
@@ -31,7 +19,7 @@ const auth = (req, res, next) => {
         req.user = decoded;
         next();
       } else {
-        res.status(403).json({ message: 'Forbidden! You need to have  appropraite privileges' });
+        res.status(403).json({ message: 'Forbidden! You need to have appropraite privileges' });
       }
     } catch (error) {
       res.status(400).send('Invalid Token');

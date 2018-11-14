@@ -51,7 +51,8 @@ loginImpl.login = function (req, res) {
                 }
 
                 res.status(501).json({
-                  message: 'Internal Server Error'
+                  message: 'Internal Server Error',
+                  Error: err
                 });
                 _context.next = 14;
                 break;
@@ -66,10 +67,10 @@ loginImpl.login = function (req, res) {
 
                 if (db.rowCount > 0) {
                   signObj = {};
-                  signObj.email = db.rows[0].email;
-                  signObj.admin = db.rows[0].admin;
+                  signObj.email = db.rows[0].attendant_email;
+                  signObj.admin = db.rows[0].attendant_admin;
                   signObj.attendant_id = db.rows[0].attendant_id;
-                  signObj.name = db.rows[0].name;
+                  signObj.name = db.rows[0].attendant_name;
                   token = _jsonwebtoken.default.sign(signObj, process.env.JWTKEY);
                   res.header('x-auth-token', token).status(200).json({
                     message: 'You"re logged in'
