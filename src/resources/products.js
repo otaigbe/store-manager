@@ -1,5 +1,5 @@
 import express from 'express';
-import productImpl from '../resourceImpl/productImpl';
+import productImpl from '../resourceImpl/product';
 import auth from '../middleware/auth';
 
 const router = express.Router();

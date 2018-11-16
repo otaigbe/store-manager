@@ -3,35 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.queries = exports.pool = void 0;
-
-var _pg = _interopRequireDefault(require("pg"));
-
-var _dotenv = _interopRequireDefault(require("dotenv"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_dotenv.default.config();
-
-var db = {};
-var config = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  host: process.env.PGHOST
-};
-var config2 = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  // password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
-  port: process.env.PGPORT
-};
-var pool = new _pg.default.Pool(config);
-exports.pool = pool;
+exports.default = void 0;
 var queries = {};
-exports.queries = queries;
 queries.selectLoginQuery = 'SELECT * FROM attendants WHERE attendant_email=$1 and attendant_password=$2';
 queries.InsertSignup = 'INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES ($1, $2, $3, $4)';
 queries.selectEmail = 'SELECT attendant_email FROM attendants WHERE attendant_email= $1';
@@ -46,7 +19,9 @@ queries.updateProduct = 'UPDATE products SET product_id = $1, product_desc = $2,
 queries.deleteProduct = 'DELETE FROM products WHERE product_id = $1';
 queries.selectProductById = 'SELECT * from products WHERE product_id = $1';
 queries.getAllsalesRecordCount = 'SELECT * FROM salesrecords';
-queries.selectAllSalesRecord = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
+queries.selectAllSalesRecordWithPagination = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
 queries.selectSalesRecordById = 'SELECT * from salesrecords WHERE salesrecord_id = $1';
-queries.selectAllSalesRecordFilterByCreatorWithPagination = 'SELECT * FROM salesRecords WHERE attendant_name = $3 LIMIT $1 OFFSET $2';
-queries.selectAllSalesRecordFilterByCreatorWithoutPagination = 'SELECT * FROM salesrecords WHERE attendant_name = $1';
+queries.selectAllSalesRecordFilterByCreatorWithPagination = 'SELECT * FROM salesRecords WHERE attendant_name= $1 LIMIT $2 OFFSET $3';
+queries.selectAllSalesRecordFilterByCreator = 'SELECT * FROM salesRecords WHERE attendant_name = $1';
+var _default = queries;
+exports.default = _default;

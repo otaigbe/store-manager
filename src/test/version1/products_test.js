@@ -11,7 +11,6 @@ import 'babel-polyfill';
 const expect = chai.expect;
 chai.use(chaiHttp);
 chai.use(chaiJson);
-chai.use(chaiUrl);
 describe('Testing out Products endpoints', () => {
   describe('Testing products GET', () => {
     it('GET / products endpoint; should return all products with pagination', async () => {
@@ -22,12 +21,6 @@ describe('Testing out Products endpoints', () => {
       expect(res.body).to.have.property('message');
       expect(res.body).to.have.property('Products');
     });
-    // it('GET / products endpoint; should check the url', (done) => {
-    //   chai.request(app).get('/api/v1/products/?pageNumber=1').end((err, res) => {
-    //     chai.expect('/api/v1/products/?pageNumber=1').to.have.path('/api/v1/products/?pageNumber=1');
-    //     done();
-    //   });
-    // });
     it('GET / products endpoint; should return all products without pagination', async () => {
       const res = await chai.request(app).get('/api/v1/products/');
       expect(res).to.have.status(200);
@@ -218,57 +211,30 @@ describe('Testing out Products endpoints', () => {
   // Beginning of DELETE
   describe('Testing the Delete method', () => {
     it('Delete / should return no access token error', async () => {
-      const res = await chai.request(app)
-        .delete('/api/v1/products/id')
-        .type('form')
-        .send({
-          product_id: 6,
-        });
+      const res = await chai.request(app).del('/api/v1/products/6');
       expect(res).to.have.status(401);
       expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
     });
-    it('Delete / should return a validation error', async () => {
-      const res = await chai.request(app)
-        .delete('/api/v1/products/id')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-        .type('form')
-        .send({
-          product_id: 'product3',
-        });
-      expect(res).to.have.status(422);
+    it('Delete / should return cannot delete a non existent product message', async () => {
+      const res = await chai.request(app).del('/api/v1/products/500')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
+      expect(res).to.have.status(404);
       expect(res.body).to.have.property('message');
-      expect(res.body.message).to.equal('Validation error! Please check your input');
+      expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
     });
-    it('Delete / should return cannot delete a non existent product message', co.wrap(() => {
-      chai.request(app).delete('/api/v1/products/id')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-        .type('form')
-        .send({
-          product_id: 500,
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(404);
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
-        });
 
-      // expect(res.body).to.have.property('message');
-      // expect(res.body.message).to.equal('Validation error! Please check your input');
-    }));
+    it('Delete / should delete a product from the database', async () => {
+      const res = await chai.request(app).del('/api/v1/products/8')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
+      expect(res).to.have.status(200);
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal('Product Deleted');
+    });
 
-    it('Delete / should delete a product from the database', co.wrap(() => {
-      chai.request(app)
-        .delete('/api/v1/products/id')
-        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-        .type('form')
-        .send({
-          product_id: '8',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('Product Deleted');
-        });
-    }));
+    it('checks if one is an admin', async () => {
+      const res = await chai.request(app).del('/api/v1/products/8')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MjI4Njg4MH0.8pQOl4ZxzdecrpTvUMGCc5x6boPzToWjgy5910cykEs');
+      expect(res).to.have.status(403);
+    });
   });
 });

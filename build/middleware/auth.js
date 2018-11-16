@@ -17,7 +17,10 @@ var auth = function auth(req, res, next) {
     return res.status(401).json({
       message: 'No access token provided! Unaccessible resource'
     });
-  } else if (token) {
+  }
+
+  if (token) {
+    /* istanbul ignore next */
     try {
       var decoded = _jsonwebtoken.default.verify(token, process.env.JWTKEY);
 

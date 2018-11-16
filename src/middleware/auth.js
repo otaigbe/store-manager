@@ -5,7 +5,9 @@ const auth = (req, res, next) => {
   const token = req.header('x-auth-token');
   if (!token) {
     return res.status(401).json({ message: 'No access token provided! Unaccessible resource' });
-  } else if (token) {
+  } 
+  if (token) {
+    /* istanbul ignore next */
     try {
       const decoded = jwt.verify(token, process.env.JWTKEY);
       if (decoded.admin === true || decoded.admin === 'true') {

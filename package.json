@@ -17,6 +17,7 @@
     "chai-json": "^1.0.0",
     "chai-url": "^1.0.4",
     "co": "^4.6.0",
+    "config": "^2.0.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
@@ -49,7 +50,7 @@
   "scripts": {
     "confirm": "babel-node ./src/dbUtils/confirmInsertion.js --env",
     "migrations": "babel-node ./src/dbUtils/autoCreateTables.js --env",
-    "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 20000 --exit",
+    "test": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 25000 --exit",
     "cover": "nyc --reporter=lcov npm test",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",

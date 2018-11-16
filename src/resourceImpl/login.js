@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import 'babel-polyfill';
-import { pool, queries } from '../dbUtils/queries/queries';
+import queries from '../dbUtils/queries/queries';
+import pool from '../dbUtils/dbConnection';
 
 const loginImpl = {};
 const schema = Joi.object({

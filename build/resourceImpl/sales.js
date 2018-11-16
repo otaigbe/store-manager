@@ -11,7 +11,9 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _functions = _interopRequireDefault(require("../utils/functions"));
 
-var _queries = require("../dbUtils/queries/queries");
+var _queries = _interopRequireDefault(require("../dbUtils/queries/queries"));
+
+var _dbConnection = _interopRequireDefault(require("../dbUtils/dbConnection"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21,474 +23,293 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var salesImpl = {};
 
-salesImpl.createSalesRecord = function (req, res) {
-  // console.log(req.body);
-  var records = [];
-
-  if (_functions.default.typeOf(req.body) === 'array') {
-    for (var i = 0; i < req.body.length; i += 1) {
-      var inner = [];
-      inner.push(req.body[i].product_id, req.body[i].product_desc, req.body[i].unit_price, req.body[i].quantity_bought, req.body[i].amount, req.body[i].attendant_id, req.body[i].attendant_name);
-      records.push(inner);
-    }
-
-    _queries.pool.connect(
-    /*#__PURE__*/
-    function () {
-      var _ref = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(err, client) {
-        var multiInsert, insertResult;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!err) {
-                  _context.next = 2;
-                  break;
-                }
-
-                return _context.abrupt("return", res.status(501).send('Something is wrong! Unable to connect to the database'));
-
-              case 2:
-                multiInsert = (0, _pgFormat.default)('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
-                _context.prev = 3;
-                _context.next = 6;
-                return client.query(multiInsert);
-
-              case 6:
-                insertResult = _context.sent;
-                return _context.abrupt("return", res.status(200).json({
-                  message: 'Records saved'
-                }));
-
-              case 10:
-                _context.prev = 10;
-                _context.t0 = _context["catch"](3);
-                return _context.abrupt("return", res.status(501).send('Something is wrong! Unable to save sales records to the database'));
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[3, 10]]);
-      }));
-
-      return function (_x, _x2) {
-        return _ref.apply(this, arguments);
-      };
-    }());
-  } else {
-    _queries.pool.connect(
-    /*#__PURE__*/
-    function () {
-      var _ref2 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(err, client) {
-        var singleInsert, insertResult;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!err) {
-                  _context2.next = 2;
-                  break;
-                }
-
-                return _context2.abrupt("return", res.status(501).send('Something is wrong! Unable to connect to the database'));
-
-              case 2:
-                singleInsert = (0, _pgFormat.default)('INSERT INTO salesRecords(product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', req.body);
-                _context2.prev = 3;
-                _context2.next = 6;
-                return client.query(singleInsert);
-
-              case 6:
-                insertResult = _context2.sent;
-                _context2.next = 12;
-                break;
-
-              case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](3);
-                return _context2.abrupt("return", res.status(501).send('Something is wrong! Unable to save sales records to the database'));
-
-              case 12:
-                return _context2.abrupt("return", res.status(200).json({
-                  message: 'Records saved'
-                }));
-
-              case 13:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[3, 9]]);
-      }));
-
-      return function (_x3, _x4) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
-  }
-};
-
-salesImpl.getAllSalesRecords = function (req, res) {
-  var urlQuery = req.query;
-  var token = req.header('x-auth-token');
-  var page = req.query.pageNumber;
-  var itemsPerPage = 5;
-  var pageOffset = (page - 1) * itemsPerPage;
-
-  if (token) {
-    var decoded = _jsonwebtoken.default.verify(token, process.env.JWTKEY); // console.log(decoded);
-    // if (!customFunc.isEmpty(decoded)) {
-
-
-    if (!_functions.default.isEmpty(urlQuery)) {
-      var args = [];
-      args.push(itemsPerPage);
-      args.push(pageOffset);
-
-      if (decoded.admin === true) {
-        _queries.pool.connect(
-        /*#__PURE__*/
-        function () {
-          var _ref3 = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee3(err, client) {
-            var count, selectResultSet;
-            return regeneratorRuntime.wrap(function _callee3$(_context3) {
-              while (1) {
-                switch (_context3.prev = _context3.next) {
-                  case 0:
-                    if (!err) {
-                      _context3.next = 2;
-                      break;
-                    }
-
-                    return _context3.abrupt("return", res.status(501).json({
-                      message: 'Internal Database Error'
-                    }));
-
-                  case 2:
-                    _context3.prev = 2;
-                    _context3.next = 5;
-                    return client.query(_queries.queries.getAllsalesRecordCount);
-
-                  case 5:
-                    count = _context3.sent;
-                    _context3.next = 8;
-                    return client.query(_queries.queries.selectAllSalesRecord, args);
-
-                  case 8:
-                    selectResultSet = _context3.sent;
-                    res.status(200).json({
-                      message: "Showing pages ".concat(page, " of ").concat(count.rows.length),
-                      salesRecords: selectResultSet.rows
-                    });
-                    _context3.next = 15;
-                    break;
-
-                  case 12:
-                    _context3.prev = 12;
-                    _context3.t0 = _context3["catch"](2);
-                    res.status(501).json({
-                      message: 'Query wasn\'t executed',
-                      Error: _context3.t0.message
-                    });
-
-                  case 15:
-                  case "end":
-                    return _context3.stop();
-                }
-              }
-            }, _callee3, this, [[2, 12]]);
-          }));
-
-          return function (_x5, _x6) {
-            return _ref3.apply(this, arguments);
-          };
-        }());
-      } else if (decoded.admin === false) {
-        // console.log(decoded.name);
-        args.push(decoded.name);
-
-        _queries.pool.connect(
-        /*#__PURE__*/
-        function () {
-          var _ref4 = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee4(err, client) {
-            var count, selectResultSet;
-            return regeneratorRuntime.wrap(function _callee4$(_context4) {
-              while (1) {
-                switch (_context4.prev = _context4.next) {
-                  case 0:
-                    if (!err) {
-                      _context4.next = 2;
-                      break;
-                    }
-
-                    return _context4.abrupt("return", res.status(501).json({
-                      message: 'Internal Database Error'
-                    }));
-
-                  case 2:
-                    _context4.prev = 2;
-                    _context4.next = 5;
-                    return client.query(_queries.queries.selectAllSalesRecordFilterByCreatorWithoutPagination);
-
-                  case 5:
-                    count = _context4.sent;
-                    _context4.next = 8;
-                    return client.query(_queries.queries.selectAllSalesRecordFilterByCreatorWithPagination, args);
-
-                  case 8:
-                    selectResultSet = _context4.sent;
-                    res.status(200).json({
-                      message: "Showing pages ".concat(page, " of ").concat(count.rows.length),
-                      salesRecords: selectResultSet.rows
-                    });
-                    _context4.next = 15;
-                    break;
-
-                  case 12:
-                    _context4.prev = 12;
-                    _context4.t0 = _context4["catch"](2);
-                    res.status(501).json({
-                      message: 'Query wasn\'t executed',
-                      Error: _context4.t0.message
-                    });
-
-                  case 15:
-                  case "end":
-                    return _context4.stop();
-                }
-              }
-            }, _callee4, this, [[2, 12]]);
-          }));
-
-          return function (_x7, _x8) {
-            return _ref4.apply(this, arguments);
-          };
-        }());
-      } // eslint-disable-next-line use-isnan
-
-    }
-
-    if (_functions.default.isEmpty(urlQuery)) {
-      var _args5 = [];
-
-      _args5.push(decoded.name);
-
-      if (decoded.admin === true) {
-        _queries.pool.connect(
-        /*#__PURE__*/
-        function () {
-          var _ref5 = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee5(err, client) {
-            var selectResultSet;
-            return regeneratorRuntime.wrap(function _callee5$(_context5) {
-              while (1) {
-                switch (_context5.prev = _context5.next) {
-                  case 0:
-                    if (!err) {
-                      _context5.next = 2;
-                      break;
-                    }
-
-                    return _context5.abrupt("return", res.status(501).json({
-                      message: 'Internal Database Error'
-                    }));
-
-                  case 2:
-                    _context5.next = 4;
-                    return client.query(_queries.queries.getAllsalesRecordCount);
-
-                  case 4:
-                    selectResultSet = _context5.sent;
-                    res.status(200).json({
-                      message: 'Showing pages All sales record',
-                      salesRecords: selectResultSet.rows
-                    });
-
-                  case 6:
-                  case "end":
-                    return _context5.stop();
-                }
-              }
-            }, _callee5, this);
-          }));
-
-          return function (_x9, _x10) {
-            return _ref5.apply(this, arguments);
-          };
-        }());
-      }
-
-      if (decoded.admin === false) {
-        _queries.pool.connect(
-        /*#__PURE__*/
-        function () {
-          var _ref6 = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee6(err, client) {
-            var selectResultSet;
-            return regeneratorRuntime.wrap(function _callee6$(_context6) {
-              while (1) {
-                switch (_context6.prev = _context6.next) {
-                  case 0:
-                    if (!err) {
-                      _context6.next = 2;
-                      break;
-                    }
-
-                    return _context6.abrupt("return", res.status(501).json({
-                      message: 'Internal Database Error'
-                    }));
-
-                  case 2:
-                    _context6.next = 4;
-                    return client.query(_queries.queries.selectAllSalesRecordFilterByCreatorWithoutPagination, _args5);
-
-                  case 4:
-                    selectResultSet = _context6.sent;
-
-                    if (!(selectResultSet.rowCount === 0)) {
-                      _context6.next = 7;
-                      break;
-                    }
-
-                    return _context6.abrupt("return", res.status(404).json({
-                      message: 'No sales Recrod for this user'
-                    }));
-
-                  case 7:
-                    res.status(200).json({
-                      message: 'Showing pages All sales record',
-                      salesRecords: selectResultSet.rows
-                    });
-
-                  case 8:
-                  case "end":
-                    return _context6.stop();
-                }
-              }
-            }, _callee6, this);
-          }));
-
-          return function (_x11, _x12) {
-            return _ref6.apply(this, arguments);
-          };
-        }());
-      }
-    } // } else {
-    //   return res.status(400).json({ message: 'Invalid Token' });
-    // }
-
-  } else {
-    return res.status(401).json({
-      message: 'No access token provided! Unaccessible resource'
-    });
-  }
-};
-
-salesImpl.getSalesRecordById = function (req, res) {
-  // const result = Joi.validate(req.params.salesrecord_id, schema3);
-  // if (result.error === null) {
-  var token = req.header('x-auth-token');
-  var args = [req.params.id];
-
-  _queries.pool.connect(
+salesImpl.createSalesRecord =
+/*#__PURE__*/
+function () {
+  var _ref = _asyncToGenerator(
   /*#__PURE__*/
-  function () {
-    var _ref7 = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee7(err, client) {
-      var queryResult, decoded;
-      return regeneratorRuntime.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              if (!err) {
-                _context7.next = 2;
-                break;
-              }
+  regeneratorRuntime.mark(function _callee(req, res) {
+    var records, i, inner, multiInsert, insertResult;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            records = [];
 
-              return _context7.abrupt("return", res.status(501).json({
-                message: 'Somethings up with the database!'
-              }));
+            for (i = 0; i < req.body.salesRecords.length; i += 1) {
+              inner = [];
+              inner.push(req.body.salesRecords[i].product_id, req.body.salesRecords[i].product_desc, req.body.salesRecords[i].unit_price, req.body.salesRecords[i].quantity_bought, req.body.salesRecords[i].amount, req.body.salesRecords[i].attendant_id, req.body.salesRecords[i].attendant_name);
+              records.push(inner);
+            }
 
-            case 2:
-              _context7.prev = 2;
-              _context7.next = 5;
-              return client.query(_queries.queries.selectSalesRecordById, args);
+            multiInsert = (0, _pgFormat.default)('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
+            _context.prev = 3;
+            _context.next = 6;
+            return _dbConnection.default.query(multiInsert);
 
-            case 5:
-              queryResult = _context7.sent;
-              decoded = _jsonwebtoken.default.verify(token, process.env.JWTKEY);
+          case 6:
+            insertResult = _context.sent;
+            return _context.abrupt("return", res.status(201).json({
+              message: 'Records saved'
+            }));
 
-              if (!(queryResult.rowCount === 1)) {
-                _context7.next = 14;
-                break;
-              }
+          case 10:
+            _context.prev = 10;
+            _context.t0 = _context["catch"](3);
+            return _context.abrupt("return", res.status(501).send('Something is wrong! Unable to save sales records to the database'));
 
-              if (!(decoded.name === queryResult.rows[0].attendant_name || decoded.admin === true)) {
-                _context7.next = 13;
-                break;
-              }
+          case 13:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, this, [[3, 10]]);
+  }));
 
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+salesImpl.getAllSalesRecords =
+/*#__PURE__*/
+function () {
+  var _ref2 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee2(req, res) {
+    var token, args, urlQuery, itemsPerPage, page, pageOffset, decoded, count, selectResultSet, array, array3, _count, _selectResultSet, args2, _selectResultSet2, _selectResultSet3;
+
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            token = req.header('x-auth-token');
+
+            if (!token) {
+              _context2.next = 61;
+              break;
+            }
+
+            args = [];
+            urlQuery = req.query;
+            itemsPerPage = 5;
+            page = req.query.pageNumber;
+            pageOffset = (Number(page) - 1) * itemsPerPage;
+            args.push(itemsPerPage);
+            args.push(pageOffset);
+            decoded = _jsonwebtoken.default.verify(token, process.env.JWTKEY);
+
+            if (_functions.default.isEmpty(urlQuery)) {
+              _context2.next = 38;
+              break;
+            }
+
+            console.log(args);
+
+            if (!(decoded.admin === true)) {
+              _context2.next = 20;
+              break;
+            }
+
+            _context2.next = 15;
+            return _dbConnection.default.query(_queries.default.getAllsalesRecordCount);
+
+          case 15:
+            count = _context2.sent;
+            _context2.next = 18;
+            return _dbConnection.default.query(_queries.default.selectAllSalesRecordWithPagination, args);
+
+          case 18:
+            selectResultSet = _context2.sent;
+            res.status(200).json({
+              message: "Showing pages ".concat(page, " of ").concat(count.rows.length),
+              salesRecords: selectResultSet.rows
+            });
+
+          case 20:
+            if (!(decoded.admin === false)) {
+              _context2.next = 38;
+              break;
+            }
+
+            // console.log(decoded.name);
+            array = [decoded.name, itemsPerPage, pageOffset];
+            array3 = [decoded.name];
+            _context2.prev = 23;
+            args.push(decoded.attendant_id);
+            console.log(args);
+            _context2.next = 28;
+            return _dbConnection.default.query(_queries.default.selectAllSalesRecordFilterByCreator, array3);
+
+          case 28:
+            _count = _context2.sent;
+            _context2.next = 31;
+            return _dbConnection.default.query(_queries.default.selectAllSalesRecordFilterByCreatorWithPagination, array);
+
+          case 31:
+            _selectResultSet = _context2.sent;
+            res.status(200).json({
+              message: "Showing pages ".concat(page, " of ").concat(_count.rows.length),
+              salesRecords: _selectResultSet.rows
+            });
+            _context2.next = 38;
+            break;
+
+          case 35:
+            _context2.prev = 35;
+            _context2.t0 = _context2["catch"](23);
+
+            /* istanbul ignore next */
+            res.status(501).json({
+              message: 'Query wasn\'t executed',
+              Error: _context2.t0.message
+            });
+
+          case 38:
+            if (!_functions.default.isEmpty(urlQuery)) {
+              _context2.next = 59;
+              break;
+            }
+
+            args2 = [];
+            args2.push(decoded.name);
+
+            if (!(decoded.admin === true)) {
+              _context2.next = 52;
+              break;
+            }
+
+            _context2.prev = 42;
+            _context2.next = 45;
+            return _dbConnection.default.query(_queries.default.getAllsalesRecordCount);
+
+          case 45:
+            _selectResultSet2 = _context2.sent;
+            res.status(200).json({
+              message: 'Showing All sales record',
+              salesRecords: _selectResultSet2.rows
+            });
+            _context2.next = 52;
+            break;
+
+          case 49:
+            _context2.prev = 49;
+            _context2.t1 = _context2["catch"](42);
+
+            /* istanbul ignore next */
+            res.status(501).json({
+              message: 'Query wasn\'t executed',
+              Error: _context2.t1.message
+            });
+
+          case 52:
+            if (!(decoded.admin === false)) {
+              _context2.next = 59;
+              break;
+            }
+
+            _context2.next = 55;
+            return _dbConnection.default.query(_queries.default.selectAllSalesRecordFilterByCreator, args2);
+
+          case 55:
+            _selectResultSet3 = _context2.sent;
+
+            if (!(_selectResultSet3.rowCount === 0)) {
+              _context2.next = 58;
+              break;
+            }
+
+            return _context2.abrupt("return", res.status(404).json({
+              message: 'No sales Recrod for this user'
+            }));
+
+          case 58:
+            res.status(200).json({
+              message: 'Showing All sales record',
+              salesRecords: _selectResultSet3.rows
+            });
+
+          case 59:
+            _context2.next = 62;
+            break;
+
+          case 61:
+            return _context2.abrupt("return", res.status(401).json({
+              message: 'No access token provided! Unaccessible resource'
+            }));
+
+          case 62:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this, [[23, 35], [42, 49]]);
+  }));
+
+  return function (_x3, _x4) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+salesImpl.getSalesRecordById =
+/*#__PURE__*/
+function () {
+  var _ref3 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee3(req, res) {
+    var args, queryResult;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            args = [req.params.id];
+            _context3.next = 3;
+            return _dbConnection.default.query(_queries.default.selectSalesRecordById, args);
+
+          case 3:
+            queryResult = _context3.sent;
+            _context3.prev = 4;
+
+            if (queryResult.rowCount === 1) {
               res.status(200).json({
                 message: 'Sales Record Found!',
                 record: queryResult.rows
               });
-              res.end();
-              _context7.next = 14;
+            }
+
+            if (!(queryResult.rowCount === 0)) {
+              _context3.next = 8;
               break;
+            }
 
-            case 13:
-              return _context7.abrupt("return", res.status(403).json({
-                message: 'Forbidden! You need to have appropraite privileges'
-              }));
+            return _context3.abrupt("return", res.status(404).json({
+              message: 'Record doesn\'t exist!'
+            }));
 
-            case 14:
-              if (!(queryResult.rowCount === 0)) {
-                _context7.next = 16;
-                break;
-              }
+          case 8:
+            _context3.next = 13;
+            break;
 
-              return _context7.abrupt("return", res.status(404).json({
-                message: 'Record doesn\'t exist!'
-              }));
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](4);
+            return _context3.abrupt("return", res.status(404).json({
+              message: 'Something went wrong: Couldn\'t acess the Record',
+              ErrorMessage: _context3.t0.message
+            }));
 
-            case 16:
-              _context7.next = 21;
-              break;
-
-            case 18:
-              _context7.prev = 18;
-              _context7.t0 = _context7["catch"](2);
-              return _context7.abrupt("return", res.status(404).json({
-                message: 'Something went wrong: Couldn\'t acess the Record',
-                ErrorMessage: _context7.t0.message
-              }));
-
-            case 21:
-            case "end":
-              return _context7.stop();
-          }
+          case 13:
+          case "end":
+            return _context3.stop();
         }
-      }, _callee7, this, [[2, 18]]);
-    }));
+      }
+    }, _callee3, this, [[4, 10]]);
+  }));
 
-    return function (_x13, _x14) {
-      return _ref7.apply(this, arguments);
-    };
-  }());
-};
+  return function (_x5, _x6) {
+    return _ref3.apply(this, arguments);
+  };
+}();
 
 var _default = salesImpl;
 exports.default = _default;

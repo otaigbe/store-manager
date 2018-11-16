@@ -11,7 +11,9 @@ var _joi = _interopRequireDefault(require("joi"));
 
 require("babel-polyfill");
 
-var _queries = require("../dbUtils/queries/queries");
+var _queries = _interopRequireDefault(require("../dbUtils/queries/queries"));
+
+var _dbConnection = _interopRequireDefault(require("../dbUtils/dbConnection"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,7 +36,7 @@ loginImpl.login = function (req, res) {
   if (result.error === null) {
     var temp = [req.body.email, req.body.password];
 
-    _queries.pool.connect(
+    _dbConnection.default.connect(
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
@@ -60,7 +62,7 @@ loginImpl.login = function (req, res) {
               case 4:
                 _context.prev = 4;
                 _context.next = 7;
-                return client.query(_queries.queries.selectLoginQuery, temp);
+                return client.query(_queries.default.selectLoginQuery, temp);
 
               case 7:
                 db = _context.sent;

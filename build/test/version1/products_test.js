@@ -26,8 +26,6 @@ _chai.default.use(_chaiHttp.default);
 
 _chai.default.use(_chaiJson.default);
 
-_chai.default.use(_chaiUrl.default);
-
 describe('Testing out Products endpoints', function () {
   describe('Testing products GET', function () {
     it('GET / products endpoint; should return all products with pagination',
@@ -58,13 +56,7 @@ describe('Testing out Products endpoints', function () {
           }
         }
       }, _callee, this);
-    }))); // it('GET / products endpoint; should check the url', (done) => {
-    //   chai.request(app).get('/api/v1/products/?pageNumber=1').end((err, res) => {
-    //     chai.expect('/api/v1/products/?pageNumber=1').to.have.path('/api/v1/products/?pageNumber=1');
-    //     done();
-    //   });
-    // });
-
+    })));
     it('GET / products endpoint; should return all products without pagination',
     /*#__PURE__*/
     _asyncToGenerator(
@@ -504,9 +496,7 @@ describe('Testing out Products endpoints', function () {
           switch (_context15.prev = _context15.next) {
             case 0:
               _context15.next = 2;
-              return _chai.default.request(_index.default).delete('/api/v1/products/id').type('form').send({
-                product_id: 6
-              });
+              return _chai.default.request(_index.default).del('/api/v1/products/6');
 
             case 2:
               res = _context15.sent;
@@ -522,7 +512,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee15, this);
     })));
-    it('Delete / should return a validation error',
+    it('Delete / should return cannot delete a non existent product message',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -533,15 +523,13 @@ describe('Testing out Products endpoints', function () {
           switch (_context16.prev = _context16.next) {
             case 0:
               _context16.next = 2;
-              return _chai.default.request(_index.default).delete('/api/v1/products/id').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
-                product_id: 'product3'
-              });
+              return _chai.default.request(_index.default).del('/api/v1/products/500').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
 
             case 2:
               res = _context16.sent;
-              expect(res).to.have.status(422);
+              expect(res).to.have.status(404);
               expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Validation error! Please check your input');
+              expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
 
             case 6:
             case "end":
@@ -550,25 +538,55 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee16, this);
     })));
-    it('Delete / should return cannot delete a non existent product message', _co.default.wrap(function () {
-      _chai.default.request(_index.default).delete('/api/v1/products/id').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
-        product_id: 500
-      }).end(function (err, res) {
-        expect(res).to.have.status(404);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
-      }); // expect(res.body).to.have.property('message');
-      // expect(res.body.message).to.equal('Validation error! Please check your input');
+    it('Delete / should delete a product from the database',
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee17() {
+      var res;
+      return regeneratorRuntime.wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.next = 2;
+              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
 
-    }));
-    it('Delete / should delete a product from the database', _co.default.wrap(function () {
-      _chai.default.request(_index.default).delete('/api/v1/products/id').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
-        product_id: '8'
-      }).end(function (err, res) {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Product Deleted');
-      });
-    }));
+            case 2:
+              res = _context17.sent;
+              expect(res).to.have.status(200);
+              expect(res.body).to.have.property('message');
+              expect(res.body.message).to.equal('Product Deleted');
+
+            case 6:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17, this);
+    })));
+    it('checks if one is an admin',
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee18() {
+      var res;
+      return regeneratorRuntime.wrap(function _callee18$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              _context18.next = 2;
+              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MjI4Njg4MH0.8pQOl4ZxzdecrpTvUMGCc5x6boPzToWjgy5910cykEs');
+
+            case 2:
+              res = _context18.sent;
+              expect(res).to.have.status(403);
+
+            case 4:
+            case "end":
+              return _context18.stop();
+          }
+        }
+      }, _callee18, this);
+    })));
   });
 });

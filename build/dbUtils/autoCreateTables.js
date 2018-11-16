@@ -2,7 +2,7 @@
 
 var _pgFormat = _interopRequireDefault(require("pg-format"));
 
-var _queries = require("./queries/queries");
+var _dbConnection = _interopRequireDefault(require("./dbConnection"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18,10 +18,10 @@ array.push(['Mama Lemon liquid soap 300ml', 450, 30, 'Okonkwo', 'soap'], ['Golde
 var populateProductTableString = (0, _pgFormat.default)('INSERT INTO products (product_desc, unit_price,  quantity_in_stock, supplier_name, category) VALUES %L', array);
 var array2 = [['otaigbe', 'otaigbe@gmail.com', 'password', true], ['angela', 'angela@gmail.com', 'password', false]];
 var populateAttendantsTableString = (0, _pgFormat.default)('INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES %L', array2);
-var array3 = [['6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'], ['6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe']];
+var array3 = [['6', 'Biscuits', '400', '5', '2000', '1', 'otaigbe'], ['6', 'Biscuits', '400', '5', '2000', '2', 'angela']];
 var populateSalesRecordsTableString = (0, _pgFormat.default)('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', array3);
 
-_queries.pool.connect(
+_dbConnection.default.connect(
 /*#__PURE__*/
 function () {
   var _ref = _asyncToGenerator(

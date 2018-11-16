@@ -1,5 +1,5 @@
 import format from 'pg-format';
-import { queries, pool } from './queries/queries';
+import pool from './dbConnection';
 
 const createProductsTable = `CREATE TABLE IF NOT EXISTS products
 (
@@ -49,7 +49,7 @@ const populateProductTableString = format('INSERT INTO products (product_desc, u
 const array2 = [['otaigbe', 'otaigbe@gmail.com', 'password', true], ['angela', 'angela@gmail.com', 'password', false]];
 const populateAttendantsTableString = format('INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES %L', array2);
 
-const array3 = [['6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe'], ['6', 'Biscuits', '400', '5', '2000', '2', 'otaigbe']];
+const array3 = [['6', 'Biscuits', '400', '5', '2000', '1', 'otaigbe'], ['6', 'Biscuits', '400', '5', '2000', '2', 'angela']];
 
 const populateSalesRecordsTableString = format('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', array3);
 

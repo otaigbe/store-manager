@@ -1,26 +1,3 @@
-import pg from 'pg';
-import env from 'dotenv';
-
-env.config();
-const db = {};
-const config = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  host: process.env.PGHOST,
-};
-const config2 = {
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  // password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
-  port: process.env.PGPORT,
-};
-
-const pool = new pg.Pool(config);
-
-
 const queries = {};
 queries.selectLoginQuery = 'SELECT * FROM attendants WHERE attendant_email=$1 and attendant_password=$2';
 queries.InsertSignup = 'INSERT INTO attendants (attendant_name, attendant_email, attendant_password, attendant_admin) VALUES ($1, $2, $3, $4)';
@@ -36,11 +13,10 @@ queries.updateProduct = 'UPDATE products SET product_id = $1, product_desc = $2,
 queries.deleteProduct = 'DELETE FROM products WHERE product_id = $1';
 queries.selectProductById = 'SELECT * from products WHERE product_id = $1';
 queries.getAllsalesRecordCount = 'SELECT * FROM salesrecords';
-queries.selectAllSalesRecord = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
+queries.selectAllSalesRecordWithPagination = 'SELECT * FROM salesrecords LIMIT $1 OFFSET $2';
 queries.selectSalesRecordById = 'SELECT * from salesrecords WHERE salesrecord_id = $1';
-queries.selectAllSalesRecordFilterByCreatorWithPagination = 'SELECT * FROM salesRecords WHERE attendant_name = $3 LIMIT $1 OFFSET $2';
-queries.selectAllSalesRecordFilterByCreatorWithoutPagination = 'SELECT * FROM salesrecords WHERE attendant_name = $1';
+queries.selectAllSalesRecordFilterByCreatorWithPagination = 'SELECT * FROM salesRecords WHERE attendant_name= $1 LIMIT $2 OFFSET $3';
+queries.selectAllSalesRecordFilterByCreator = 'SELECT * FROM salesRecords WHERE attendant_name = $1';
 
 
-
-export { pool, queries };
+export default queries;
