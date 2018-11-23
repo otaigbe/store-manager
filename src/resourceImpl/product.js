@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable consistent-return */
 import Joi from 'joi';
+import format from 'pg-format';
 import customFunc from '../utils/functions';
 import errorHandler from '../utils/errorHandler';
 import queries from '../dbUtils/queries/queries';
@@ -11,6 +12,7 @@ const productImpl = {};
 const schema = Joi.object({
   product_desc: Joi.string().min(3).required(),
   unit_price: Joi.number().required(),
+  quantity_in_stock: Joi.number().required(),
   quantity_supplied: Joi.number().required(),
   supplier_name: Joi.string().required(),
   category: Joi.string().required(),
@@ -20,6 +22,7 @@ const schema2 = Joi.object({
   product_id: Joi.number().required(),
   product_desc: Joi.string().min(3).required(),
   unit_price: Joi.number().required(),
+  quantity_in_stock: Joi.number().required(),
   quantity_supplied: Joi.number().required(),
   supplier_name: Joi.string().required(),
   category: Joi.string().required(),
@@ -33,19 +36,20 @@ productImpl.addProduct = async (req, res) => {
   if (result.error === null) {
     const productDesc = req.body.product_desc;
     const unitPrice = req.body.unit_price;
+    const quantityInStock = req.body.quantity_in_stock;
     const quantitySupplied = req.body.quantity_supplied;
     const supplierName = req.body.supplier_name;
     const category = req.body.category;
-    const temp3 = [productDesc, unitPrice, quantitySupplied, supplierName, category];
+    const temp3 = [productDesc, unitPrice, quantityInStock, quantitySupplied, supplierName, category];
     const temp = [productDesc];
     try {
       const resultSet = await pool.query(queries.selectProductIfExist, temp);
       if (resultSet.rowCount === 1) {
-        const currentQuantityInStock = resultSet.rows[0].quantity_in_stock;
-        console.log(currentQuantityInStock);
-        const temp2 = [Number(quantitySupplied) + Number(currentQuantityInStock), productDesc, unitPrice];
-        const updateResult = await pool.query(queries.updateProductDuringCreation, temp2);
-        return res.status(200).json({ message: 'Updated an already existent product.' });
+        // const currentQuantityInStock = resultSet.rows[0].quantity_in_stock;
+        // console.log(currentQuantityInStock);
+        // const temp2 = [Number(quantitySupplied) + Number(currentQuantityInStock), productDesc, unitPrice];
+        // const updateResult = await pool.query(queries.updateProductDuringCreation, temp2);
+        return res.status(200).json({ message: 'Product already exists Modify instead.' });
       }
       /* istanbul ignore next */
       if (resultSet.rowCount === 0) {
@@ -67,43 +71,43 @@ productImpl.addProduct = async (req, res) => {
   }
 };
 
-productImpl.getAllProducts = (req, res) => {
-  try {
-    const urlQuery = req.query;
-    const args = [];
-    if (!customFunc.isEmpty(urlQuery)) {
-      const page = req.query.pageNumber;
-      const itemsPerPage = 5;
-      const pageOffset = (page - 1) * itemsPerPage;
-      args.push(itemsPerPage);
-      args.push(pageOffset);
-      pool.connect(async (err, client) => {
-        /* istanbul ignore next */
-        if (err) errorHandler.connectionError(err, res);
-        const count = await client.query(queries.countAllProducts);
-        const selectResultSet = await client.query(queries.selectProductsWithPagination, args);
-        res.status(200).json({
-          message: `Showing pages ${page} of ${count.rows.length}`,
-          Products: selectResultSet.rows,
-        });
+productImpl.getAllProducts = async (req, res) => {
+  const urlQuery = req.query;
+  const args = [];
+  if (!customFunc.isEmpty(urlQuery)) {
+    const page = req.query.pageNumber;
+    const itemsPerPage = 5;
+    const pageOffset = (page - 1) * itemsPerPage;
+    args.push(itemsPerPage);
+    args.push(pageOffset);
+    try {
+      const count = await pool.query(queries.countAllProducts);
+      const selectResultSet = await pool.query(queries.getProductsWithPagination, args);
+      res.status(200).json({
+        message: `Showing pages ${page} of ${count.rows.length}`,
+        Products: selectResultSet.rows,
       });
-    } else {
-      pool.connect(async (error, client) => {
-        /* istanbul ignore next */
-        if (error) errorHandler.connectionError(error, res);
-        const selectResultSet = await client.query(queries.selectProductsWithoutPagination);
-        res.status(200).json({
-          message: 'Showing pages All Products',
-          Products: selectResultSet.rows,
-        });
+    } catch (error) {
+      /* istanbul ignore next */
+      res.status(501).json({
+        message: 'Query wasn\'t executed',
+        Error: error.message,
       });
     }
-  } catch (e) {
-    /* istanbul ignore next */
-    res.status(501).json({
-      message: 'Query wasn\'t executed',
-      Error: e.message,
-    });
+  } else {
+    try {
+      const selectResultSet = await pool.query(queries.getProductsWithoutPagination);
+      res.status(200).json({
+        message: 'Showing pages All Products',
+        Products: selectResultSet.rows,
+      });
+    } catch (error) {
+      /* istanbul ignore next */
+      res.status(501).json({
+        message: 'Query wasn\'t executed',
+        Error: error.message,
+      });
+    }
   }
 };
 
@@ -111,7 +115,7 @@ productImpl.getAllProducts = (req, res) => {
 productImpl.modifyAProduct = async (req, res) => {
   const result = Joi.validate(req.body, schema2);
   if (result.error === null) {
-    const args = [req.body.product_id, req.body.product_desc, req.body.unit_price, req.body.quantity_supplied, req.body.supplier_name, req.body.category];
+    const args = [req.body.product_id, req.body.product_desc, req.body.unit_price, req.body.quantity_in_stock, req.body.quantity_supplied, req.body.supplier_name, req.body.category];
     const temp = [req.params.id, req.body.product_desc];
     try {
       const queryResult = await pool.query(queries.checkIfAProductExist, temp);
@@ -185,5 +189,21 @@ productImpl.getProductById = (req, res) => {
       });
     }
   });
+};
+
+productImpl.modifyProductQuantityAfterSale = async (req, res) => {
+  const args = req.body;
+  try {
+    const sql = format('update products as p set quantity_in_stock = quantity_in_stock - CAST(q.qty_bought AS INTEGER) from (values %L) as q(qty_bought, product_id) where CAST(q.product_id AS INTEGER) = p.product_id;', args);
+    console.log(sql);
+    const updateResult = await pool.query(sql);
+    return res.status(200).json({ message: 'Product Modified' });
+  } catch (error) {
+    /* istanbul ignore next */
+    return res.status(501).json({
+      message: 'Something went wrong: Couldn\'t modify the product',
+      ErrorMessage: error.message,
+    });
+  }
 };
 export default productImpl;

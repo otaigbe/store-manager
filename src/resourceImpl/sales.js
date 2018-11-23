@@ -10,10 +10,10 @@ salesImpl.createSalesRecord = async (req, res) => {
   const records = [];
   for (let i = 0; i < req.body.salesRecords.length; i += 1) {
     const inner = [];
-    inner.push(req.body.salesRecords[i].product_id, req.body.salesRecords[i].product_desc, req.body.salesRecords[i].unit_price, req.body.salesRecords[i].quantity_bought, req.body.salesRecords[i].amount, req.body.salesRecords[i].attendant_id, req.body.salesRecords[i].attendant_name);
+    inner.push(req.body.salesRecords[i].product_id, req.body.salesRecords[i].product_desc, req.body.salesRecords[i].unit_price, req.body.salesRecords[i].quantity_bought, req.body.salesRecords[i].amount, req.body.attendant_name, req.body.receiptNumber);
     records.push(inner);
   }
-  const multiInsert = format('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
+  const multiInsert = format('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_name, receipt_number) VALUES %L', records);
   try {
     const insertResult = await pool.query(multiInsert);
     return res.status(201).json({ message: 'Records saved' });

@@ -15,6 +15,8 @@ var _login = _interopRequireDefault(require("../../resources/login"));
 
 var _sales = _interopRequireDefault(require("../../resources/sales"));
 
+var _cart = _interopRequireDefault(require("../../resources/cart"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = _express.default.Router();
@@ -23,5 +25,6 @@ router.use('/products', _products.default);
 router.use('/auth/signup', _signup.default);
 router.use('/auth/login', _login.default);
 router.use('/sales', _sales.default);
+router.use('/cart', _cart.default);
 var _default = router;
 exports.default = _default;

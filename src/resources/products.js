@@ -12,6 +12,8 @@ router.post('/', auth, productImpl.addProduct);
 
 router.put('/:id', auth, productImpl.modifyAProduct);
 
+router.put('/', productImpl.modifyProductQuantityAfterSale);
+
 router.delete('/:id', auth, productImpl.deleteProduct);
 
 export default router;

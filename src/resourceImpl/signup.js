@@ -6,8 +6,10 @@ import 'babel-polyfill';
 const signupImpl = {};
 const schema = Joi.object({
   name: Joi.string().min(3).required(),
+  lastname: Joi.string().min(3).required(),
   email: Joi.string().email({ minDomainAtoms: 2 }),
   password: Joi.string().required(),
+  phoneNumber: Joi.number().required(),
   admin: Joi.boolean().required(),
 });
 signupImpl.signup = async (req, res) => {
@@ -21,7 +23,7 @@ signupImpl.signup = async (req, res) => {
       if (resultset.rowCount > 0) return res.status(409).json({ message: 'Email already exists, choose a unique email.' });
       /* istanbul ignore next */
       if (resultset.rowCount === 0) {
-        const temp = [req.body.name, req.body.email, req.body.password, req.body.admin];
+        const temp = [req.body.name, req.body.lastname, req.body.phoneNumber, req.body.email, req.body.password, req.body.admin];
         try {
           const dbresult = await client.query(queries.InsertSignup, temp);
           return res.status(201).json({ message: 'Attendant created! Proceed to login' });

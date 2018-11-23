@@ -17,7 +17,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _dotenv.default.config();
 
-var app = (0, _express.default)();
+var app = (0, _express.default)(); // app.use(express.cookieParser());
+
 app.use(_express.default.urlencoded({
   extended: true
 }));

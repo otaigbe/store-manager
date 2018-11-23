@@ -5,7 +5,7 @@ import customFunc from './utils/functions';
 
 dotenv.config();
 const app = express();
-
+// app.use(express.cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('./UI'));

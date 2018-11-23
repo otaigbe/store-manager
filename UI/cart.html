@@ -7,6 +7,21 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/searchtable.css">
     <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/searchicon2.css">
+
+    <style>
+        #logout{
+        padding: 12px;
+        font-size: 14px;
+    } 
+    #cart_table{
+        padding: 15px;
+
+    }
+    </style>
+    <script type="text/javascript" src="jwt-decode-master/build/jwt-decode.js"></script>
+    <script src="js/products.js"></script>
+
 </head>
 
 <body>
@@ -14,11 +29,10 @@
         <nav class="navigation">
             <ul>
                 <div id="logo">Store-Manager</div>
-                <li><a href="login.html">Logout</a></li>
+                <li><button type="button" id="logout"> logout </button></li>
                 <li><a href="sales.html">sales record</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="#" id="currentUser">
-                        {attendant_name}</a></li>
+                <li><a href="products.html">products</a></li>
+                <li><a href="#" id="currentUser"></a></li>
             </ul>
         </nav>
 
@@ -28,234 +42,17 @@
         <center>
             <h1> Shopping Cart</h1>
             <p id="recordOfSales"> </p>
-            <input type="text" id="product_filter" onkeyup="filterTable()" placeholder="filter products by Description.." title="Type in a name">
+            <div class="search">
+                <input type="text" id="product_filter" onkeyup="filterTable()" placeholder="filter products by Description.."
+                    title="Type in a name">
+                <button type="submit"><i class="fa fa-search"></i></button> </div>
             <div id="shopping_cart">
 
-                <table id="cart_table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Add to cart
-                            </th>
-                            <th>
-                                Product Id
-                            </th>
-                            <th>
-                                Product Description
-                            </th>
-                            <th>
-                                Brand
-                            </th>
-                            <th>
-                                Price
-                            </th>
-                            <th>
-                                Quantity
-                            </th>
-                            <th>
-                                Qty-in-stock
-                            </th>
-                            <th>
-                                Availability
-                            </th>
-                            <th>
-                                Amount(unit price * quantity)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="cart-body">
-                        <tr class="cart_row">
-                            <td>
-                                <input type="checkbox" name="check" class="tick">
-                            </td>
-                            <td>
-                                productId
-                            </td>
-                            <td>
-                                three crowns milk powder 250g refill packs
-                            </td>
-                            <td>
-                                ProductBrand
-                            </td>
-                            <td class="Unit-price">
-                                <!--<input name="price" class="price" type="text" value="36.50" readonly />-->
-								36.50
-                            </td>
-                            <td>
-                                <input name="quantity_to_be_purchased" type="number" onkeypress="return isNumberKey(event)"
-                                    value="0" oninput="calculateAmountReduceQuantityInStock(event)" />
-                            </td>
-                            <td class="quantity_in_stock">
-                                <!--
-                                <input name="quantity_in_stock" type="number" onkeypress="return isNumberKey(event)"
-                                    value="500" readonly />
--->									500
-                            </td>
-                            <td>
-                                yes/no
-                            </td>
-                            <td>
-                                <input type="number" name="amount" class="amount" readonly>
-                            </td>
-                        </tr>
-                        <tr class="cart_row">
-                            <td>
-                                <input type="checkbox" name="check" class="tick">
-                            </td>
-                            <td>
-                                productId
-                            </td>
-                            <td>
-                                Three crowns milk 500g packets
-                            </td>
-                            <td>
-                                ProductBrand
-                            </td>
-                            <td class="Unit-price">
-<!--                                <input name="price" class="price" type="text" value="36.50" readonly />-->
-								36.50
-                            </td>
-                            <td>
-                                <input name="quantity_to_be_purchased" type="number" onkeypress="return isNumberKey(event)"
-                                    value="0" oninput="calculateAmountReduceQuantityInStock(event)" />
-                            </td>
-                            <td class="quantity_in_stock">
-                                <!--<input name="quantity_in_stock" type="number" onkeypress="return isNumberKey(event)"
-                                    value="500" readonly />-->
-								500
-                            </td>
-                            <td>
-                                yes/no
-                            </td>
-                            <td>
-                                <input type="number" name="amount" class="amount" readonly>
-								
-                            </td>
-                        </tr>
-                        <tr class="cart_row">
-                            <td>
-                                <input type="checkbox" name="check" class="tick">
-                            </td>
-                            <td>
-                                productId
-                            </td>
-                            <td>
-                                Golden morn maize 1kg packs
-                            </td>
-                            <td>
-                                ProductBrand
-                            </td>
-                            <td class="Unit-price">
-                                <!--<input name="price" class="price" type="text" value="36.50" readonly />-->
-								36.50
-                            </td>
-                            <td>
-                                <input name="quantity_to_be_purchased" type="number" onkeypress="return isNumberKey(event)"
-                                    value="0" oninput="calculateAmountReduceQuantityInStock(event)" />
-                            </td>
-                            <td class="quantity_in_stock">
-<!--
-                                <input name="quantity_in_stock" type="number" onkeypress="return isNumberKey(event)"
-                                    value="500" readonly />
--->									500
-                            </td>
-                            <td>
-                                yes/no
-                            </td>
-                            <td>
-                                <input type="number" name="amount" class="amount" readonly>
-                            </td>
-                        </tr>
-                        <tr class="cart_row">
-                            <td>
-                                <input type="checkbox" name="check" class="tick">
-                            </td>
-                            <td>
-                                productId
-                            </td>
-                            <td>
-                                Yellow Label Lipton pack
-                            </td>
-                            <td>
-                                ProductBrand
-                            </td>
-                            <td class="Unit-price">
-                                <!--<input name="price" class="price" type="text" value="36.50" readonly />-->
-								36.50
-                            </td>
-                            <td>
-                                <input name="quantity_to_be_purchased" type="number" onkeypress="return isNumberKey(event)"
-                                    value="0" oninput="calculateAmountReduceQuantityInStock(event)" />
-                            </td>
-                            <td class = "quantity_in_stock">
-                               <!--
-                                <input name="quantity_in_stock" type="number" onkeypress="return isNumberKey(event)"
-                                    value="500" readonly />
--->									500
-                            </td>
-                            <td>
-                                yes/no
-                            </td>
-                            <td>
-                                <input type="number" name="amount" class="amount" readonly>
-                            </td>
-                        </tr>
-                        <tr class="cart_row">
-                            <td>
-                                <input type="checkbox" name="check" class="tick">
-                            </td>
-                            <td>
-                                productId
-                            </td>
-                            <td>
-                                Dangote Refined Sugar 1kg packs
-                            </td>
-                            <td>
-                                ProductBrand
-                            </td>
-                            <td class="Unit-price">
-                               <!--<input name="price" class="price" type="text" value="36.50" readonly />-->
-								36.50
-                            </td>
-                            <td>
-                                <input name="quantity_to_be_purchased" type="number" onkeypress="return isNumberKey(event)"
-                                    value="0" oninput="calculateAmountReduceQuantityInStock(event)" />
-                            </td>
-                            <td class="quantity_in_stock">
-                               <!--
-                                <input name="quantity_in_stock" type="number" onkeypress="return isNumberKey(event)"
-                                    value="500" readonly />
--->									500
-                            </td>
-                            <td>
-                                yes/no
-                            </td>
-                            <td>
-                                <input type="number" name="amount" class="amount" readonly>
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                    <tfoot id="cart-foot">
-                        <tr>
-                            <td colspan="7">
-
-                            </td>
-                            <td>
-                                Total
-                            </td>
-                            <td id="total">
-
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-				<button id="modalBtn" class="button">Checkout & Create Receipt</button>
+                <button id="modalBtn" class="button">Checkout & Create Receipt</button>
             </div>
         </center>
     </div>
-    
+
     <div id="simpleModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -263,12 +60,10 @@
                 <h2>Hardware Store</h2>
                 <h4>Plot 7 sunmonu adekunle toyosi street orile Lagos</h4><br>
                 <span>Attended by: <strong>
-                        <%= attendant-name  %></strong></span>
+                        <span id="attendantName"></span></strong></span>
                 <span id="custId">Receipt Number:<em id="receipt-num"></em></span>
             </div>
             <div class="modal-body" id="receipt-content">
-                <!--<table id="receipt-table"> 
-		  </table>-->
             </div>
             <div class="modal-footer">
                 <button id="saveToSalesRecord" onclick="getSalesRecordObj()">save to records</button>
@@ -278,5 +73,18 @@
     </div>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
+    <script>
+        getAllProductsForCart();
+    </script>
+    <script>
+        const token = document.cookie;
+        const decoded = jwt_decode(token);
+        console.log(decoded.name);
+        document.getElementById("attendantName").innerHTML = decoded.name;
+        document.getElementById("currentUser").innerHTML = decoded.name;
+    </script>
+    <script src="js/universalFunc.js"></script>
+
 </body>
+
 </html>

@@ -52,6 +52,7 @@ loginImpl.login = function (req, res) {
                   break;
                 }
 
+                /* ignore istanbul next */
                 res.status(501).json({
                   message: 'Internal Server Error',
                   Error: err
@@ -74,9 +75,16 @@ loginImpl.login = function (req, res) {
                   signObj.attendant_id = db.rows[0].attendant_id;
                   signObj.name = db.rows[0].attendant_name;
                   token = _jsonwebtoken.default.sign(signObj, process.env.JWTKEY);
-                  res.header('x-auth-token', token).status(200).json({
-                    message: 'You"re logged in'
-                  });
+
+                  if (signObj.admin === true) {
+                    res.cookie('x-auth-token', token);
+                    res.redirect('/admin_control_page.html');
+                  }
+
+                  if (signObj.admin === false) {
+                    res.cookie('x-auth-token', token);
+                    res.redirect('/cart.html');
+                  }
                 } else {
                   res.status(404).json({
                     message: 'User doesn"t exist! Enter valid email and password'

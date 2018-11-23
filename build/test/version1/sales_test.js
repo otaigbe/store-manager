@@ -78,10 +78,10 @@ describe('Test cases for the sales endpoint', function () {
                   product_desc: 'Biscuits',
                   unit_price: 400,
                   quantity_bought: 5,
-                  amount: 2000,
-                  attendant_id: 1,
-                  attendant_name: 'otaigbe'
-                }]
+                  amount: 2000
+                }],
+                attendant_name: 'otaigbe',
+                receiptNumber: 598796898709
               });
 
             case 2:

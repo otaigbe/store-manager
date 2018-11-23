@@ -4,7 +4,8 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import chaiJson from 'chai-json';
 import chaiUrl from 'chai-url';
-import co from 'co';
+import chaiCookie from 'chai-expected-cookie';
+
 import app from '../../index';
 import 'babel-polyfill';
 
@@ -12,6 +13,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.use(chaiUrl);
+chai.use(chaiCookie);
 
 describe('StoreManager endpoints tests', () => {
   afterEach(() => {
@@ -22,10 +24,11 @@ describe('StoreManager endpoints tests', () => {
       describe('Testing when correct information is provided', () => {
         it('POST / login endpoint should successfully sign in', async () => {
           const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe@gmail.com', password: 'password' });
-          expect(res).to.have.status(200);
-          expect(res.body).to.eql({ message: 'You"re logged in' });
-          expect(res.body).to.have.property('message');
-          expect(res.body.message).to.equal('You"re logged in');
+          expect(res).to.redirectTo('http://127.0.0.1:4555/admin_control_page.html');
+        });
+        it('POST / login endpoint should successfully sign in(not as admin)', async () => {
+          const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'angela@gmail.com', password: 'password' });
+          chai.expect('http://127.0.0.1:4555/cart.html').to.have.path('/cart.html');
         });
       });
       describe('Testing when wrong information is inputted', () => {

@@ -59,9 +59,9 @@ describe('Test cases for the sales endpoint', () => {
             unit_price: 400,
             quantity_bought: 5,
             amount: 2000,
-            attendant_id: 1,
-            attendant_name: 'otaigbe',
           }],
+          attendant_name: 'otaigbe',
+          receiptNumber: 598796898709,
         });
       expect(res).to.have.status(201);
       expect(res.body).to.eql({ message: 'Records saved' });

@@ -35,6 +35,8 @@ describe('Testing the SIGNUP endpoint', () => {
         .type('form')
         .send({
           name: 'otaigbe',
+          lastname: 'otaigbe',
+          phoneNumber: 2348088888888,
           email: 'otaigbe@gmail.com',
           password: 'password',
           admin: true,
@@ -49,8 +51,10 @@ describe('Testing the SIGNUP endpoint', () => {
         .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
         .type('form')
         .send({
-          name: 'stanley',
-          email: 'stanley@gmail.com',
+          name: 'tunde',
+          lastname: 'tunde',
+          phoneNumber: 234088543888,
+          email: 'tunde@gmail.com',
           password: 'password',
           admin: true,
         });

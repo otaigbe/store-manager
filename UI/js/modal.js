@@ -28,8 +28,18 @@ const checkboxes = document.getElementsByClassName("tick")
   for (let i = 0; i < checkboxes.length; i++){
 	  if (checkboxes[i].checked===true){
 		  checkboxes[i].checked=false;
-		  }
+      }
+      
   modal.style.display = 'none';
+}
+  const amountboxes = document.getElementsByClassName('amount');
+  for (let i = 0; i < amountboxes.length; i += 1) {
+    amountboxes[i].value = 0;
+}
+
+  const purchaseboxes = document.getElementsByClassName('qty_purchased');
+  for (let i = 0; i < purchaseboxes.length; i += 1) {
+    purchaseboxes[i].value = 0;
 }
 }
 // Function to close modal if outside click

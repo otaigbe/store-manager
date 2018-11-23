@@ -18,9 +18,14 @@
 		<center>
 			<div id="inner-container">
 				
-				<form method="POST" action="cart.html">
-					<h1 id="welcome-message"> Welcome Attendant</h1>
-				  <table>
+				<form method="POST" action="api/v1/auth/login/">
+					
+				  <table id="loginTable">
+					  <thead><tr>
+						  <th colspan="2">
+								<h1 id="welcome-message"> Welcome Attendant</h1>
+						  </th>
+					  </tr></thead>
 					  <tr>
 							<td>
 								<label for="email"> Enter email:</label>
@@ -40,7 +45,8 @@
 						<tr>
 
 							<td colspan="2" align="right">
-								<a id = "loginlink" href="cart.html">login</a>
+								<!-- <a id = "loginlink" href="cart.html">login</a> -->
+								<button type="submit"> login </button>
 							</td>
 						</tr>
 				  </table>

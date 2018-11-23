@@ -8,7 +8,7 @@ var _chaiJson = _interopRequireDefault(require("chai-json"));
 
 var _chaiUrl = _interopRequireDefault(require("chai-url"));
 
-var _co = _interopRequireDefault(require("co"));
+var _chaiExpectedCookie = _interopRequireDefault(require("chai-expected-cookie"));
 
 var _index = _interopRequireDefault(require("../../index"));
 
@@ -27,6 +27,8 @@ _chai.default.use(_chaiHttp.default);
 _chai.default.use(_chaiJson.default);
 
 _chai.default.use(_chaiUrl.default);
+
+_chai.default.use(_chaiExpectedCookie.default);
 
 describe('StoreManager endpoints tests', function () {
   afterEach(function () {
@@ -53,23 +55,16 @@ describe('StoreManager endpoints tests', function () {
 
                 case 2:
                   res = _context.sent;
-                  expect(res).to.have.status(200);
-                  expect(res.body).to.eql({
-                    message: 'You"re logged in'
-                  });
-                  expect(res.body).to.have.property('message');
-                  expect(res.body.message).to.equal('You"re logged in');
+                  expect(res).to.redirectTo('http://127.0.0.1:4555/admin_control_page.html');
 
-                case 7:
+                case 4:
                 case "end":
                   return _context.stop();
               }
             }
           }, _callee, this);
         })));
-      });
-      describe('Testing when wrong information is inputted', function () {
-        it('POST / login endpoint should return a 404(not found) error',
+        it('POST / login endpoint should successfully sign in(not as admin)',
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
@@ -81,27 +76,25 @@ describe('StoreManager endpoints tests', function () {
                 case 0:
                   _context2.next = 2;
                   return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'otaigbe@gmail.com',
-                    password: 'okokobioko'
+                    email: 'angela@gmail.com',
+                    password: 'password'
                   });
 
                 case 2:
                   res = _context2.sent;
-                  expect(res).to.have.status(404);
-                  expect(res.body).to.eql({
-                    message: 'User doesn"t exist! Enter valid email and password'
-                  });
-                  expect(res.body).to.have.property('message');
-                  expect(res.body.message).to.equal('User doesn"t exist! Enter valid email and password');
 
-                case 7:
+                  _chai.default.expect('http://127.0.0.1:4555/cart.html').to.have.path('/cart.html');
+
+                case 4:
                 case "end":
                   return _context2.stop();
               }
             }
           }, _callee2, this);
         })));
-        it('POST / login endpoint should return a 422(unprocessable entity) error',
+      });
+      describe('Testing when wrong information is inputted', function () {
+        it('POST / login endpoint should return a 404(not found) error',
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
@@ -113,16 +106,18 @@ describe('StoreManager endpoints tests', function () {
                 case 0:
                   _context3.next = 2;
                   return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'otaigbe',
+                    email: 'otaigbe@gmail.com',
                     password: 'okokobioko'
                   });
 
                 case 2:
                   res = _context3.sent;
-                  expect(res).to.have.status(422);
+                  expect(res).to.have.status(404);
+                  expect(res.body).to.eql({
+                    message: 'User doesn"t exist! Enter valid email and password'
+                  });
                   expect(res.body).to.have.property('message');
-                  expect(res.body).to.have.property('ErrorMessage');
-                  expect(res.body.message).to.equal('Validation error! Please check your input');
+                  expect(res.body.message).to.equal('User doesn"t exist! Enter valid email and password');
 
                 case 7:
                 case "end":
@@ -130,6 +125,36 @@ describe('StoreManager endpoints tests', function () {
               }
             }
           }, _callee3, this);
+        })));
+        it('POST / login endpoint should return a 422(unprocessable entity) error',
+        /*#__PURE__*/
+        _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee4() {
+          var res;
+          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  _context4.next = 2;
+                  return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
+                    email: 'otaigbe',
+                    password: 'okokobioko'
+                  });
+
+                case 2:
+                  res = _context4.sent;
+                  expect(res).to.have.status(422);
+                  expect(res.body).to.have.property('message');
+                  expect(res.body).to.have.property('ErrorMessage');
+                  expect(res.body.message).to.equal('Validation error! Please check your input');
+
+                case 7:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4, this);
         })));
       });
     });

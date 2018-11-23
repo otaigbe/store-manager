@@ -1,176 +1,89 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>sales records</title>
-<link href="css/searchtable.css" rel="stylesheet" type="text/css">
-	<link href="css/style.css" rel="stylesheet" type="text/css">
 
+<head>
+  <meta charset="utf-8">
+  <title>sales records</title>
+  <link href="css/searchtable.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link href="css/searchicon2.css" rel="stylesheet" type="text/css">
+
+  <script src="js/sales.js"></script>
+  <script type="text/javascript" src="jwt-decode-master/build/jwt-decode.js"></script>
+<style>
+#logout{
+        padding: 12px;
+        font-size: 14px;
+    } </style>
 </head>
 
-	<body>
-		<div id="container">
-		
-		<div id="header">
-        <nav class="navigation">
-            <ul>
-                <div id="logo">Store-Manager</div>
-				<li><a href="login.html">Logout</a></li>
-                <li><a href="cart.html">cart</a></li>
-                 <li><a href="#" id="currentUser">
-                        {attendant_name}</a></li>
-            </ul>
-        </nav>
+<body>
+  <div id="container">
+
+    <div id="header">
+      <nav class="navigation">
+        <ul>
+          <div id="logo">Store-Manager</div>
+          <li><button type="button" id="logout"> logout </button></li>
+          <li><a href="cart.html">cart</a></li>
+          <li><a href="#" id="currentUser">
+              {attendant_name}</a></li>
+        </ul>
+      </nav>
 
 
     </div>
-	<div id="salesArea">
-		
-		<center>
-	<input type="text" id="product_filter" onkeyup="filterTable2()" placeholder="Enter first letter to filter table .." title="Type in a name">
-	<table id="salesrecordtable">
-  <tr class="header">
-	  <th>Date</th>
-    <th>Sales Attendant</th>
-    <th>Sales Id</th>
-	  <th>Product Id</th>
-    <th>Product Name</th>
-	  <th>Unit-price</th>
-    <th>Qty-Sold</th>
-	  <th>Amount</th>
-	  <th>Receipt Number</th>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
- <tr>
-	 <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-  <tr>
-	  <td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-	<tr>
-		<td>date</td>
-    <td>Attendant</td>
-    <td>salesId</td>
-	  <td>Product Id</td>
-    <td>Product Name</td>
-	  <td>Unit-price</td>
-    <td>Qty-Sold</td>
-	  <td>Amount</td>
-	  <td>Receipt Number</td>
-  </tr>
-</table>
+    <div id="salesArea">
 
-	
-	
-	</center>
-	</div>
+      <center>
+        <div class="search">
+          <input type="text" id="product_filter" onkeyup="filterTable()" placeholder="filter products by Description.."
+            title="Type in a name">
+          <button type="submit"><i class="fa fa-search"></i></button> </div>
+         
+        <div id="sales">
+        </div>
+      </center>
+    </div>
 
-		
-		
-		
-		
-		</div>
-	
 
-	<script type="text/javascript">
-	function filterTable2() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("product_filter");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("salesrecordtable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[2];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+
+
+
+  </div>
+
+
+  <script type="text/javascript">
+    function filterTable2() {
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("product_filter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("salesrecordtable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
       }
     }
-  }
-}
-	</script>
+  </script>
+  <script>
+    const token = document.cookie;
+    const decoded = jwt_decode(token);
+    console.log(decoded.name);
+    document.getElementById("currentUser").innerHTML = decoded.name;
+  </script>
+
+  <script>
+    getAllSalesRecordsWithDetails();
+  </script>
+  <script src="js/universalFunc.js"></script>
+
 </body>
+
 </html>

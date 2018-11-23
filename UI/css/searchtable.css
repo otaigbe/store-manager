@@ -14,13 +14,16 @@
   
   #cart_table tr, #salesrecordtable tr, #productsrecordtable tr {
     border-bottom: 1px solid #ddd;
+
   }
   
   #cart_table tr.header, #cart_table tr:hover, #salesrecordtable tr:hover, #salesrecordtable tr.header, #productsrecordtable tr.header, #productsrecordtable tr:hover{
     background-color: #f1f1f1;
   }
 #cart_table td, #salesrecordtable td, #productsrecordtable td{
-	text-align: left;
+  text-align: left;
+  padding-left: 20px;
+
 }
 
 #cart_table td, #cart_table th, #salesrecordtable td, #salesrecordtable th, #productsrecordtable td, #productsrecordtable th{

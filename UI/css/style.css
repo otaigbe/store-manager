@@ -4,8 +4,12 @@
 	padding: 0;
 	margin: 0;
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-   }
-   
+}
+
+#loginTable {
+    border-collapse: separate;
+    border-spacing: 25px;
+}
 #container {
 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
@@ -17,7 +21,7 @@ button[type=submit], button[type=button] {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	background-color: #551263;
 	color: white;
-	padding: 30px 20px 30px 20px;
+	padding: 15px 20px 15px 20px;
 	border: none;
 	color: white;
 	border-radius: 4px;
@@ -60,7 +64,7 @@ nav > ul {
   background-repeat: no-repeat;
   width: 50%;
   font-size: 16px;
-  padding: 12px 20px 12px 40px;
+  padding: 12px 5px 12px 5px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
 }
@@ -77,9 +81,9 @@ form input[type=password], input[type=email] {
 	width: 350px;
 }
 
-form {
+ form {
 	margin: 250px;
-}
+} 
 
 #salesArea{
 	margin-top: 50px;

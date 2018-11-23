@@ -1,16 +1,14 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/searchtable.css">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<style>
-form input[type=text] {
+	<meta charset="utf-8">
+	<title>All Products</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/searchtable.css">
+	<link rel="stylesheet" href="css/searchicon2.css">
+	<style>
+		form input[type=text] {
 	border-radius: 5px;
 	height: 30px;
 	font-size: 20px;
@@ -32,148 +30,81 @@ form input[type=text] {
 	}
 
 </style>
+<script type="text/javascript" src="jwt-decode-master/build/jwt-decode.js"></script>
+<script src="js/products.js"></script>
 
 </head>
 
 <body>
 	<div id="container">
-	
-	<div id="header">
-	<nav class="navigation">
-		<ul>
-			<div id="logo">Store-Manager</div>
-			<li><a href="login.html">Logout</a></li>
-			<li><a href="cart.html">cart</a></li>
-			 <li><a href="#" id="currentUser">
-					{attendant_name}</a></li>
-		</ul>
-	</nav>
+
+		<div id="header">
+			<nav class="navigation">
+				<ul>
+					<div id="logo">Store-Manager</div>
+					<li><button type="button" id="logout"> logout </button></li>
+					<li><a href="cart.html">cart</a></li>
+					<li><a href="#" id="currentUser">
+							</a></li>
+				</ul>
+			</nav>
 
 
-</div>
-<div id="productArea">	
-	<center>
-	
-			<div><input type="text" id="product_filter" onkeyup="filterTable2()"  aria-hidden="true"><button type="button" id="searcIcon"><i class="fa fa-search"></i></button></div>
+		</div>
+		<div id="productArea">
+			<center>
+				<div class="search">
+					<!-- <span class="fa fa-search"></span> -->
+					<input type="text" id="product_filter" onkeyup="filterTable()" placeholder="filter products by Description.."
+					 title="Type in a name">
+					<button type="submit"><i class="fa fa-search"></i></button> </div>
 
-			
-<table id="productsrecordtable">
-<tr class="header">
-    <th>Product Id</th>
-<th>Product Description</th>
-  <th>Unit-price</th>
-	<th>Qty-Supplied</th>
-	<th>Date-of-supply</th>
-	<th>Supplier</th>
-</tr>
-<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	<tr>
-  <td>Product Id</td>
-<td>Product Name</td>
-  <td>Unit-price</td>
-<td>Qty-Supplied</td>
-	<td>Date-of-supply</td>
-	<td>Supplier</td>
-</tr>
-	
-</table>
+				<div id="products">
+				</div>
 
-
-
-</center>
-</div>	
+			</center>
+		</div>
 	</div>
 
 
-<script type="text/javascript">
-function filterTable2() {
-var input, filter, table, tr, td, i;
-input = document.getElementById("product_filter");
-filter = input.value.toUpperCase();
-table = document.getElementById("salesrecordtable");
-tr = table.getElementsByTagName("tr");
-for (i = 0; i < tr.length; i++) {
-td = tr[i].getElementsByTagName("td")[2];
-if (td) {
-  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-	tr[i].style.display = "";
-  } else {
-	tr[i].style.display = "none";
-  }
-}
-}
-}
-</script>
+	<script type="text/javascript">
+		function filterTable2() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("product_filter");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("salesrecordtable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+
+	<script>
+		getAllProductsWithDetails();
+	</script>
+	 <script>
+		const token = document.cookie;
+		const decoded = jwt_decode(token);
+		console.log(decoded.name);
+	//	document.getElementById("attendantName").innerHTML = decoded.name;
+		document.getElementById("currentUser").innerHTML = decoded.name;
+		console.log(decoded.name);
+
+		function deleteCookie(){
+			document.cookie = 'x-auth-token' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			window.location.replace("/login.html");
+		}
+		document.getElementById('logout').addEventListener('click', deleteCookie);
+		</script>
+		<script src="js/universalFunc.js"></script>
 </body>
+
 </html>

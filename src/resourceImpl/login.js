@@ -16,6 +16,7 @@ loginImpl.login = (req, res) => {
     const temp = [req.body.email, req.body.password];
     pool.connect(async (err, client) => {
       if (err) {
+        /* ignore istanbul next */
         res.status(501).json({
           message: 'Internal Server Error',
           Error: err,
@@ -30,9 +31,14 @@ loginImpl.login = (req, res) => {
             signObj.attendant_id = db.rows[0].attendant_id;
             signObj.name = db.rows[0].attendant_name;
             const token = jwt.sign(signObj, process.env.JWTKEY);
-            res.header('x-auth-token', token).status(200).json({
-              message: 'You"re logged in',
-            });
+            if (signObj.admin === true) {
+              res.cookie('x-auth-token', token);
+              res.redirect('/admin_control_page.html');
+            }
+            if (signObj.admin === false) {
+              res.cookie('x-auth-token', token);
+              res.redirect('/cart.html');
+            }
           } else {
             res.status(404).json({
               message: 'User doesn"t exist! Enter valid email and password',
@@ -49,7 +55,6 @@ loginImpl.login = (req, res) => {
       ErrorMessage: result.error,
     });
   }
-
 };
 
 export default loginImpl;

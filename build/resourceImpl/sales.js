@@ -38,11 +38,11 @@ function () {
 
             for (i = 0; i < req.body.salesRecords.length; i += 1) {
               inner = [];
-              inner.push(req.body.salesRecords[i].product_id, req.body.salesRecords[i].product_desc, req.body.salesRecords[i].unit_price, req.body.salesRecords[i].quantity_bought, req.body.salesRecords[i].amount, req.body.salesRecords[i].attendant_id, req.body.salesRecords[i].attendant_name);
+              inner.push(req.body.salesRecords[i].product_id, req.body.salesRecords[i].product_desc, req.body.salesRecords[i].unit_price, req.body.salesRecords[i].quantity_bought, req.body.salesRecords[i].amount, req.body.attendant_name, req.body.receiptNumber);
               records.push(inner);
             }
 
-            multiInsert = (0, _pgFormat.default)('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_id, attendant_name) VALUES %L', records);
+            multiInsert = (0, _pgFormat.default)('INSERT INTO salesRecords (product_id, product_desc, unit_price, quantity_bought, amount, attendant_name, receipt_number) VALUES %L', records);
             _context.prev = 3;
             _context.next = 6;
             return _dbConnection.default.query(multiInsert);

@@ -23,10 +23,12 @@ var signupImpl = {};
 
 var schema = _joi.default.object({
   name: _joi.default.string().min(3).required(),
+  lastname: _joi.default.string().min(3).required(),
   email: _joi.default.string().email({
     minDomainAtoms: 2
   }),
   password: _joi.default.string().required(),
+  phoneNumber: _joi.default.number().required(),
   admin: _joi.default.boolean().required()
 });
 
@@ -83,7 +85,7 @@ function () {
                           break;
                         }
 
-                        temp = [req.body.name, req.body.email, req.body.password, req.body.admin];
+                        temp = [req.body.name, req.body.lastname, req.body.phoneNumber, req.body.email, req.body.password, req.body.admin];
                         _context.prev = 9;
                         _context.next = 12;
                         return client.query(_queries.default.InsertSignup, temp);

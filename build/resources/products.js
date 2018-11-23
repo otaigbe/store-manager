@@ -19,6 +19,7 @@ router.get('/?', _product.default.getAllProducts);
 router.get('/:id', _product.default.getProductById);
 router.post('/', _auth.default, _product.default.addProduct);
 router.put('/:id', _auth.default, _product.default.modifyAProduct);
+router.put('/', _product.default.modifyProductQuantityAfterSale);
 router.delete('/:id', _auth.default, _product.default.deleteProduct);
 var _default = router;
 exports.default = _default;
