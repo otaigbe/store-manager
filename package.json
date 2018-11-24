@@ -61,8 +61,7 @@
     "start": "npm run build && node ./build/index.js",
     "dbscript": "psql -U postgres -f ./src/dbUtils/dbscripts/createDb.sql",
     "tables-setup-heroku": "heroku pg:psql -f  ./dbscripts/createDbHeroku.sql",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "travistest": "npm run migrations && cross-env NODE_ENV=test nyc _mocha --recursive src/test/version1/  --timeout 10000 --exit"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
