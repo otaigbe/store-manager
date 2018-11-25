@@ -11,8 +11,6 @@ var _queries = _interopRequireDefault(require("../dbUtils/queries/queries"));
 
 var _dbConnection = _interopRequireDefault(require("../dbUtils/dbConnection"));
 
-require("babel-polyfill");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }

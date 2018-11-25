@@ -13,3 +13,5 @@ script:
   - npm run test
 after_success:
   - nyc report --reporter=text-lcov | coveralls
+on:
+    branch: develop

@@ -1,7 +1,6 @@
 import customFunc from '../utils/functions';
 import queries from '../dbUtils/queries/queries';
 import pool from '../dbUtils/dbConnection';
-import 'babel-polyfill';
 
 const cartImpl = {};
 cartImpl.getAllProducts = async (req, res) => {

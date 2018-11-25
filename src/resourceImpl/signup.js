@@ -1,7 +1,6 @@
 import Joi from 'joi';
 import queries from '../dbUtils/queries/queries';
 import pool from '../dbUtils/dbConnection';
-import 'babel-polyfill';
 
 const signupImpl = {};
 const schema = Joi.object({

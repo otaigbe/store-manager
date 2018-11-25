@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
-import 'babel-polyfill';
 import queries from '../dbUtils/queries/queries';
 import pool from '../dbUtils/dbConnection';
 

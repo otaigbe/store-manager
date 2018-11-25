@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import versions from './controller/api/versions';
 import customFunc from './utils/functions';
+import 'babel-polyfill';
 
 dotenv.config();
 const app = express();

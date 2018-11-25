@@ -13,6 +13,8 @@ var _versions = _interopRequireDefault(require("./controller/api/versions"));
 
 var _functions = _interopRequireDefault(require("./utils/functions"));
 
+require("babel-polyfill");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config();

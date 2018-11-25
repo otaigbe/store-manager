@@ -9,8 +9,6 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _joi = _interopRequireDefault(require("joi"));
 
-require("babel-polyfill");
-
 var _queries = _interopRequireDefault(require("../dbUtils/queries/queries"));
 
 var _dbConnection = _interopRequireDefault(require("../dbUtils/dbConnection"));
