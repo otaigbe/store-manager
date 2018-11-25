@@ -46,7 +46,7 @@
   },
   "scripts": {
     "migrations": "babel-node ./src/dbUtils/autoCreateTables.js --env",
-    "test": "npm run migrations && nyc mocha --recursive src/test/version1/ --timeout 25000 --exit",
+    "test": "npm run migrations && cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha --recursive src/test/version1/ --timeout 25000 --exit",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel ./src --out-dir ./build",
     "build": "npm run clean && npm run build-babel",
