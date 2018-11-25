@@ -12,6 +12,6 @@ env:
 script:
   - npm run test
 after_success:
-  - nyc report --reporter=lcov | coveralls
+  - nyc report --reporter=text-lcov | coveralls
 on:
     branch: develop
