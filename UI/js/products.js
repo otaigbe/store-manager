@@ -14,10 +14,10 @@ const getAllProductsForCart = async () => {
   let thead = '<thead><tr>';
   let tbody = '<tbody id="cart-body">';
 
-  for (let i = 0; i < json.Products.length; i += 1) {
+  for (let i = 0; i < json.Resources.length; i += 1) {
     if (i === 1) {
       thead += `<th>Add to Cart</th>`;
-      const keys = Object.keys(json.Products[i]);
+      const keys = Object.keys(json.Resources[i]);
       for (let j = 0; j < keys.length; j += 1) {
         if (j === 3) {
           thead += `<th>Qty-to-be-purchased</th>`;
@@ -30,7 +30,7 @@ const getAllProductsForCart = async () => {
     }
 
     let tableRow = `<tr class="cart_row"><td><input type="checkbox" name="check" class="tick" align="middle"></td>`;
-    const values = Object.values(json.Products[i]);
+    const values = Object.values(json.Resources[i]);
     for (let j = 0; j < values.length; j += 1) {
       if (j === 2) {
         tableRow += `<td class="Unit-price" >${values[j]}</td>`;
@@ -78,9 +78,9 @@ const getAllProductsWithDetails = async () => {
   let thead = '<thead><tr>';
   let tbody = '<tbody>';
 
-  for (let i = 0; i < json.Products.length; i += 1) {
+  for (let i = 0; i < json.Resources.length; i += 1) {
     if (i === 1) {
-      const keys = Object.keys(json.Products[i]);
+      const keys = Object.keys(json.Resources[i]);
       for (let j = 0; j < keys.length; j += 1) {
         thead += `<th>${keys[j]}</th>`;
       }
@@ -88,7 +88,7 @@ const getAllProductsWithDetails = async () => {
     }
 
     let tableRow = `<tr>`;
-    const values = Object.values(json.Products[i]);
+    const values = Object.values(json.Resources[i]);
     for (let j = 0; j < values.length; j += 1) {
       tableRow += `<td>${values[j]}</td>`;
     }

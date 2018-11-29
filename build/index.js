@@ -13,20 +13,22 @@ var _versions = _interopRequireDefault(require("./controller/api/versions"));
 
 var _functions = _interopRequireDefault(require("./utils/functions"));
 
+var _error = _interopRequireDefault(require("./middleware/error"));
+
 require("babel-polyfill");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config();
 
-var app = (0, _express.default)(); // app.use(express.cookieParser());
-
+var app = (0, _express.default)();
 app.use(_express.default.urlencoded({
   extended: true
 }));
 app.use(_express.default.json());
 app.use(_express.default.static('./UI'));
 app.use('/', _versions.default);
+app.use(_error.default);
 
 var port = _functions.default.checkAndSwitchEnvironment();
 

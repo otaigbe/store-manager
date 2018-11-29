@@ -6,10 +6,6 @@ var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
 var _chaiJson = _interopRequireDefault(require("chai-json"));
 
-var _chaiUrl = _interopRequireDefault(require("chai-url"));
-
-var _co = _interopRequireDefault(require("co"));
-
 var _index = _interopRequireDefault(require("../../index"));
 
 require("babel-polyfill");
@@ -48,7 +44,7 @@ describe('Testing out Products endpoints', function () {
               expect(res).to.have.status(200);
               expect(res).to.be.json;
               expect(res.body).to.have.property('message');
-              expect(res.body).to.have.property('Products');
+              expect(res.body).to.have.property('Resources');
 
             case 7:
             case "end":
@@ -100,8 +96,8 @@ describe('Testing out Products endpoints', function () {
               expect(res).to.have.status(200);
               expect(res).to.be.json;
               expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Product Found!');
-              expect(res.body).to.have.property('Product');
+              expect(res.body.message).to.equal('Resource Found!');
+              expect(res.body).to.have.property('Resource');
 
             case 8:
             case "end":
@@ -128,7 +124,7 @@ describe('Testing out Products endpoints', function () {
               expect(res).to.have.status(404);
               expect(res).to.be.json;
               expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Product doesn\'t exist!');
+              expect(res.body.message).to.equal('Resource doesn\'t exist!');
 
             case 7:
             case "end":
@@ -206,24 +202,7 @@ describe('Testing out Products endpoints', function () {
           }
         }
       }, _callee6, this);
-    }))); // it('POST / products endpoint; should update an already existing product in the database', async () => {
-    //   const res = await chai.request(app)
-    //     .post('/api/v1/products')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-    //     .type('form')
-    //     .send({
-    //       product_desc: 'bucket',
-    //       unit_price: 150,
-    //       quantity_in_stock: 40,
-    //       quantity_supplied: 10,
-    //       supplier_name: 'Okonkwo',
-    //       category: 'hardware',
-    //     });
-    //   expect(res.body).to.be.a.jsonObj();
-    //   expect(res).to.have.status(200);
-    //   expect(res.body).to.eql({ message: 'Updated an already existent product.' });
-    // });
-
+    })));
     it('POST / products endpoint; should report a validation error',
     /*#__PURE__*/
     _asyncToGenerator(
@@ -258,7 +237,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee7, this);
     })));
-    it('POST / products endpoint; should return a no access message',
+    it('POST / products endpoint; should update an already existing product in the database',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -269,20 +248,21 @@ describe('Testing out Products endpoints', function () {
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.next = 2;
-              return _chai.default.request(_index.default).post('/api/v1/products').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
+              return _chai.default.request(_index.default).post('/api/v1/products').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
                 product_desc: 'bucket',
-                unit_price: 350,
-                quantity_in_stock: 10,
+                unit_price: 150,
+                quantity_in_stock: 40,
+                quantity_supplied: 10,
                 supplier_name: 'Okonkwo',
-                category: 'biscuits'
+                category: 'hardware'
               });
 
             case 2:
               res = _context8.sent;
               expect(res.body).to.be.a.jsonObj();
-              expect(res).to.have.status(403);
+              expect(res).to.have.status(200);
               expect(res.body).to.eql({
-                message: 'Forbidden! You need to have  admin privileges'
+                message: 'Product already exists Modify instead.'
               });
 
             case 6:
@@ -292,11 +272,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee8, this);
     })));
-  }); // end of POST
-  // Beginning of PUT
-
-  describe('Testing the PUT method', function () {
-    it('PUT / should return no access token error',
+    it('POST / products endpoint; should return a no access message',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -307,30 +283,34 @@ describe('Testing out Products endpoints', function () {
           switch (_context9.prev = _context9.next) {
             case 0:
               _context9.next = 2;
-              return _chai.default.request(_index.default).put('/api/v1/products/id').type('form').send({
-                product_id: 6,
-                product_desc: 'Biscuits',
-                unit_price: 400,
-                quantity_supplied: 150,
+              return _chai.default.request(_index.default).post('/api/v1/products').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
+                product_desc: 'bucket',
+                unit_price: 350,
+                quantity_in_stock: 10,
                 supplier_name: 'Okonkwo',
-                category: 'soap'
+                category: 'biscuits'
               });
 
             case 2:
               res = _context9.sent;
-              expect(res).to.have.status(401);
+              expect(res.body).to.be.a.jsonObj();
+              expect(res).to.have.status(403);
               expect(res.body).to.eql({
-                message: 'No access token provided! Unaccessible resource'
+                message: 'Forbidden! You need to have  admin privileges'
               });
 
-            case 5:
+            case 6:
             case "end":
               return _context9.stop();
           }
         }
       }, _callee9, this);
     })));
-    it('PUT / should return a product doesnt exists error message',
+  }); // end of POST
+  // Beginning of PUT
+
+  describe('Testing the PUT method', function () {
+    it('PUT / should return no access token error',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -341,6 +321,40 @@ describe('Testing out Products endpoints', function () {
           switch (_context10.prev = _context10.next) {
             case 0:
               _context10.next = 2;
+              return _chai.default.request(_index.default).put('/api/v1/products/id').type('form').send({
+                product_id: 6,
+                product_desc: 'Biscuits',
+                unit_price: 400,
+                quantity_supplied: 150,
+                supplier_name: 'Okonkwo',
+                category: 'soap'
+              });
+
+            case 2:
+              res = _context10.sent;
+              expect(res).to.have.status(401);
+              expect(res.body).to.eql({
+                message: 'No access token provided! Unaccessible resource'
+              });
+
+            case 5:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10, this);
+    })));
+    it('PUT / should return a product doesnt exists error message',
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee11() {
+      var res;
+      return regeneratorRuntime.wrap(function _callee11$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              _context11.next = 2;
               return _chai.default.request(_index.default).put('/api/v1/products/6').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
                 product_id: 6,
                 product_desc: 'Detergent',
@@ -352,44 +366,10 @@ describe('Testing out Products endpoints', function () {
               });
 
             case 2:
-              res = _context10.sent;
+              res = _context11.sent;
               expect(res).to.have.status(404);
               expect(res.body).to.eql({
                 message: 'Product doesn\'t exist! Create the Product'
-              });
-
-            case 5:
-            case "end":
-              return _context10.stop();
-          }
-        }
-      }, _callee10, this);
-    })));
-    it('PUT / should return a forbidden access error',
-    /*#__PURE__*/
-    _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee11() {
-      var res;
-      return regeneratorRuntime.wrap(function _callee11$(_context11) {
-        while (1) {
-          switch (_context11.prev = _context11.next) {
-            case 0:
-              _context11.next = 2;
-              return _chai.default.request(_index.default).put('/api/v1/products/6').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
-                product_id: 6,
-                product_desc: 'Biscuits',
-                unit_price: 400,
-                quantity_supplied: 150,
-                supplier_name: 'Okonkwo',
-                category: 'soap'
-              });
-
-            case 2:
-              res = _context11.sent;
-              expect(res).to.have.status(403);
-              expect(res.body).to.eql({
-                message: 'Forbidden! You need to have  admin privileges'
               });
 
             case 5:
@@ -399,7 +379,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee11, this);
     })));
-    it('PUT / should return a validation error! Unprocessable entity',
+    it('PUT / should return a forbidden access error',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -410,29 +390,30 @@ describe('Testing out Products endpoints', function () {
           switch (_context12.prev = _context12.next) {
             case 0:
               _context12.next = 2;
-              return _chai.default.request(_index.default).put('/api/v1/products/6').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
+              return _chai.default.request(_index.default).put('/api/v1/products/6').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTU0MTQ4OTE5NH0.aEbvCde9ALV1B0VksKGuu39PIdbWUiGYc5eoigtEAgw').type('form').send({
                 product_id: 6,
                 product_desc: 'Biscuits',
                 unit_price: 400,
-                quantity_in_stock: 150,
+                quantity_supplied: 150,
                 supplier_name: 'Okonkwo',
                 category: 'soap'
               });
 
             case 2:
               res = _context12.sent;
-              expect(res).to.have.status(422);
-              expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Validation error! Please check your input');
+              expect(res).to.have.status(403);
+              expect(res.body).to.eql({
+                message: 'Forbidden! You need to have  admin privileges'
+              });
 
-            case 6:
+            case 5:
             case "end":
               return _context12.stop();
           }
         }
       }, _callee12, this);
     })));
-    it('PUT / should modify a product in the database',
+    it('PUT / should return a validation error! Unprocessable entity',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -443,6 +424,39 @@ describe('Testing out Products endpoints', function () {
           switch (_context13.prev = _context13.next) {
             case 0:
               _context13.next = 2;
+              return _chai.default.request(_index.default).put('/api/v1/products/6').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
+                product_id: 6,
+                product_desc: 'Biscuits',
+                unit_price: 400,
+                quantity_in_stock: 150,
+                supplier_name: 'Okonkwo',
+                category: 'soap'
+              });
+
+            case 2:
+              res = _context13.sent;
+              expect(res).to.have.status(422);
+              expect(res.body).to.have.property('message');
+              expect(res.body.message).to.equal('Something wrong with input!');
+
+            case 6:
+            case "end":
+              return _context13.stop();
+          }
+        }
+      }, _callee13, this);
+    })));
+    it('PUT / should modify a product in the database',
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee14() {
+      var res;
+      return regeneratorRuntime.wrap(function _callee14$(_context14) {
+        while (1) {
+          switch (_context14.prev = _context14.next) {
+            case 0:
+              _context14.next = 2;
               return _chai.default.request(_index.default).put('/api/v1/products/7').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI').type('form').send({
                 product_id: 7,
                 product_desc: 'Ariel',
@@ -454,41 +468,10 @@ describe('Testing out Products endpoints', function () {
               });
 
             case 2:
-              res = _context13.sent;
+              res = _context14.sent;
               expect(res).to.have.status(200);
               expect(res.body).to.eql({
                 message: 'Product Modified'
-              });
-
-            case 5:
-            case "end":
-              return _context13.stop();
-          }
-        }
-      }, _callee13, this);
-    })));
-  }); // end of PUT
-  // Beginning of DELETE
-
-  describe('Testing the Delete method', function () {
-    it('Delete / should return no access token error',
-    /*#__PURE__*/
-    _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee14() {
-      var res;
-      return regeneratorRuntime.wrap(function _callee14$(_context14) {
-        while (1) {
-          switch (_context14.prev = _context14.next) {
-            case 0:
-              _context14.next = 2;
-              return _chai.default.request(_index.default).del('/api/v1/products/6');
-
-            case 2:
-              res = _context14.sent;
-              expect(res).to.have.status(401);
-              expect(res.body).to.eql({
-                message: 'No access token provided! Unaccessible resource'
               });
 
             case 5:
@@ -498,7 +481,11 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee14, this);
     })));
-    it('Delete / should return cannot delete a non existent product message',
+  }); // end of PUT
+  // Beginning of DELETE
+
+  describe('Testing the Delete method', function () {
+    it('Delete / should return no access token error',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -509,22 +496,23 @@ describe('Testing out Products endpoints', function () {
           switch (_context15.prev = _context15.next) {
             case 0:
               _context15.next = 2;
-              return _chai.default.request(_index.default).del('/api/v1/products/500').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
+              return _chai.default.request(_index.default).del('/api/v1/products/6');
 
             case 2:
               res = _context15.sent;
-              expect(res).to.have.status(404);
-              expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
+              expect(res).to.have.status(401);
+              expect(res.body).to.eql({
+                message: 'No access token provided! Unaccessible resource'
+              });
 
-            case 6:
+            case 5:
             case "end":
               return _context15.stop();
           }
         }
       }, _callee15, this);
     })));
-    it('Delete / should delete a product from the database',
+    it('Delete / should return cannot delete a non existent product message',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -535,13 +523,13 @@ describe('Testing out Products endpoints', function () {
           switch (_context16.prev = _context16.next) {
             case 0:
               _context16.next = 2;
-              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
+              return _chai.default.request(_index.default).del('/api/v1/products/500').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
 
             case 2:
               res = _context16.sent;
-              expect(res).to.have.status(200);
+              expect(res).to.have.status(404);
               expect(res.body).to.have.property('message');
-              expect(res.body.message).to.equal('Product Deleted');
+              expect(res.body.message).to.equal('Product doesn\'t exist! Nothing to Delete');
 
             case 6:
             case "end":
@@ -550,7 +538,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee16, this);
     })));
-    it('checks if one is an admin',
+    it('Delete / should delete a product from the database',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/
@@ -561,18 +549,44 @@ describe('Testing out Products endpoints', function () {
           switch (_context17.prev = _context17.next) {
             case 0:
               _context17.next = 2;
-              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MjI4Njg4MH0.8pQOl4ZxzdecrpTvUMGCc5x6boPzToWjgy5910cykEs');
+              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI');
 
             case 2:
               res = _context17.sent;
-              expect(res).to.have.status(403);
+              expect(res).to.have.status(200);
+              expect(res.body).to.have.property('message');
+              expect(res.body.message).to.equal('Product Deleted');
 
-            case 4:
+            case 6:
             case "end":
               return _context17.stop();
           }
         }
       }, _callee17, this);
+    })));
+    it('checks if one is an admin',
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee18() {
+      var res;
+      return regeneratorRuntime.wrap(function _callee18$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              _context18.next = 2;
+              return _chai.default.request(_index.default).del('/api/v1/products/8').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MjI4Njg4MH0.8pQOl4ZxzdecrpTvUMGCc5x6boPzToWjgy5910cykEs');
+
+            case 2:
+              res = _context18.sent;
+              expect(res).to.have.status(403);
+
+            case 4:
+            case "end":
+              return _context18.stop();
+          }
+        }
+      }, _callee18, this);
     })));
   });
 });

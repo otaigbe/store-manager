@@ -67,32 +67,32 @@ function getSalesRecordObj() {
 }
 
 
-function sendForm(data, url) {
-  const xmlHttp = new XMLHttpRequest();
-  if (xmlHttp) {
-    xmlHttp.onreadystatechange = () => {
-      const messageElem = document.getElementById('salesStatus');
-      if (xmlHttp.readyState === 1) {
-        messageElem.innerHTML += 'Status 1: Server connection established!';
-      } else if (xmlHttp.readyState === 2) {
-        messageElem.innerHTML += 'Status 2: Request recieved ! <br/>';
-      } else if (xmlHttp.readyState === 3) {
-        messageElem.innerHTML += 'Status 3: Processing Request ! <br/>';
-      } else if (xmlHttp.readyState === 4) {
-        if (xmlHttp.status === 200) {
-          const text = xmlHttp.responseText;
-          messageElem.innerHTML += 'Status 4: Processing Request ! <br/>';
-          messageElem.innerHTML = text;
-        } else {
-          alert('Something is wrong !');
-        }
-      }
-    };
-    xmlHttp.open('POST', url, true);
-    xmlHttp.setRequestHeader('Content-Type', 'application/json');
-    xmlHttp.send(data);
-  }
-}
+// function sendForm(data, url) {
+//   const xmlHttp = new XMLHttpRequest();
+//   if (xmlHttp) {
+//     xmlHttp.onreadystatechange = () => {
+//       const messageElem = document.getElementById('salesStatus');
+//       if (xmlHttp.readyState === 1) {
+//         messageElem.innerHTML += 'Status 1: Server connection established!';
+//       } else if (xmlHttp.readyState === 2) {
+//         messageElem.innerHTML += 'Status 2: Request recieved ! <br/>';
+//       } else if (xmlHttp.readyState === 3) {
+//         messageElem.innerHTML += 'Status 3: Processing Request ! <br/>';
+//       } else if (xmlHttp.readyState === 4) {
+//         if (xmlHttp.status === 200) {
+//           const text = xmlHttp.responseText;
+//           messageElem.innerHTML += 'Status 4: Processing Request ! <br/>';
+//           messageElem.innerHTML = text;
+//         } else {
+//           alert('Something is wrong !');
+//         }
+//       }
+//     };
+//     xmlHttp.open('POST', url, true);
+//     xmlHttp.setRequestHeader('Content-Type', 'application/json');
+//     xmlHttp.send(data);
+//   }
+// }
 
 
 function getAttendantName() {

@@ -20,14 +20,14 @@ const getAllSalesRecordsWithDetails = async () => {
   } catch (error) {
     console.log(error.message);
   }
-  console.log(json.salesRecords);
+  // console.log(json.Resources);
   let table = '<table id="salesrecordtable">';
   let thead = '<thead><tr>';
   let tbody = '<tbody>';
 
-  for (let i = 0; i < json.salesRecords.length; i += 1) {
+  for (let i = 0; i < json.Resources.length; i += 1) {
     if (i === 0) {
-      const keys = Object.keys(json.salesRecords[i]);
+      const keys = Object.keys(json.Resources[i]);
       for (let j = 0; j < keys.length; j += 1) {
         thead += `<th>${keys[j]}</th>`;
       }
@@ -35,7 +35,7 @@ const getAllSalesRecordsWithDetails = async () => {
     }
 
     let tableRow = '<tr>';
-    const values = Object.values(json.salesRecords[i]);
+    const values = Object.values(json.Resources[i]);
     for (let j = 0; j < values.length; j += 1) {
       tableRow += `<td>${values[j]}</td>`;
     }

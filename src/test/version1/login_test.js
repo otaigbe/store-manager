@@ -43,8 +43,8 @@ describe('StoreManager endpoints tests', () => {
           const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe', password: 'okokobioko' });
           expect(res).to.have.status(422);
           expect(res.body).to.have.property('message');
-          expect(res.body).to.have.property('ErrorMessage');
-          expect(res.body.message).to.equal('Validation error! Please check your input');
+          expect(res.body).to.have.property('Error');
+          expect(res.body.message).to.equal('Something wrong with input!',);
         });
       });
     });

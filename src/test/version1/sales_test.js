@@ -116,8 +116,8 @@ describe('Test cases for the sales endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a.jsonObj();
         expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('record');
-        expect(res.body.message).to.equal('Sales Record Found!');
+        expect(res.body).to.have.property('Resource');
+        expect(res.body.message).to.equal('Resource Found!');
       });
 
       it('should return an invalid token error', async () => {
@@ -133,7 +133,7 @@ describe('Test cases for the sales endpoint', () => {
           .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImF0dGVuZGFudF9pZCI6MSwibmFtZSI6Im90YWlnYmUiLCJpYXQiOjE1NDE2Nzg3MTN9.fYiBIQAVnd6dxPjJJ6o6xNKZZSbU0FLk4xikzlj7370');
         expect(res).to.have.status(404);
         expect(res.body).to.be.a.jsonObj();
-        expect(res.body).to.eql({ message: 'Record doesn\'t exist!' });
+        expect(res.body).to.eql({ message: 'Resource doesn\'t exist!' });
       });
     });
 
@@ -146,7 +146,7 @@ describe('Test cases for the sales endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a.jsonObj();
         expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('salesRecords');
+        expect(res.body).to.have.property('Resources');
       });
 
       it('should return all salesrecords (without pagination) when admin is true', async () => {
@@ -156,7 +156,7 @@ describe('Test cases for the sales endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a.jsonObj();
         expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('salesRecords');
+        expect(res.body).to.have.property('Resources');
       });
 
       it('should return all salesrecords (without pagination) when admin is false', async () => {
@@ -166,7 +166,7 @@ describe('Test cases for the sales endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a.jsonObj();
         expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('salesRecords');
+        expect(res.body).to.have.property('Resources');
       });
 
       it('should return all salesrecords by the creator(with pagination) when admin is false', async () => {
@@ -177,7 +177,7 @@ describe('Test cases for the sales endpoint', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.a.jsonObj();
         expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('salesRecords');
+        expect(res.body).to.have.property('Resources');
       });
 
       it('should return a no access token provided', (done) => {

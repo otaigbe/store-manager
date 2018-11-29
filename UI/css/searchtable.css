@@ -23,9 +23,10 @@
 #cart_table td, #salesrecordtable td, #productsrecordtable td{
   text-align: left;
   padding-left: 20px;
+  padding-right: 20px;
 
 }
 
 #cart_table td, #cart_table th, #salesrecordtable td, #salesrecordtable th, #productsrecordtable td, #productsrecordtable th{
-	border:thin solid white;
+	border:1px solid #ddd;
 }

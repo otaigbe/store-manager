@@ -156,8 +156,8 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('record');
-                expect(res.body.message).to.equal('Sales Record Found!');
+                expect(res.body).to.have.property('Resource');
+                expect(res.body.message).to.equal('Resource Found!');
 
               case 8:
               case "end":
@@ -208,7 +208,7 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(404);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.eql({
-                  message: 'Record doesn\'t exist!'
+                  message: 'Resource doesn\'t exist!'
                 });
 
               case 6:
@@ -240,7 +240,7 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('salesRecords');
+                expect(res.body).to.have.property('Resources');
 
               case 7:
               case "end":
@@ -267,7 +267,7 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('salesRecords');
+                expect(res.body).to.have.property('Resources');
 
               case 7:
               case "end":
@@ -294,7 +294,7 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('salesRecords');
+                expect(res.body).to.have.property('Resources');
 
               case 7:
               case "end":
@@ -323,7 +323,7 @@ describe('Test cases for the sales endpoint', function () {
                 expect(res).to.have.status(200);
                 expect(res.body).to.be.a.jsonObj();
                 expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('salesRecords');
+                expect(res.body).to.have.property('Resources');
 
               case 7:
               case "end":

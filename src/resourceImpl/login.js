@@ -2,58 +2,35 @@ import jwt from 'jsonwebtoken';
 import Joi from 'joi';
 import queries from '../dbUtils/queries/queries';
 import pool from '../dbUtils/dbConnection';
+import errorHandler from '../utils/errorHandler';
+import schemas from '../utils/validationSchemas';
+import usefulFunctions from './ImplFunctions';
+import asyncMiddleware from '../middleware/async';
 
 const loginImpl = {};
-const schema = Joi.object({
-  email: Joi.string().email({ minDomainAtoms: 2 }),
-  password: Joi.string().required(),
-});
-
-loginImpl.login = (req, res) => {
-  const result = Joi.validate(req.body, schema);
+loginImpl.login = asyncMiddleware(async (req, res) => {
+  const result = Joi.validate(req.body, schemas.loginSchema);
   if (result.error === null) {
     const temp = [req.body.email, req.body.password];
-    pool.connect(async (err, client) => {
-      if (err) {
-        /* ignore istanbul next */
-        res.status(501).json({
-          message: 'Internal Server Error',
-          Error: err,
-        });
-      } else {
-        try {
-          const db = await client.query(queries.selectLoginQuery, temp);
-          if (db.rowCount > 0) {
-            const signObj = {};
-            signObj.email = db.rows[0].attendant_email;
-            signObj.admin = db.rows[0].attendant_admin;
-            signObj.attendant_id = db.rows[0].attendant_id;
-            signObj.name = db.rows[0].attendant_name;
-            const token = jwt.sign(signObj, process.env.JWTKEY);
-            if (signObj.admin === true) {
-              res.cookie('x-auth-token', token);
-              res.redirect('/admin_control_page.html');
-            }
-            if (signObj.admin === false) {
-              res.cookie('x-auth-token', token);
-              res.redirect('/cart.html');
-            }
-          } else {
-            res.status(404).json({
-              message: 'User doesn"t exist! Enter valid email and password',
-            });
-          }
-        } catch (error) {
-          console.log(error.message);
-        }
+    const queryResult = await pool.query(queries.selectLoginQuery, temp);
+    if (queryResult.rowCount > 0) {
+      const signObj = {};
+      signObj.email = queryResult.rows[0].attendant_email;
+      signObj.admin = queryResult.rows[0].attendant_admin;
+      signObj.attendant_id = queryResult.rows[0].attendant_id;
+      signObj.name = queryResult.rows[0].attendant_name;
+      const token = jwt.sign(signObj, process.env.JWTKEY);
+      if (signObj.admin === true) {
+        usefulFunctions.setCookieAndRedirect(res, token, '/admin_control_page.html');
+      } else { 
+        usefulFunctions.setCookieAndRedirect(res, token, '/cart.html');
       }
-    });
+    } else {
+      errorHandler.notFoundError(res);
+    }
   } else {
-    return res.status(422).json({
-      message: 'Validation error! Please check your input',
-      ErrorMessage: result.error,
-    });
+    errorHandler.validationError(res, result);
   }
-};
+});
 
 export default loginImpl;

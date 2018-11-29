@@ -58,20 +58,18 @@ const createWindow = (e) => {
     formElements[i].value = targetGrandParent.cells[i].textContent;
     // console.log(targetGrandParent.cells[i].textContent);
   }
-
-
-  function handleForm(event) {
-    event.preventDefault();
-    const formElement = document.getElementById('EditProductForm').elements;
-    const id = formElement[0].value;
-    EditProduct(id);
-    console.log('Pressed');
-    const screen = document.getElementById('popup');
-    screen.parentElement.removeChild(screen);
-  }
-  document.getElementById('EditSubmitButton').addEventListener('click', handleForm);
 };
 
+function handleForm(event) {
+  event.preventDefault();
+  const formElement = document.getElementById('EditProductForm').elements;
+  const id = formElement[0].value;
+  EditProduct(id);
+  console.log('Pressed');
+  const screen = document.getElementById('popup');
+  screen.parentElement.removeChild(screen);
+}
+document.getElementById('EditSubmitButton').addEventListener('click', handleForm);
 
 const getAllProducts = async () => {
   let response = null;
@@ -94,14 +92,14 @@ const getAllProducts = async () => {
   } catch (error) {
     console.log(error.message);
   }
-  // console.log(json.Products);
+  // console.log(json.Resources);
   let table = '<table id="productsrecordtable">';
   let thead = '<thead><tr>';
   let tbody = '<tbody>';
 
-  for (let i = 0; i < json.Products.length; i += 1) {
+  for (let i = 0; i < json.Resources.length; i += 1) {
     if (i === 0) {
-      const keys = Object.keys(json.Products[i]);
+      const keys = Object.keys(json.Resources[i]);
       for (let j = 0; j < keys.length; j += 1) {
         thead += `<th>${keys[j]}</th>`;
       }
@@ -109,7 +107,7 @@ const getAllProducts = async () => {
     }
 
     let tableRow = '<tr>';
-    const values = Object.values(json.Products[i]);
+    const values = Object.values(json.Resources[i]);
     for (let j = 0; j < values.length; j += 1) {
       tableRow += `<td>${values[j]}</td>`;
 

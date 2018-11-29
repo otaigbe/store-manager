@@ -1,0 +1,41 @@
+version: "2"         # required to adjust maintainability checks
+checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 500
+  method-complexity:
+    config:
+      threshold: 5
+  method-count:
+    config:
+      threshold: 50
+  method-lines:
+    config:
+      threshold: 50
+  nested-control-flow:
+    config:
+      threshold: 10
+  return-statements:
+    config:
+      threshold: 10
+  similar-code:
+    config:
+      threshold: false
+  identical-code:
+    config:
+      threshold: false
+  
+exclude_patterns:
+- "tests/"
+- "build/"
+- "css/"
+- "js/"
+- "jwt-decode-master/"
+- "UI/"
+

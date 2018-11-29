@@ -10,7 +10,7 @@ const createProductsTable = `CREATE TABLE IF NOT EXISTS products
     quantity_supplied INT NOT NULL,
     supplier_name VARCHAR(200)  NOT NULL,
     category VARCHAR(200) NOT NULL,
-    date_created timestamp not null default CURRENT_TIMESTAMP
+    date_created DATE NOT NULL DEFAULT CURRENT_DATE
 )`;
 
 const createAttendantsTable = `CREATE TABLE IF NOT EXISTS attendants
@@ -34,7 +34,7 @@ const createSalesRecordTable = `CREATE TABLE IF NOT EXISTS salesRecords
     amount double precision NOT NULL,
     attendant_name VARCHAR(200) NOT NULL,
     receipt_number BIGINT,
-    date_created timestamp not null default CURRENT_TIMESTAMP
+    date_created DATE NOT NULL DEFAULT CURRENT_DATE
 )`;
 
 const array = [];

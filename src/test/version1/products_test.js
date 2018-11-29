@@ -3,8 +3,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import chaiJson from 'chai-json';
-import chaiUrl from 'chai-url';
-import co from 'co';
 import app from '../../index';
 import 'babel-polyfill';
 
@@ -19,7 +17,7 @@ describe('Testing out Products endpoints', () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body).to.have.property('message');
-      expect(res.body).to.have.property('Products');
+      expect(res.body).to.have.property('Resources');
     });
     it('GET / products endpoint; should return all products without pagination', async () => {
       const res = await chai.request(app).get('/api/v1/products/');
@@ -32,8 +30,8 @@ describe('Testing out Products endpoints', () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body).to.have.property('message');
-      expect(res.body.message).to.equal('Product Found!');
-      expect(res.body).to.have.property('Product');
+      expect(res.body.message).to.equal('Resource Found!');
+      expect(res.body).to.have.property('Resource');
     });
 
     it('GET / products endpoint; should return product not found', async () => {
@@ -41,7 +39,7 @@ describe('Testing out Products endpoints', () => {
       expect(res).to.have.status(404);
       expect(res).to.be.json;
       expect(res.body).to.have.property('message');
-      expect(res.body.message).to.equal('Product doesn\'t exist!');
+      expect(res.body.message).to.equal('Resource doesn\'t exist!');
     });
   });
 
@@ -75,23 +73,6 @@ describe('Testing out Products endpoints', () => {
       expect(res).to.have.status(201);
       expect(res.body.message).to.equal('Created a new product.');
     });
-    // it('POST / products endpoint; should update an already existing product in the database', async () => {
-    //   const res = await chai.request(app)
-    //     .post('/api/v1/products')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
-    //     .type('form')
-    //     .send({
-    //       product_desc: 'bucket',
-    //       unit_price: 150,
-    //       quantity_in_stock: 40,
-    //       quantity_supplied: 10,
-    //       supplier_name: 'Okonkwo',
-    //       category: 'hardware',
-    //     });
-    //   expect(res.body).to.be.a.jsonObj();
-    //   expect(res).to.have.status(200);
-    //   expect(res.body).to.eql({ message: 'Updated an already existent product.' });
-    // });
     it('POST / products endpoint; should report a validation error', async () => {
       const res = await chai.request(app).post('/api/v1/products')
         .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
@@ -108,6 +89,24 @@ describe('Testing out Products endpoints', () => {
       expect(res.body).to.have.property('message');
       expect(res.body).to.have.property('Error');
       expect(res.body.message).to.equal('Something wrong with input!');
+    });
+
+it('POST / products endpoint; should update an already existing product in the database', async () => {
+      const res = await chai.request(app)
+        .post('/api/v1/products')
+        .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')
+        .type('form')
+        .send({
+          product_desc: 'bucket',
+          unit_price: 150,
+          quantity_in_stock: 40,
+          quantity_supplied: 10,
+          supplier_name: 'Okonkwo',
+          category: 'hardware',
+        });
+      expect(res.body).to.be.a.jsonObj();
+      expect(res).to.have.status(200);
+      expect(res.body).to.eql({ message: 'Product already exists Modify instead.' });
     });
 
     it('POST / products endpoint; should return a no access message', async () => {
@@ -192,7 +191,7 @@ describe('Testing out Products endpoints', () => {
         });
       expect(res).to.have.status(422);
       expect(res.body).to.have.property('message');
-      expect(res.body.message).to.equal('Validation error! Please check your input');
+      expect(res.body.message).to.equal('Something wrong with input!');
     });
     it('PUT / should modify a product in the database', async () => {
       const res = await chai.request(app).put('/api/v1/products/7')

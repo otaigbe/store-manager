@@ -37,7 +37,11 @@ describe('StoreManager endpoints tests', function () {
   describe('Testing the login endpoint', function () {
     describe('Testing the POST method', function () {
       describe('Testing when correct information is provided', function () {
-        it('POST / login endpoint should successfully sign in',
+        // it('POST / login endpoint should successfully sign in', async () => {
+        //   const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe@gmail.com', password: 'password' });
+        //   expect(res).to.redirectTo('http://127.0.0.1:4555/admin_control_page.html');
+        // });
+        it('POST / login endpoint should successfully sign in(not as admin)',
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
@@ -49,13 +53,14 @@ describe('StoreManager endpoints tests', function () {
                 case 0:
                   _context.next = 2;
                   return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'otaigbe@gmail.com',
+                    email: 'angela@gmail.com',
                     password: 'password'
                   });
 
                 case 2:
                   res = _context.sent;
-                  expect(res).to.redirectTo('http://127.0.0.1:4555/admin_control_page.html');
+
+                  _chai.default.expect('http://127.0.0.1:4555/cart.html').to.have.path('/cart.html');
 
                 case 4:
                 case "end":
@@ -64,7 +69,9 @@ describe('StoreManager endpoints tests', function () {
             }
           }, _callee, this);
         })));
-        it('POST / login endpoint should successfully sign in(not as admin)',
+      });
+      describe('Testing when wrong information is inputted', function () {
+        it('POST / login endpoint should return a 404(not found) error',
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
@@ -76,25 +83,27 @@ describe('StoreManager endpoints tests', function () {
                 case 0:
                   _context2.next = 2;
                   return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'angela@gmail.com',
-                    password: 'password'
+                    email: 'otaigbe@gmail.com',
+                    password: 'okokobioko'
                   });
 
                 case 2:
                   res = _context2.sent;
+                  expect(res).to.have.status(404);
+                  expect(res.body).to.eql({
+                    message: 'User doesn"t exist! Enter valid email and password'
+                  });
+                  expect(res.body).to.have.property('message');
+                  expect(res.body.message).to.equal('User doesn"t exist! Enter valid email and password');
 
-                  _chai.default.expect('http://127.0.0.1:4555/cart.html').to.have.path('/cart.html');
-
-                case 4:
+                case 7:
                 case "end":
                   return _context2.stop();
               }
             }
           }, _callee2, this);
         })));
-      });
-      describe('Testing when wrong information is inputted', function () {
-        it('POST / login endpoint should return a 404(not found) error',
+        it('POST / login endpoint should return a 422(unprocessable entity) error',
         /*#__PURE__*/
         _asyncToGenerator(
         /*#__PURE__*/
@@ -106,18 +115,16 @@ describe('StoreManager endpoints tests', function () {
                 case 0:
                   _context3.next = 2;
                   return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'otaigbe@gmail.com',
+                    email: 'otaigbe',
                     password: 'okokobioko'
                   });
 
                 case 2:
                   res = _context3.sent;
-                  expect(res).to.have.status(404);
-                  expect(res.body).to.eql({
-                    message: 'User doesn"t exist! Enter valid email and password'
-                  });
+                  expect(res).to.have.status(422);
                   expect(res.body).to.have.property('message');
-                  expect(res.body.message).to.equal('User doesn"t exist! Enter valid email and password');
+                  expect(res.body).to.have.property('Error');
+                  expect(res.body.message).to.equal('Something wrong with input!');
 
                 case 7:
                 case "end":
@@ -125,36 +132,6 @@ describe('StoreManager endpoints tests', function () {
               }
             }
           }, _callee3, this);
-        })));
-        it('POST / login endpoint should return a 422(unprocessable entity) error',
-        /*#__PURE__*/
-        _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee4() {
-          var res;
-          return regeneratorRuntime.wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return _chai.default.request(_index.default).post('/api/v1/auth/login').type('form').send({
-                    email: 'otaigbe',
-                    password: 'okokobioko'
-                  });
-
-                case 2:
-                  res = _context4.sent;
-                  expect(res).to.have.status(422);
-                  expect(res.body).to.have.property('message');
-                  expect(res.body).to.have.property('ErrorMessage');
-                  expect(res.body.message).to.equal('Validation error! Please check your input');
-
-                case 7:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4, this);
         })));
       });
     });
