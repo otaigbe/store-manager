@@ -7,5 +7,4 @@ Gruntfile.js
 README.md
 .nyc_output
 .env
-package-lock.json
 .env.default

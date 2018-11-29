@@ -31,11 +31,3 @@ checks:
     config:
       threshold: false
   
-exclude_patterns:
-- "tests/"
-- "build/"
-- "css/"
-- "js/"
-- "jwt-decode-master/"
-- "UI/"
-
