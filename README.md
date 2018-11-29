@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/otaigbe/store-manager.svg?branch=develop)](https://travis-ci.org/otaigbe/store-manager)  [![Coverage Status](https://coveralls.io/repos/github/otaigbe/store-manager/badge.svg?branch=develop)](https://coveralls.io/github/otaigbe/store-manager?branch=develop)
+[![Build Status](https://travis-ci.org/otaigbe/store-manager.svg?branch=develop)](https://travis-ci.org/otaigbe/store-manager)  [![Coverage Status](https://coveralls.io/repos/github/otaigbe/store-manager/badge.svg?branch=develop)](https://coveralls.io/github/otaigbe/store-manager?branch=develop) [![Test Coverage](https://api.codeclimate.com/v1/badges/100b2a4e64fc7695355c/test_coverage)](https://codeclimate.com/github/otaigbe/store-manager/test_coverage)
 
 # Store-Manager
 Store-Manager is a light weight, easy to use desktop application that runs primarily in a browser. It is built on top of NodeJS and uses javascript to query restful resources from the backend. It is higly responsive and flexible because it helps the store owner/Administrator perform a variety of operations which include:
