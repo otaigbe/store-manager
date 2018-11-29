@@ -14,3 +14,12 @@ checks:
       threshold: 50
   similar-code:
     enabled: false
+exclude_patterns:
+  - "build/"
+  - "UI/"
+  - "config/"
+  - "dbUtils/"
+  - "dist/"
+  - "features/"
+  - "**/node_modules/"
+  - "test/"
