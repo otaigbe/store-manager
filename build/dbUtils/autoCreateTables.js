@@ -61,16 +61,16 @@ function () {
             return client.query(populateSalesRecordsTableString);
 
           case 16:
-            _context.next = 21;
+            console.log('Tables created and Populated');
+            _context.next = 22;
             break;
 
-          case 18:
-            _context.prev = 18;
+          case 19:
+            _context.prev = 19;
             _context.t0 = _context["catch"](1);
             console.log(_context.t0);
 
-          case 21:
-            console.log('Tables created and Populated');
+          case 22:
             process.exit();
 
           case 23:
@@ -78,7 +78,7 @@ function () {
             return _context.stop();
         }
       }
-    }, _callee, this, [[1, 18]]);
+    }, _callee, this, [[1, 19]]);
   }));
 
   return function (_x, _x2) {
