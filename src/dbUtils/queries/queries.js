@@ -7,7 +7,7 @@ queries.updateProductDuringCreation = 'UPDATE products SET quantity_in_stock = $
 queries.insertProduct = 'INSERT INTO products (product_desc, unit_price, quantity_in_stock, quantity_supplied, supplier_name, category) VALUES ($1,$2,$3,$4,$5,$6)';
 queries.selectProductsWithPagination = 'SELECT product_id,product_desc,unit_price,quantity_in_stock FROM products LIMIT $1 OFFSET $2';
 queries.countAllProducts = 'SELECT * FROM products';
-queries.selectProductsWithoutPagination = 'SELECT product_id,product_desc,unit_price,quantity_in_stock FROM products';
+queries.selectProductsWithoutPagination = 'SELECT product_id as ID,product_desc as Description,unit_price,quantity_in_stock as Qty_Available FROM products';
 queries.checkIfAProductExist = 'SELECT product_id,product_desc,unit_price,quantity_in_stock,quantity_supplied,supplier_name,category FROM products WHERE product_id = $1 and product_desc = $2';
 queries.updateProduct = 'UPDATE products SET product_id = $1, product_desc = $2, unit_price = $3, quantity_in_stock = $4, quantity_supplied = $5, supplier_name = $6, category = $7 WHERE product_id = $1';
 queries.deleteProduct = 'DELETE FROM products WHERE product_id = $1';

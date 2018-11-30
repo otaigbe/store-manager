@@ -11,7 +11,7 @@ cartImpl.getAllProducts = asyncMiddleware(async (req, res) => {
     const page = urlQuery.pageNumber;
     usefulFunctions.fetchAllStuffWithPagination(res, page, queries.countAllProducts, queries.getProductsWithPagination, args);
   } else {
-    usefulFunctions.fetchAllStuffWithoutPagination(res, queries.getProductsWithoutPagination);
+    usefulFunctions.fetchAllStuffWithoutPagination(res, queries.selectProductsWithoutPagination);
   }
 });
 

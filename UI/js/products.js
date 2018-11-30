@@ -20,7 +20,7 @@ const getAllProductsForCart = async () => {
       const keys = Object.keys(json.Resources[i]);
       for (let j = 0; j < keys.length; j += 1) {
         if (j === 3) {
-          thead += `<th>Qty-to-be-purchased</th>`;
+          thead += `<th>Qty</th>`;
         }
         thead += `<th>${keys[j]}</th>`;
       }

@@ -39,7 +39,7 @@ function () {
 
               _ImplFunctions.default.fetchAllStuffWithPagination(res, page, _queries.default.countAllProducts, _queries.default.getProductsWithPagination, args);
             } else {
-              _ImplFunctions.default.fetchAllStuffWithoutPagination(res, _queries.default.getProductsWithoutPagination);
+              _ImplFunctions.default.fetchAllStuffWithoutPagination(res, _queries.default.selectProductsWithoutPagination);
             }
 
           case 2:

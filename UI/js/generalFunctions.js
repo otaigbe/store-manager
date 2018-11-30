@@ -1,4 +1,4 @@
-/* eslint-disable quotes */
+/* eslint-disable no-restricted-syntax */
 function generateTableWithHeader(json, tableName) {
   let table = `<table id="${tableName}">`;
   let thead = '<thead><tr>';
@@ -11,7 +11,7 @@ function generateTableWithHeader(json, tableName) {
       }
       table += thead;
     }
-    let tableRow = `<tr>`;
+    let tableRow = '<tr>';
     const values = Object.values(json.Resources[i]);
     for (let j = 0; j < values.length; j += 1) {
       tableRow += `<td>${values[j]}</td>`;
@@ -22,29 +22,23 @@ function generateTableWithHeader(json, tableName) {
   }
   table += tbody;
   table += '</tbody>';
-  table += `<tfoot><tr></tr></tfoot>`;
+  table += '<tfoot><tr></tr></tfoot>';
   table += '</table>';
   return table;
 }
 
+function splitCookie() {
+  const cookieStr = document.cookie;
+  const ans = cookieStr.split('=');
+  const ans1 = ans[0];
+  const ans2 = ans[1];
+  return ans2;
+}
 
-const getAllProductsWithDetails = async () => {
-  let response = null;
-  let json = null;
-  const url = '/api/v1/products/';
-  try {
-    response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    json = await response.json();
-  } catch (error) {
-    console.log(error.message);
+function convertFormDataToJsonObject(formdata) {
+  const jsonObj = {};
+  for (const [key, value] of formdata.entries()) {
+    jsonObj[key] = value;
   }
-  const table = generateTableWithHeader(json, 'productsrecordtable');
-  const d = document.createRange().createContextualFragment(table);
-  document.getElementById('products').prepend(d);
-};
-
+  return jsonObj;
+}

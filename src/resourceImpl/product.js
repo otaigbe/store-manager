@@ -39,7 +39,7 @@ productImpl.getAllProducts = asyncMiddleware((req, res) => {
   if (!customFunc.isEmpty(urlQuery)) {
     const args = [];
     const page = urlQuery.pageNumber;
-    usefulFunctions.fetchAllStuffWithPagination(res, page, queries.countAllProducts, queries.getProductsWithPagination, args);
+    usefulFunctions.fetchAllStuffWithPagination(res, page, queries.countAllProducts, queries.selectProductsWithPagination, args);
   } else {
     usefulFunctions.fetchAllStuffWithoutPagination(res, queries.getProductsWithoutPagination);
   }

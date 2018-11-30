@@ -79,6 +79,7 @@ form input[type=password], input[type=email] {
 	font-size: 20px;
 	font-weight: 50;
 	width: 350px;
+	padding: 5px;
 }
 
  form {
@@ -113,7 +114,8 @@ nav ul li a {
     color: white;
     text-align: center;
     padding: 14px 16px;
-    text-decoration: none;
+	text-decoration: none;
+	cursor: pointer;
 }	
 	nav ul li a:hover {
     background-color: #111;

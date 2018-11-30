@@ -7,7 +7,8 @@
   
   #cart_table th, #salesrecordtable th, #productsrecordtable th  {
     text-align: left;
-    padding: 12px;
+    /* padding: 12px; */
+    padding-left: 10px;
 	  background-color: #551263;
 	color: white;
   }
@@ -22,9 +23,7 @@
   }
 #cart_table td, #salesrecordtable td, #productsrecordtable td{
   text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
-
+  padding-left: 10px;
 }
 
 #cart_table td, #cart_table th, #salesrecordtable td, #salesrecordtable th, #productsrecordtable td, #productsrecordtable th{

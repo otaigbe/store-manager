@@ -109,7 +109,7 @@ productImpl.getAllProducts = (0, _async.default)(function (req, res) {
     var args = [];
     var page = urlQuery.pageNumber;
 
-    _ImplFunctions.default.fetchAllStuffWithPagination(res, page, _queries.default.countAllProducts, _queries.default.getProductsWithPagination, args);
+    _ImplFunctions.default.fetchAllStuffWithPagination(res, page, _queries.default.countAllProducts, _queries.default.selectProductsWithPagination, args);
   } else {
     _ImplFunctions.default.fetchAllStuffWithoutPagination(res, _queries.default.getProductsWithoutPagination);
   }
