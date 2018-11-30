@@ -68,10 +68,11 @@ pool.connect(async (err, client) => {
     await client.query(populateProductTableString);
     await client.query(populateAttendantsTableString);
     await client.query(populateSalesRecordsTableString);
+    console.log('Tables created and Populated');
   } catch (error) {
     console.log(error);
   }
-  console.log('Tables created and Populated');
+  
   process.exit();
 });
 
