@@ -9,3 +9,4 @@ README.md
 .env
 package-lock.json
 .env.default
+/config
