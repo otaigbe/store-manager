@@ -1,16 +1,24 @@
 async function saveSalesRecordToDb(receipt) {
   const num = document.getElementById('receipt-num').textContent;
   const attendant = document.getElementById('attendantName').textContent;
+  let json = null;
   const str = `"${attendant}"`;
   console.log(`{"salesRecords":${receipt},"receiptNumber":${num},"attendant_name":${str}}`);
   const salesObj = JSON.parse(`{"salesRecords":${receipt},"receiptNumber":${num},"attendant_name":${str}}`);
-  const res = await fetch('/api/v1/sales', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(salesObj),
-  });
+  let res = null;
+  try {
+    res = await fetch('/api/v1/sales', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(salesObj),
+    });
+    json = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+  document.getElementById('recordOfSales').innerHTML = json.message;
   // console.log(JSON.parse(salesObj));
   // console.log(salesObj);
   const receiptObj = JSON.parse(receipt);

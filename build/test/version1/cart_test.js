@@ -34,7 +34,7 @@ describe('Testing products GET', function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _chai.default.request(_index.default).get('/api/v1/cart/').query({
+            return _chai.default.request(_index.default).get('/api/v1/cart/').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MzY3MTM1OX0.8h2vnVxIz2UFCcQoTN8XTUBA1SIAhDNnlL9oVtPnKQo').query({
               pageNumber: 1
             });
 
@@ -63,7 +63,7 @@ describe('Testing products GET', function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _chai.default.request(_index.default).get('/api/v1/cart/');
+            return _chai.default.request(_index.default).get('/api/v1/cart/').set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuZ2VsYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImF0dGVuZGFudF9pZCI6MiwibmFtZSI6ImFuZ2VsYSIsImlhdCI6MTU0MzY3MTM1OX0.8h2vnVxIz2UFCcQoTN8XTUBA1SIAhDNnlL9oVtPnKQo');
 
           case 2:
             res = _context2.sent;

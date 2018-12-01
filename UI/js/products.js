@@ -2,15 +2,23 @@
 const getAllProductsForCart = async () => {
   let response = null;
   let json = null;
+  const cookieStr = document.cookie;
+  const ans = cookieStr.split('=');
+  const ans1 = ans[0];
+  const ans2 = ans[1];
   try {
-    response = await fetch('/api/v1/cart/');
+    response = await fetch('/api/v1/cart/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': ans2,
+      },
+    });
     json = await response.json();
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
-  // console.log(json.message);
-  // console.log(json.Products);
-  let table = '<table id="cart_table" style="padding:15px;">';
+  let table = '<table id="cart_table">';
   let thead = '<thead><tr>';
   let tbody = '<tbody id="cart-body">';
 
