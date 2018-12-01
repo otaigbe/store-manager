@@ -43,7 +43,7 @@ function () {
           case 9:
             selectResultSet = _context.sent;
             res.status(200).json({
-              message: "Showing pages ".concat(page, " of ").concat(count.rows.length / pageOffset),
+              message: "Showing pages ".concat(page, " of ").concat(count.rows.length / itemsPerPage),
               Resources: selectResultSet.rows
             });
 
