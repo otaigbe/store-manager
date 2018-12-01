@@ -1,0 +1,1 @@
+web: node ./build/dbUtils/queries/queries.js && node build/index.js
