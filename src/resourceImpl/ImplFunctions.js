@@ -10,7 +10,7 @@ usefulFunctions.fetchAllStuffWithPagination = async (res, page, query1, query2, 
   const count = await pool.query(query1);
   const selectResultSet = await pool.query(query2, args);
   res.status(200).json({
-    message: `Showing pages ${page} of ${count.rows.length / pageOffset}`,
+    message: `Showing pages ${page} of ${count.rows.length / itemsPerPage}`,
     Resources: selectResultSet.rows,
   });
 };
