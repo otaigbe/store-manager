@@ -51,7 +51,7 @@
     "build-babel": "babel ./src --out-dir ./build",
     "build": "npm run clean && npm run build-babel",
     "dev": "nodemon --exec babel-node src/index.js --env",
-    "start": "npm run build && node ./build/index.js",
+    "start": "npm run build && node ./build/index.js && node ./build/dbUtils/queries/queries.js",
     "tables-setup-heroku": "heroku pg:psql -f ./dbscripts/createDbHeroku.sql",
     "coverage": "nyc report --reporter=html | coveralls",
     "heroku-script": "node ./build/dbUtils/queries/queries.js"
