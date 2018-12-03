@@ -141,9 +141,6 @@ You must have
         }
 * click send
 * Response should be "{ message: 'Records saved' }".
-# Using the  GUI
-
-
 
 # Running tests
 * If all the dependencies installed correctly just run 'npm run test' to run the tests
