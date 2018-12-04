@@ -37,10 +37,6 @@ describe('StoreManager endpoints tests', function () {
   describe('Testing the login endpoint', function () {
     describe('Testing the POST method', function () {
       describe('Testing when correct information is provided', function () {
-        // it('POST / login endpoint should successfully sign in', async () => {
-        //   const res = await chai.request(app).post('/api/v1/auth/login').type('form').send({ email: 'otaigbe@gmail.com', password: 'password' });
-        //   expect(res).to.redirectTo('http://127.0.0.1:4555/admin_control_page.html');
-        // });
         it('POST / login endpoint should successfully sign in(not as admin)',
         /*#__PURE__*/
         _asyncToGenerator(

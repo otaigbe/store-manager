@@ -1,0 +1,401 @@
+---
+openapi: 3.0.1
+info:
+  title: Store-Manager
+  description: Store Manager is a web application that helps store owners manage sales and product inventory records.
+  version: "1.0"
+servers:
+- url: https://hidden-cove-62317.herokuapp.com
+paths:
+  /api/v1/sales:
+    get:
+      summary: This endpoint gets all sales records.
+      description: Retreives all sales from the database
+      parameters:
+      - name: x-auth-token
+        in: header
+        description: This token is generated after user is logged in as admin.
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      responses:
+        200:
+          description: Successfully retreived all sales records from Db
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+    post:
+      summary: This saves sales records to the database.
+      description: Saves sales made by the attendant
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+            examples:
+              0:
+                value: "{\r\n          \"salesRecords\": [{\r\n            \"product_id\"\
+                  : 6,\r\n            \"product_desc\": \"Biscuits\",\r\n        \
+                  \    \"unit_price\": 400,\r\n            \"quantity_bought\": 5,\r\
+                  \n            \"amount\": 2000\r\n          }],\r\n          \"\
+                  attendant_name\": \"otaigbe\",\r\n          \"receiptNumber\": 598796898709\r\
+                  \n        }"
+      responses:
+        201:
+          description: sales record saved
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /api/v1/products/12:
+    put:
+      summary: modify a product
+      description: Modifying a product in the database
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_1'
+            examples:
+              0:
+                value: "{\r\n            \"product_id\": 12,\r\n          \"product_desc\"\
+                  : \"Air freshner\",\r\n         \"unit_price\": 650,\r\n       \
+                  \   \"quantity_in_stock\": 40,\r\n          \"quantity_supplied\"\
+                  : 40,\r\n          \"supplier_name\": \"Okonkwo\",\r\n         \"\
+                  category\": \"biscuits\"\r\n    \r\n}"
+      responses:
+        200:
+          description: success message after product has been modified
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+    delete:
+      summary: Delete Product
+      description: Deleting a product from the Database
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      responses:
+        200:
+          description: message after deletion succeeds
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /api/v1/auth/login:
+    post:
+      summary: login as attendant or admin
+      description: Login to access API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_2'
+            examples:
+              0:
+                value: '{ "email": "angela@gmail.com", "password": "password" }'
+              1:
+                value: '{ "email": "otaigbe", "password": "okokobioko" }'
+              2:
+                value: '{ "email": "otaigbe@gmail.com", "password": "okokobioko" }'
+      responses:
+        200:
+          description: Login success
+          content:
+            text/html; charset=UTF-8:
+              schema:
+                type: string
+              examples: {}
+        404:
+          description: Records not found
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        422:
+          description: Wrong Input Message
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /api/v1/products:
+    get:
+      summary: Retrieves all products
+      description: Retrieves all products from the database
+      responses:
+        200:
+          description: successfully retrieved all products from db
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+    post:
+      summary: Creating new product
+      description: Endpoint to create a new product
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_3'
+            examples:
+              0:
+                value: "{\r\n          \"product_desc\": \"short bread butter biscuit\"\
+                  ,\r\n         \"unit_price\": 650,\r\n          \"quantity_supplied\"\
+                  : 40,\r\n          \"supplier_name\": \"Okonkwo\",\r\n         \"\
+                  category\": \"biscuits\"\r\n}"
+              1:
+                value: "{\r\n          \"product_desc\": \"short bread butter biscuit\"\
+                  ,\r\n         \"unit_price\": 650,\r\n          \"quantity_supplied\"\
+                  : 40,\r\n          \"supplier_name\": \"Okonkwo\",\r\n         \"\
+                  category\": \"biscuits\"\r\n}"
+              2:
+                value: "{\r\n          \"product_desc\": \"short bread butter biscuit\"\
+                  ,\r\n         \"unit_price\": 650,\r\n          \"quantity_supplied\"\
+                  : 40,\r\n          \"supplier_name\": \"Okonkwo\",\r\n         \"\
+                  category\": \"biscuits\"\r\n}"
+              3:
+                value: "{\r\n          \"product_desc\": \"Air freshner\",\r\n   \
+                  \      \"unit_price\": 650,\r\n          \"quantity_in_stock\":\
+                  \ 40,\r\n          \"quantity_supplied\": 40,\r\n          \"supplier_name\"\
+                  : \"Okonkwo\",\r\n         \"category\": \"biscuits\"\r\n    \r\n\
+                  }"
+      responses:
+        201:
+          description: Successfully created a new product
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        401:
+          description: No access token provided
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        403:
+          description: Error message! Admin privilege required
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        422:
+          description: Wrong Input
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /api/v1/auth/signup:
+    post:
+      summary: create attendant
+      description: Registering a new attendant
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_4'
+            examples:
+              0:
+                value: "{\r\n          \"name\": \"dele\",\r\n          \"lastname\"\
+                  : \"momodu\",\r\n          \"phoneNumber\": 234088543888,\r\n  \
+                  \        \"email\": \"dele@gmail.com\",\r\n          \"password\"\
+                  : \"password\",\r\n          \"admin\": true\r\n}"
+              1:
+                value: "{\r\n          \"name\": \"dele\",\r\n          \"lastname\"\
+                  : \"momodu\",\r\n          \"phoneNumber\": 234088543888,\r\n  \
+                  \        \"email\": \"dele@gmail.com\",\r\n          \"password\"\
+                  : \"password\",\r\n          \"admin\": true\r\n}"
+              2:
+                value: "{\r\n          \"name\": \"dele\",\r\n          \"lastname\"\
+                  : \"momodu\",\r\n          \"phoneNumber\": 234088543888,\r\n  \
+                  \        \"email\": \"dele@gmail.com\",\r\n          \"password\"\
+                  : \"password\",\r\n          \"admin\": true\r\n}"
+      responses:
+        201:
+          description: Success! Attendant created
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        403:
+          description: Admin privileges needed
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+        409:
+          description: Conflict! Email already exists
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /api/v1/products/500:
+    delete:
+      description: Deleting non existent products
+      parameters:
+      - name: x-auth-token
+        in: header
+        required: false
+        style: SIMPLE
+        explode: false
+        schema:
+          type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI
+      responses:
+        404:
+          description: Products not found! Deletion inconsequential
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+components:
+  schemas:
+    body_3:
+      type: object
+      properties:
+        product_desc:
+          type: string
+        quantity_supplied:
+          type: integer
+          format: int32
+        unit_price:
+          type: integer
+          format: int32
+        supplier_name:
+          type: string
+        category:
+          type: string
+        quantity_in_stock:
+          type: integer
+          format: int32
+    body_4:
+      type: object
+      properties:
+        password:
+          type: string
+        phoneNumber:
+          type: number
+        name:
+          type: string
+        admin:
+          type: boolean
+        email:
+          type: string
+        lastname:
+          type: string
+    body_1:
+      type: object
+      properties:
+        product_desc:
+          type: string
+        product_id:
+          type: integer
+          format: int32
+        quantity_supplied:
+          type: integer
+          format: int32
+        unit_price:
+          type: integer
+          format: int32
+        supplier_name:
+          type: string
+        category:
+          type: string
+        quantity_in_stock:
+          type: integer
+          format: int32
+    body_2:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+    body:
+      type: object
+      properties:
+        salesRecords:
+          type: array
+          properties:
+            items:
+              type: object
+              properties:
+                product_desc:
+                  type: string
+                amount:
+                  type: integer
+                  format: int32
+                product_id:
+                  type: integer
+                  format: int32
+                unit_price:
+                  type: integer
+                  format: int32
+                quantity_bought:
+                  type: integer
+                  format: int32
+        attendant_name:
+          type: string
+        receiptNumber:
+          type: number

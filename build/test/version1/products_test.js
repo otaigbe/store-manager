@@ -237,7 +237,7 @@ describe('Testing out Products endpoints', function () {
         }
       }, _callee7, this);
     })));
-    it('POST / products endpoint; should update an already existing product in the database',
+    it('POST / products endpoint; should return an already existing product message',
     /*#__PURE__*/
     _asyncToGenerator(
     /*#__PURE__*/

@@ -91,7 +91,7 @@ describe('Testing out Products endpoints', () => {
       expect(res.body.message).to.equal('Something wrong with input!');
     });
 
-    it('POST / products endpoint; should update an already existing product in the database', async () => {
+    it('POST / products endpoint; should return an already existing product message', async () => {
       const res = await chai.request(app)
         .post('/api/v1/products')
         .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImlhdCI6MTU0MTQ4NjQ2MH0.F-7ZK_IyOxO5VVKlotO7ySh5QF4Bz2T3qNEg0CxDNSI')

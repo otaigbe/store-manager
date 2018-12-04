@@ -43,7 +43,7 @@ customFunctions.checkAndSwitchEnvironment = function () {
 
   switch (process.env.NODE_ENV) {
     case 'test':
-      port = process.env.TESTPORT || 4555;
+      port = process.env.TESTPORT || 5500;
       break;
 
     case 'development':

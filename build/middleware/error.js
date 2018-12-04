@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _default;
 
-function _default(err, req, res, next) {
+function _default(err, res) {
   res.status(501).json({
     message: 'Something went wrong!',
     Error: err.message

@@ -8,8 +8,6 @@ var _chaiJson = _interopRequireDefault(require("chai-json"));
 
 var _chaiUrl = _interopRequireDefault(require("chai-url"));
 
-var _co = _interopRequireDefault(require("co"));
-
 var _index = _interopRequireDefault(require("../../index"));
 
 require("babel-polyfill");
@@ -42,25 +40,6 @@ describe('Test cases for the sales endpoint', function () {
   //   app.close();
   // });
   describe('Testing the create sales record endpoint', function () {
-    // it('POST / should return a no access token error', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/sales')
-    //     .type('form')
-    //     .send([{
-    //       salesrecord_Id: 3,
-    //       product_id: 6,
-    //       product_desc: 'Biscuits',
-    //       unit_price: 400,
-    //       quantity_bought: 5,
-    //       amount: 2000,
-    //       attendant_id: 2,
-    //     }])
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(401);
-    //       expect(res.body).to.eql({ message: 'No access token provided! Unaccessible resource' });
-    //       done();
-    //     });
-    // });
     it('should successfully create a sales record',
     /*#__PURE__*/
     _asyncToGenerator(
@@ -97,44 +76,7 @@ describe('Test cases for the sales endpoint', function () {
           }
         }
       }, _callee, this);
-    }))); // it('should deny access and request for admin token', co.wrap(() => {
-    //   chai.request(app)
-    //     .post('/api/v1/sales')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuY29tIiwiYWRtaW4iOnRydWUsImF0dGVuZGFudF9pZCI6MSwibmFtZSI6Im90YWlnYmUiLCJpYXQiOjE1NDE2Nzg3MTN9.fYiBIQAVnd6dxPjJJ6o6xNKZZSbU0FLk4xikzlj7370')
-    //     .type('form')
-    //     .send({
-    //       product_id: 6,
-    //       product_desc: 'Biscuits',
-    //       unit_price: 400,
-    //       quantity_bought: 5,
-    //       amount: 2000,
-    //       attendant_id: 1,
-    //       attendant_name: 'otaigbe',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(403);
-    //       expect(res.body).to.eql({ message: 'Forbidden! You need to have appropraite privileges' });
-    //     });
-    // }));
-    // it('should deny access and return an invalid token message', co.wrap(() => {
-    //   chai.request(app)
-    //     .post('/api/v1/sales')
-    //     .set('x-auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im90YWlnYmVAZ21haWwuYdsfgdhdgf29tIiwiYWRtaW4iOnRydWUsImF0dGVuZGFudF9pZCI6MSwibmFtZSI6Im90YWlnYmUiLCJpYXQiOjE1NDE2Nzg3MTN9.fYiBIQAVnd6dxPjJJ6o6xNKZZSbU0FLk4xikzlj7370')
-    //     .type('form')
-    //     .send({
-    //       product_id: 6,
-    //       product_desc: 'Biscuits',
-    //       unit_price: 400,
-    //       quantity_bought: 5,
-    //       amount: 2000,
-    //       attendant_id: 1,
-    //       attendant_name: 'otaigbe',
-    //     })
-    //     .end((err, res) => {
-    //       expect(res).to.have.status(400);
-    //       // expect(res.body).to.be.a('string');
-    //     });
-    // }));
+    })));
   });
   describe('Testing the GET methods', function () {
     describe('Testing the getsalesrecordsbyid endpoint', function () {

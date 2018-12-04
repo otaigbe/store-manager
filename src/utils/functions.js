@@ -27,7 +27,7 @@ customFunctions.checkAndSwitchEnvironment = () => {
   let port = null;
   switch (process.env.NODE_ENV) {
     case 'test':
-      port = process.env.TESTPORT || 4555;
+      port = process.env.TESTPORT || 5500;
       break;
     case 'development':
       port = process.env.DEVELOPMENTPORT || 7500;
