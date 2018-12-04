@@ -11,6 +11,8 @@ Store-Manager is a light weight, easy to use desktop application that runs prima
 
 # Project Management
 This project is managed using the pivotal tracker Management tool. click [here](https://www.pivotaltracker.com/n/projects/2203108) to inspect.
+# Documentation
+[Api Documentation](https://app.swaggerhub.com/apis/otaigbe/Store-Manager/1.0#/)
 
 # Getting Started
 To obtain a copy of this app download or clone the repository. Once you download the zip file, extract zip archive file to a directory any where on your computer.
